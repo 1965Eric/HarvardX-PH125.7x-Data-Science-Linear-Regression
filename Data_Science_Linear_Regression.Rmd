@@ -210,6 +210,10 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 - [ ] B.
 
+![Scatter plot B](https://user-images.githubusercontent.com/17474099/88281550-2dbc1000-cce8-11ea-8fbc-31d4a9f9baf3.png)
+
+- [ ] C.
+
 
 
 Assessment 9- Variance Explained
