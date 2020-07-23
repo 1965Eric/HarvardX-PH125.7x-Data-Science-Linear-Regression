@@ -1,25 +1,21 @@
 # Data_Science_Linear_Regression
-HarvardX: PH125.7x | Data Science: Linear Regression
-Data Science: Linear Regression
+# HarvardX: PH125.7x | Data Science: Linear Regression
 
-    Course Instructor: Rafael Irizarry
+## Abstract
+This is the 7th course in the HarvardX Professional Certificate in Data Science, a series of courses that prepare you to do data analysis in R, from simple computations to machine learning.
 
-Abstract
+The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
-This is the seventh course in the HarvardX Professional Certificate in Data Science, a series of courses that prepare you to do data analysis in R, from simple computations to machine learning.
+## Learning Objectives
+- How linear regression was originally developed by Galton
+- What confounding is and how to detect it
+- How to examine the relationships between variables by implementing linear regression in R
 
-The textbook for the Data Science course series is freely available online.
-Learning Objectives
-
-    How linear regression was originally developed by Galton
-    What confounding is and how to detect it
-    How to examine the relationships between variables by implementing linear regression in R
-
-Course Overview
+## Course Overview
 
 There are three major sections in this course: introduction to linear regression, linear models, and confounding.
 
-Introduction to Linear Regression
+### Introduction to Linear Regression
 
 In this section, you’ll learn the basics of linear regression through this course’s motivating example, the data-driven approach used to construct baseball teams. You’ll also learn about correlation, the correlation coefficient, stratification, and the variance explained.
 
