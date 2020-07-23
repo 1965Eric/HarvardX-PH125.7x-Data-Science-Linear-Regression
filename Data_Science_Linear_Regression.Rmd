@@ -1,8 +1,8 @@
 ---
 title: "Data_Science_Linear_Regression"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -84,6 +84,8 @@ The textbook for this section is available [here](https://rpubs.com/faisalcep/ds
 
 - [ ] A.
 ```{r}
+library(tidyverse)
+library(dslabs)
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     ggplot(aes(AB, R)) + 
     geom_point(alpha = 0.5)
