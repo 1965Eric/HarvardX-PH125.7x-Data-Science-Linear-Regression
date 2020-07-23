@@ -53,7 +53,70 @@ After completing this section, you will be able to:
     
 This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html)
+The textbook for this whole section is available [here](https://rafalab.github.io/dsbook/linear-models.html)
+
+## Motivating Example: Moneyball
+
+The corresponding section of the textbook is the [case study on Moneyball](https://rafalab.github.io/dsbook/linear-models.html#case-study-moneyball)
+
+**Key points**
+
+Bill James was the originator of the **sabermetrics**, the approach of using data to predict what outcomes best predicted if a team would win.
+
+## Baseball basics
+
+The corresponding section of the textbook is the [section on baseball basics](https://rafalab.github.io/dsbook/linear-models.html#baseball-basics)
+
+**Key points**
+
+* The goal of a baseball game is to score more runs (points) than the other team.
+* Each team has 9 batters who have an opportunity to hit a ball with a bat in a predetermined order. 
+* Each time a batter has an opportunity to bat, we call it a plate appearance (PA).
+* The PA ends with a binary outcome: the batter either makes an out (failure) and returns to the bench or the batter doesn’t (success) and can run around the bases, and potentially score a run (reach all 4 bases).
+* We are simplifying a bit, but there are five ways a batter can succeed (not make an out):
+1. Bases on balls (BB): the pitcher fails to throw the ball through a predefined area considered to be hittable (the strike zone), so the batter is permitted to go to first base.
+2. Single: the batter hits the ball and gets to first base.
+3. Double (2B): the batter hits the ball and gets to second base.
+4. Triple (3B): the batter hits the ball and gets to third base.
+5. Home Run (HR): the batter hits the ball and goes all the way home and scores a run.
+* Historically, the batting average has been considered the most important offensive statistic. To define this average, we define a hit (H) and an at bat (AB). Singles, doubles, triples and home runs are hits. The fifth way to be successful, a walk (BB), is not a hit. An AB is the number of times you either get a hit or make an out; BBs are excluded. The batting average is simply H/AB and is considered the main measure of a success rate.
+
+## Bases on Balls or Stolen Bases?
+
+The corresponding section of the textbook is the [base on balls or stolen bases textbook section](https://rafalab.github.io/dsbook/linear-models.html#base-on-balls-or-stolen-bases)
+
+**Key points**
+
+The visualization of choice when exploring the relationship between two variables like home runs and runs is a scatterplot.
+
+*Scatterplot of the relationship between HRs and wins*
+```{r}
+library(Lahman)
+library(tidyverse)
+library(dslabs)
+ds_theme_set()
+
+Teams %>% filter(yearID %in% 1961:2001) %>%
+    mutate(HR_per_game = HR / G, R_per_game = R / G) %>%
+    ggplot(aes(HR_per_game, R_per_game)) + 
+    geom_point(alpha = 0.5)
+```
+
+*Scatterplot of the relationship between stolen bases and wins*
+```{r}
+Teams %>% filter(yearID %in% 1961:2001) %>%
+    mutate(SB_per_game = SB / G, R_per_game = R / G) %>%
+    ggplot(aes(SB_per_game, R_per_game)) + 
+    geom_point(alpha = 0.5)
+```
+
+*Scatterplot of the relationship between bases on balls and runs*
+```{r}
+Teams %>% filter(yearID %in% 1961:2001) %>%
+    mutate(BB_per_game = BB / G, R_per_game = R / G) %>%
+    ggplot(aes(BB_per_game, R_per_game)) + 
+    geom_point(alpha = 0.5)
+```
 
 ## Assessment 1 - Motivating Example: Moneyball
 
@@ -92,9 +155,6 @@ Teams %>% filter(yearID %in% 1961:2001 ) %>%
 
 - [X] B.
 ```{r}
-library(Lahman)
-library(tidyverse)
-library(dslabs)
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(AB_per_game, R_per_game)) + 
