@@ -19,99 +19,113 @@ There are three major sections in this course: introduction to linear regression
 
 In this section, you’ll learn the basics of linear regression through this course’s motivating example, the data-driven approach used to construct baseball teams. You’ll also learn about correlation, the correlation coefficient, stratification, and the variance explained.
 
-Linear Models
+### Linear Models
 
 In this section, you’ll learn about linear models. You’ll learn about least squares estimates, multivariate regression, and several useful features of R, such as tibbles, lm, do, and broom. You’ll learn how to apply regression to baseball to build a better offensive metric.
 
-Confounding
+### Confounding
 
 In the final section of the course, you’ll learn about confounding and several reasons that correlation is not the same as causation, such as spurious correlation, outliers, reversing cause and effect, and confounders. You’ll also learn about Simpson’s Paradox.
-Introduction to Linear Regression
+
+## Introduction to Linear Regression
 
 In the Introduction to Regression section, you will learn the basics of linear regression.
 
 After completing this section, you will be able to:
+- Understand how Galton developed linear regression.
+- Calculate and interpret the sample correlation.
+- Stratify a dataset when appropriate.
+- Understand what a bivariate normal distribution is.
+- Explain what the term variance explained means.
+- Interpret the two regression lines.
+    
+This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.
 
-    Understand how Galton developed linear regression.
-    Calculate and interpret the sample correlation.
-    Stratify a dataset when appropriate.
-    Understand what a bivariate normal distribution is.
-    Explain what the term variance explained means.
-    Interpret the two regression lines.
-    This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.
+The textbook for this section is available [here](https://rpubs.com/faisalcep/dsLinearRegression)
 
-The textbook for this section is available here
-Assessment 1- Motivating Example: Moneyball
+## Assessment 1 - Motivating Example: Moneyball
 
-    What is the application of statistics and data science to baseball called?
+1. What is the application of statistics and data science to baseball called?
 
-A. Moneyball
-B. Sabermetrics
-C. The “Oakland A’s Approach”
-D. There is no specific name for this; it’s just data science.
-Assessment 2- Baseball Basics
+- [ ] A. Moneyball
+- [X] B. Sabermetrics
+- [ ] C. The “Oakland A’s Approach”
+- [ ] D. There is no specific name for this; it’s just data science.
 
-    Which of the following outcomes is not included in the batting average?
+## Assessment 2 - Baseball Basics
 
-A. A home run
-B. A base on balls
-C. An out
-D. A single
+1. Which of the following outcomes is not included in the batting average?
 
-    Why do we consider team statistics as well as individual player statistics?
+- [ ] A. A home run
+- [X] B. A base on balls
+- [ ] C. An out
+- [ ] D. A single
 
-A. The success of any individual player also depends on the strength of their team.
-B. Team statistics can be easier to calculate.
-C. The ultimate goal of sabermetrics is to rank teams, not players.
-Assessment 3- Bases on Balls or Stolen Bases?
+2. Why do we consider team statistics as well as individual player statistics?
 
-    You want to know whether teams with more at-bats per game have more runs per game. What R code below correctly makes a scatter plot for this relationship?
+- [X] A. The success of any individual player also depends on the strength of their team.
+- [ ] B. Team statistics can be easier to calculate.
+- [ ] C. The ultimate goal of sabermetrics is to rank teams, not players.
 
+## Assessment 3 - Bases on Balls or Stolen Bases?
+
+1. You want to know whether teams with more at-bats per game have more runs per game. What R code below correctly makes a scatter plot for this relationship?
+
+- [ ] A.
+```{r}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     ggplot(aes(AB, R)) + 
     geom_point(alpha = 0.5)
-
-B.
-
+```
+- [X] B.
+```{r}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(AB_per_game, R_per_game)) + 
     geom_point(alpha = 0.5)
-
+```
+- [ ] C.
+```{r}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(AB_per_game, R_per_game)) + 
     geom_line()
-
+```
+- [ ] D.
+```{r}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(R_per_game, AB_per_game)) + 
     geom_point()
+```
+2. What does the variable “SOA” stand for in the Teams table?
 
-    What does the variable “SOA” stand for in the Teams table?
+- [ ] A. sacrifice out
+- [ ] B. slides or attempts
+- [X] C. strikeouts by pitchers
+- [ ] D. accumulated singles
 
-A. sacrifice out
-B. slides or attempts
-C. strikeouts by pitchers
-D. accumulated singles
-Assessment 4- Correlation
+## Assessment 4 - Correlation
 
-    While studying heredity, Francis Galton developed what important statistical concept?
+1. While studying heredity, Francis Galton developed what important statistical concept?
 
-A. Standard deviation
-B. Normal distribution
-C. Correlation
-D. Probability
+- [ ] A. Standard deviation
+- [ ] B. Normal distribution
+- [X] C. Correlation
+- [ ] D. Probability
 
-    The correlation coefficient is a summary of what?
+2. The correlation coefficient is a summary of what?
 
-A. The trend between two variables
-B. The dispersion of a variable
-C. The central tendency of a variable
-D. The distribution of a variable
-Assessment 5- Correlation Coefficient
+- [X] A. The trend between two variables
+- [ ] B. The dispersion of a variable
+- [ ] C. The central tendency of a variable
+- [ ] D. The distribution of a variable
 
-    Below is a scatter plot showing the relationship between two variables, x and y.
+## Assessment 5- Correlation Coefficient
+
+1. Below is a scatter plot showing the relationship between two variables, x and y.
+
+
 
 From this figure, the correlation between x and y appears to be about:
 
