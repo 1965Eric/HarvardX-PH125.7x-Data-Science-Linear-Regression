@@ -138,7 +138,7 @@ Teams %>% filter(yearID %in% 1961:2001 ) %>%
 - [ ] C. The central tendency of a variable
 - [ ] D. The distribution of a variable
 
-## Assessment 5- Correlation Coefficient
+## Assessment 5 - Correlation Coefficient
 
 1. Below is a scatter plot showing the relationship between two variables, x and y.
 
@@ -151,7 +151,7 @@ From this figure, the correlation between x and y appears to be about:
 - [ ] C. 0.9
 - [ ] D. 2
 
-## Assessment 6- Sample Correlation is a Random Variable
+## Assessment 6 - Sample Correlation is a Random Variable
 
 1. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
 
@@ -169,7 +169,7 @@ Would you expect the standard deviation of our sample correlation to increase, d
 - [X] B. Decrease
 - [ ] C. Stay approximately the same
 
-## Assessment 7- Anscombe’s Quartet/Stratification
+## Assessment 7 - Anscombe’s Quartet/Stratification
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
 
@@ -193,7 +193,7 @@ Would you expect the standard deviation of our sample correlation to increase, d
 - [X] C. Conditional means are less stable than a regression line.
 - [ ] D. Conditional means are a useful theoretical tool but cannot be calculated.
 
-## Assessment 8- Bivariate Normal Distribution
+## Assessment 8 - Bivariate Normal Distribution
 
 1. A regression line is the best prediction of Y given we know the value of X when:
 
@@ -218,55 +218,59 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 - [ ] D.
 
+![Scatter plot D](https://user-images.githubusercontent.com/17474099/88281807-986d4b80-cce8-11ea-9d0d-719572315c01.png)
 
+## Assessment 9 - Variance Explained
 
-Assessment 9- Variance Explained
-
-    We previously calculated that the correlation coefficient between fathers’ and sons’ heights is 0.5.
+1. We previously calculated that the correlation coefficient between fathers’ and sons’ heights is 0.5.
 
 Given this, what percent of the variation in sons’ heights is explained by fathers’ heights?
 
-A. 0%
-B. 25%
-C. 50%
-D. 75%
-Linear Models Overview
+- [ ] A. 0%
+- [X] B. 25%
+- [ ] C. 50%
+- [ ] D. 75%
+
+## Linear Models Overview
 
 In the Linear Models section, you will learn how to do linear regression.
 
 After completing this section, you will be able to:
-
-    Use multivariate regression to adjust for confounders.
-    Write linear models to describe the relationship between two or more variables.
-    Calculate the least squares estimates for a regression model using the lm function.
-    Understand the differences between tibbles and data frames.
-    Use the do function to bridge R functions and the tidyverse.
-    Use the tidy, glance, and augment functions from the broom package.
-    Apply linear regression to measurement error models.
+* Use multivariate regression to adjust for confounders.
+* Write linear models to describe the relationship between two or more variables.
+* Calculate the least squares estimates for a regression model using the lm function.
+* Understand the differences between tibbles and data frames.
+* Use the do function to bridge R functions and the tidyverse.
+* Use the tidy, glance, and augment functions from the broom package.
+* Apply linear regression to measurement error models.
 
 This section has four parts: Introduction to Linear Models, Least Squares Estimates, Tibbles, do, and broom, and Regression and Baseball.
 
-The textbook for this section is available here
-Assessment 1- Confounding: Are BBs More Predictive?
+The textbook for this section is available [here](https://rpubs.com/faisalcep/dsLinearRegression)
 
-    Why is the number of home runs considered a confounder of the relationship between bases on balls and runs per game?
+## Assessment 1 - Confounding: Are BBs More Predictive?
 
-A. Home runs is not a confounder of this relationship.
-B. Home runs are the primary cause of runs per game.
-C. The correlation between home runs and runs per game is stronger than the correlation between bases on balls and runs per game.
-D. Players who get more bases on balls also tend to have more home runs; in addition, home runs increase the points per game.
-Assessment 2- Stratification and Multivariate Regression
+1. Why is the number of home runs considered a confounder of the relationship between bases on balls and runs per game?
 
-    As described in the video, when we stratified our regression lines for runs per game vs. bases on balls by the number of home runs, what happened?
+- [ ] A. Home runs is not a confounder of this relationship.
+- [ ] B. Home runs are the primary cause of runs per game.
+- [ ] C. The correlation between home runs and runs per game is stronger than the correlation between bases on balls and runs per game.
+- [X] D. Players who get more bases on balls also tend to have more home runs; in addition, home runs increase the points per game.
 
-A. The slope of runs per game vs. bases on balls within each stratum was reduced because we removed confounding by home runs.
-B. The slope of runs per game vs. bases on balls within each stratum was reduced because there were fewer data points.
-C. The slope of runs per game vs. bases on balls within each stratum increased after we removed confounding by home runs.
-D. The slope of runs per game vs. bases on balls within each stratum stayed about the same as the original slope.
-Assessment 3- Linear Models
+## Assessment 2 - Stratification and Multivariate Regression
 
-    We run a linear model for sons’ heights vs. fathers’ heights using the Galton height data, and get the following results:
+1. As described in the video, when we stratified our regression lines for runs per game vs. bases on balls by the number of home runs, what happened?
 
+- [X] A. The slope of runs per game vs. bases on balls within each stratum was reduced because we removed confounding by home runs.
+- [ ] B. The slope of runs per game vs. bases on balls within each stratum was reduced because there were fewer data points.
+- [ ] C. The slope of runs per game vs. bases on balls within each stratum increased after we removed confounding by home runs.
+- [ ] D. The slope of runs per game vs. bases on balls within each stratum stayed about the same as the original slope.
+
+## Assessment 3 - Linear Models
+
+1. We run a linear model for sons’ heights vs. fathers’ heights using the Galton height data, and get the following results:
+
+```{r, eval=FALSE, echo=TRUE}
 > lm(son ~ father, data = galton_heights)
 
 Call:
@@ -275,20 +279,23 @@ lm(formula = son ~ father, data = galton_heights)
 Coefficients:
 (Intercept)    father  
     35.71       0.50  
+```
 
 Interpret the numeric coefficient for “father.”
 
-A. For every inch we increase the son’s height, the predicted father’s height increases by 0.5 inches.
-B. For every inch we increase the father’s height, the predicted son’s height grows by 0.5 inches.
-C. For every inch we increase the father’s height, the predicted son’s height is 0.5 times greater.
+- [ ] A. For every inch we increase the son’s height, the predicted father’s height increases by 0.5 inches.
+- [X] B. For every inch we increase the father’s height, the predicted son’s height grows by 0.5 inches.
+- [ ] C. For every inch we increase the father’s height, the predicted son’s height is 0.5 times greater.
 
-    We want the intercept term for our model to be more interpretable, so we run the same model as before but now we subtract the mean of fathers’ heights from each individual father’s height to create a new variable centered at zero.
+2. We want the intercept term for our model to be more interpretable, so we run the same model as before but now we subtract the mean of fathers’ heights from each individual father’s height to create a new variable centered at zero.
 
+```{r, eval=FALSE, echo=TRUE}
 galton_heights <- galton_heights %>%
     mutate(father_centered=father - mean(father))
-
+```
 We run a linear model using this centered fathers’ height variable.
 
+```{r, eval=FALSE, echo=TRUE}
 > lm(son ~ father_centered, data = galton_heights)
 
 Call:
@@ -297,28 +304,27 @@ lm(formula = son ~ father_centered, data = galton_heights)
 Coefficients:
 (Intercept)    father_centered  
     70.45          0.50  
+```
 
 Interpret the numeric coefficient for the intercept.
 
-A. The height of a son of a father of average height is 70.45 inches.
-B. The height of a son when a father’s height is zero is 70.45 inches.
-C. The height of an average father is 70.45 inches.
-Assessment 4- Least Squares Estimates (LSE)
+- [X] A. The height of a son of a father of average height is 70.45 inches.
+- [ ] B. The height of a son when a father’s height is zero is 70.45 inches.
+- [ ] C. The height of an average father is 70.45 inches.
 
-    The following code was used in the video to plot RSS with  β0=25
+## Assessment 4- Least Squares Estimates (LSE)
 
-    .
+1. The following code was used in the video to plot RSS with $\rho_0=25$.
 
+```{r, eval=FALSE, echo=TRUE}
 beta1 = seq(0, 1, len=nrow(galton_heights))
 results <- data.frame(beta1 = beta1,
                       rss = sapply(beta1, rss, beta0 = 25))
 results %>% ggplot(aes(beta1, rss)) + geom_line() + 
   geom_line(aes(beta1, rss), col=2)
+```
 
-In a model for sons’ heights vs fathers’ heights, what is the least squares estimate (LSE) for  β1
-if we assume  β0^
-
-is 36?
+In a model for sons’ heights vs fathers’ heights, what is the least squares estimate (LSE) for $\beta_1$ if we assume $\hat{\beta}^{0}$ is 36?
 
 A. 0.65
 B. 0.5
