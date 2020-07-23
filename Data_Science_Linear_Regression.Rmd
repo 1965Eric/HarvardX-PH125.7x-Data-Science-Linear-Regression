@@ -1,8 +1,8 @@
 ---
 title: "Data_Science_Linear_Regression"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -83,29 +83,33 @@ The textbook for this section is available [here](https://rpubs.com/faisalcep/ds
 1. You want to know whether teams with more at-bats per game have more runs per game. What R code below correctly makes a scatter plot for this relationship?
 
 - [ ] A.
-```{r}
-library(tidyverse)
-library(dslabs)
+```{r, eval=FALSE, echo=TRUE}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     ggplot(aes(AB, R)) + 
     geom_point(alpha = 0.5)
 ```
+
 - [X] B.
 ```{r}
+library(Lahman)
+library(tidyverse)
+library(dslabs)
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(AB_per_game, R_per_game)) + 
     geom_point(alpha = 0.5)
 ```
+
 - [ ] C.
-```{r}
+```{r, eval=FALSE, echo=TRUE}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(AB_per_game, R_per_game)) + 
     geom_line()
 ```
+
 - [ ] D.
-```{r}
+```{r, eval=FALSE, echo=TRUE}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(R_per_game, AB_per_game)) + 
@@ -178,13 +182,11 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 2. Why does the regression line simplify to a line with intercept zero and slope when we standardize our x and y variables? Try the simplification on your own first!
 
-A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation:  $y_i=px_i$.
+A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
 
 B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = px_i$.
 
-C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation:  yi=pxi
-
-.
+C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
 
     What is a limitation of calculating conditional means?
 
