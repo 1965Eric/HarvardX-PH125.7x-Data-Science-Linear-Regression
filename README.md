@@ -156,21 +156,16 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
 
-scatter plot of son and father heights with son heights on the y-axis and father heights on the x-axis
+![Scatter plot of son and father heights with son heights on the y-axis and father heights on the x-axis](https://user-images.githubusercontent.com/17474099/88270632-373c7c80-ccd6-11ea-8dec-eb7315a564b1.png)
 
-A. Slope = (correlation coefficient of son and father heights) * (standard deviation of sons’ heights / standard deviation of fathers’ heights)
+- [X] A. Slope = (correlation coefficient of son and father heights) * (standard deviation of sons’ heights / standard deviation of fathers’ heights)
+- [ ] B. Slope = (correlation coefficient of son and father heights) * (standard deviation of fathers’ heights / standard deviation of sons’ heights)
+- [ ] C. Slope = (correlation coefficient of son and father heights) / (standard deviation of sons’ heights * standard deviation of fathers’ heights)
+- [ ] D. Slope = (mean height of fathers) - (correlation coefficient of son and father heights * mean height of sons).
 
-B. Slope = (correlation coefficient of son and father heights) * (standard deviation of fathers’ heights / standard deviation of sons’ heights)
+2. Why does the regression line simplify to a line with intercept zero and slope when we standardize our x and y variables? Try the simplification on your own first!
 
-C. Slope = (correlation coefficient of son and father heights) / (standard deviation of sons’ heights * standard deviation of fathers’ heights)
-
-D. Slope = (mean height of fathers) - (correlation coefficient of son and father heights * mean height of sons).
-
-    Why does the regression line simplify to a line with intercept zero and slope when we standardize our x and y variables? Try the simplification on your own first!
-
-A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation:  yi=pxi
-
-.
+A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation:  $$y_i=px_i$$.
 
 B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $\ y_i = px_i$.
 
