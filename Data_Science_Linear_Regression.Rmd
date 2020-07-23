@@ -18,9 +18,9 @@ This is the 7th course in the HarvardX Professional Certificate in Data Science,
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
 ## Learning Objectives
-- How linear regression was originally developed by Galton
-- What confounding is and how to detect it
-- How to examine the relationships between variables by implementing linear regression in R
+* How linear regression was originally developed by Galton
+* What confounding is and how to detect it
+* How to examine the relationships between variables by implementing linear regression in R
 
 ## Course Overview
 
@@ -43,12 +43,12 @@ In the final section of the course, you’ll learn about confounding and several
 In the Introduction to Regression section, you will learn the basics of linear regression.
 
 After completing this section, you will be able to:
-- Understand how Galton developed linear regression.
-- Calculate and interpret the sample correlation.
-- Stratify a dataset when appropriate.
-- Understand what a bivariate normal distribution is.
-- Explain what the term variance explained means.
-- Interpret the two regression lines.
+* Understand how Galton developed linear regression.
+* Calculate and interpret the sample correlation.
+* Stratify a dataset when appropriate.
+* Understand what a bivariate normal distribution is.
+* Explain what the term variance explained means.
+* Interpret the two regression lines.
     
 This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.
 
@@ -182,30 +182,31 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 2. Why does the regression line simplify to a line with intercept zero and slope when we standardize our x and y variables? Try the simplification on your own first!
 
-A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
+- [ ] A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
+- [X] B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = px_i$.
+- [ ] C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
 
-B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = px_i$.
+3. What is a limitation of calculating conditional means?
 
-C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
+- [X] A. Each stratum we condition on (e.g., a specific father’s height) may not have many data points.
+- [X] B. Because there are limited data points for each stratum, our average values have large standard errors.
+- [X] C. Conditional means are less stable than a regression line.
+- [ ] D. Conditional means are a useful theoretical tool but cannot be calculated.
 
-    What is a limitation of calculating conditional means?
+## Assessment 8- Bivariate Normal Distribution
 
-A. Each stratum we condition on (e.g., a specific father’s height) may not have many data points.
-B. Because there are limited data points for each stratum, our average values have large standard errors.
-C. Conditional means are less stable than a regression line.
-D. Conditional means are a useful theoretical tool but cannot be calculated.
-Assessment 8- Bivariate Normal Distribution
+1. A regression line is the best prediction of Y given we know the value of X when:
 
-    A regression line is the best prediction of Y given we know the value of X when:
+- [ ] A. X and Y follow a bivariate normal distribution.
+- [ ] B. Both X and Y are normally distributed.
+- [ ] C. Both X and Y have been standardized.
+- [ ] D. There are at least 25 X-Y pairs.
 
-A. X and Y follow a bivariate normal distribution.
-B. Both X and Y are normally distributed.
-C. Both X and Y have been standardized.
-D. There are at least 25 X-Y pairs.
+2. Which one of the following scatterplots depicts an x and y distribution that is NOT well-approximated by the bivariate normal distribution?
 
-    Which one of the following scatterplots depicts an x and y distribution that is NOT well-approximated by the bivariate normal distribution?
+- [X] A.
 
-A.
+
 
 Assessment 9- Variance Explained
 
