@@ -403,7 +403,15 @@ summary {
 <div id="introduction-to-linear-regression-1" class="section level2">
 <h2>Introduction to Linear Regression</h2>
 <p>In the Introduction to Regression section, you will learn the basics of linear regression.</p>
-<p>After completing this section, you will be able to: * Understand how Galton developed linear regression. * Calculate and interpret the sample correlation. * Stratify a dataset when appropriate. * Understand what a bivariate normal distribution is. * Explain what the term variance explained means. * Interpret the two regression lines.</p>
+<p>After completing this section, you will be able to:</p>
+<ul>
+<li>Understand how Galton developed linear regression.</li>
+<li>Calculate and interpret the sample correlation.</li>
+<li>Stratify a dataset when appropriate.</li>
+<li>Understand what a bivariate normal distribution is.</li>
+<li>Explain what the term variance explained means.</li>
+<li>Interpret the two regression lines.</li>
+</ul>
 <p>This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.</p>
 <p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/linear-models.html">here</a></p>
 </div>
@@ -705,7 +713,16 @@ D. 75%</li>
 <div id="linear-models-overview" class="section level2">
 <h2>Linear Models Overview</h2>
 <p>In the Linear Models section, you will learn how to do linear regression.</p>
-<p>After completing this section, you will be able to: * Use multivariate regression to adjust for confounders. * Write linear models to describe the relationship between two or more variables. * Calculate the least squares estimates for a regression model using the lm function. * Understand the differences between tibbles and data frames. * Use the do function to bridge R functions and the tidyverse. * Use the tidy, glance, and augment functions from the broom package. * Apply linear regression to measurement error models.</p>
+<p>After completing this section, you will be able to:</p>
+<ul>
+<li>Use multivariate regression to adjust for confounders.</li>
+<li>Write linear models to describe the relationship between two or more variables.</li>
+<li>Calculate the least squares estimates for a regression model using the lm function.</li>
+<li>Understand the differences between tibbles and data frames.</li>
+<li>Use the do function to bridge R functions and the tidyverse.</li>
+<li>Use the tidy, glance, and augment functions from the broom package.</li>
+<li>Apply linear regression to measurement error models.</li>
+</ul>
 <p>This section has four parts: Introduction to Linear Models, Least Squares Estimates, Tibbles, do, and broom, and Regression and Baseball.</p>
 <p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/linear-models.html#confounding">here</a></p>
 </div>
@@ -1194,29 +1211,132 @@ C. The experiment was only repeated 10 times, not 100 times.</li>
 <div id="confounding-overview" class="section level2">
 <h2>Confounding Overview</h2>
 <p>In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.</p>
-<p>After completing this section, you will be able to: * Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation. * Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation. * Explain how reversing cause and effect can lead to associations being confused with causation. * Understand how confounders can lead to the misinterpretation of associations. * Explain and give examples of Simpson’s Paradox.</p>
+<p>After completing this section, you will be able to:</p>
+<ul>
+<li>Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation.</li>
+<li>Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation.</li>
+<li>Explain how reversing cause and effect can lead to associations being confused with causation.</li>
+<li>Understand how confounders can lead to the misinterpretation of associations.</li>
+<li>Explain and give examples of Simpson’s Paradox.</li>
+</ul>
 <p>This section has one part: Correlation is Not Causation.</p>
 <p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html">here</a></p>
 </div>
 <div id="assessment-1---correlation-is-not-causation-spurious-correlation" class="section level2">
 <h2>Assessment 1 - Correlation is Not Causation: Spurious Correlation</h2>
-<pre><code>In the video, we ran one million tests of correlation for two random variables, X and Y.</code></pre>
+<ol style="list-style-type: decimal">
+<li>In the video, we ran one million tests of correlation for two random variables, X and Y.</li>
+</ol>
 <p>How many of these correlations would you expect to have a significant p-value (p&gt;0.05), just by chance?</p>
-<p>A. 5,000 B. 50,000 C. 100,000 D. It’s impossible to know</p>
-<pre><code>Which of the following are examples of p-hacking?</code></pre>
-<p>A. Looking for associations between an outcome and several exposures and only reporting the one that is significant. B. Trying several different models and selecting the one that yields the smallest p-value. C. Repeating an experiment multiple times and only reporting the one with the smallest p-value. D. Using a Monte Carlo simulations in an analysis. Assessment 2- Correlation is Not Causation: Outliers</p>
-<pre><code>The Spearman correlation coefficient is robust to outliers because:</code></pre>
-<p>A. It drops outliers before calculating correlation. B. It is the correlation of standardized values. C. It calculates correlation between ranks, not values. Assessment 3- Correlation is Not Causation: Reversing Cause and Effect</p>
-<pre><code>Which of the following may be examples of reversed cause and effect?</code></pre>
-<p>A. Past smokers who have quit smoking may be more likely to die from lung cancer. B. Tall fathers are more likely to have tall sons. C. People with high blood pressure tend to have a healthier diet. D. Individuals in a low social status have a higher risk of schizophrenia. Assessment 4- Correlation is Not Causation: Confounderss</p>
-<pre><code>What can you do to determine if you are misinterpreting results because of a confounder?</code></pre>
-<p>A. Nothing, if the p-value says the result is significant, then it is. B. More closely examine the results by stratifying and plotting the data. C. Always assume that you are misinterpreting the results. D. Use linear models to tease out a confounder.</p>
-<pre><code>Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.</code></pre>
-<p>A. The data is from 1973. B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric. C. The data is from the “dslabs” package. D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.</p>
-<pre><code>In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:</code></pre>
-<p>A. It was harder for women to be admitted to UC Berkeley. B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors. C. Some majors are more selective than others D. Major selectivity is not a confounder. Assessment 5- Simpson’s Paradox</p>
-<pre><code>Admission rates at UC Berkeley are an example of Simpson’s Paradox because:</code></pre>
-<p>A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men. B. It was a paradox that women were being admitted at a lower rate than men. C. The relationship between admissions and gender is confounded by major selectivity.</p>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. 5,000</li>
+<li><input type="checkbox" disabled checked></input>
+B. 50,000</li>
+<li><input type="checkbox" disabled></input>
+C. 100,000</li>
+<li><input type="checkbox" disabled></input>
+D. It’s impossible to know</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Which of the following are examples of p-hacking?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. Looking for associations between an outcome and several exposures and only reporting the one that is significant.</li>
+<li><input type="checkbox" disabled checked></input>
+B. Trying several different models and selecting the one that yields the smallest p-value.</li>
+<li><input type="checkbox" disabled checked></input>
+C. Repeating an experiment multiple times and only reporting the one with the smallest p-value.</li>
+<li><input type="checkbox" disabled></input>
+D. Using a Monte Carlo simulations in an analysis.</li>
+</ul>
+</div>
+<div id="assessment-2---correlation-is-not-causation-outliers" class="section level2">
+<h2>Assessment 2 - Correlation is Not Causation: Outliers</h2>
+<ol style="list-style-type: decimal">
+<li>The Spearman correlation coefficient is robust to outliers because:</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. It drops outliers before calculating correlation.</li>
+<li><input type="checkbox" disabled></input>
+B. It is the correlation of standardized values.</li>
+<li><input type="checkbox" disabled checked></input>
+C. It calculates correlation between ranks, not values.</li>
+</ul>
+</div>
+<div id="assessment-3---correlation-is-not-causation-reversing-cause-and-effect" class="section level2">
+<h2>Assessment 3 - Correlation is Not Causation: Reversing Cause and Effect</h2>
+<ol style="list-style-type: decimal">
+<li>Which of the following may be examples of reversed cause and effect?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. Past smokers who have quit smoking may be more likely to die from lung cancer.</li>
+<li><input type="checkbox" disabled></input>
+B. Tall fathers are more likely to have tall sons.</li>
+<li><input type="checkbox" disabled checked></input>
+C. People with high blood pressure tend to have a healthier diet.</li>
+<li><input type="checkbox" disabled checked></input>
+D. Individuals in a low social status have a higher risk of schizophrenia.</li>
+</ul>
+</div>
+<div id="assessment-4---correlation-is-not-causation-confounders" class="section level2">
+<h2>Assessment 4 - Correlation is Not Causation: Confounders</h2>
+<ol style="list-style-type: decimal">
+<li>What can you do to determine if you are misinterpreting results because of a confounder?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. Nothing, if the p-value says the result is significant, then it is.</li>
+<li><input type="checkbox" disabled checked></input>
+B. More closely examine the results by stratifying and plotting the data.</li>
+<li><input type="checkbox" disabled></input>
+C. Always assume that you are misinterpreting the results.</li>
+<li><input type="checkbox" disabled></input>
+D. Use linear models to tease out a confounder.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. The data is from 1973.</li>
+<li><input type="checkbox" disabled></input>
+B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.</li>
+<li><input type="checkbox" disabled></input>
+C. The data is from the “dslabs” package.</li>
+<li><input type="checkbox" disabled checked></input>
+D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. It was harder for women to be admitted to UC Berkeley.</li>
+<li><input type="checkbox" disabled checked></input>
+B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.</li>
+<li><input type="checkbox" disabled></input>
+C. Some majors are more selective than others</li>
+<li><input type="checkbox" disabled></input>
+D. Major selectivity is not a confounder.</li>
+</ul>
+</div>
+<div id="assessment-5---simpsons-paradox" class="section level2">
+<h2>Assessment 5 - Simpson’s Paradox</h2>
+<ol style="list-style-type: decimal">
+<li>Admission rates at UC Berkeley are an example of Simpson’s Paradox because:</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.</li>
+<li><input type="checkbox" disabled></input>
+B. It was a paradox that women were being admitted at a lower rate than men.</li>
+<li><input type="checkbox" disabled></input>
+C. The relationship between admissions and gender is confounded by major selectivity.</li>
+</ul>
 </div>
 </div>
 
