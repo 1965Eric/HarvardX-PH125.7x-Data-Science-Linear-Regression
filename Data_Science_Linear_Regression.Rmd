@@ -197,7 +197,7 @@ Would you expect the standard deviation of our sample correlation to increase, d
 
 1. A regression line is the best prediction of Y given we know the value of X when:
 
-- [ ] A. X and Y follow a bivariate normal distribution.
+- [`x] A. X and Y follow a bivariate normal distribution.
 - [ ] B. Both X and Y are normally distributed.
 - [ ] C. Both X and Y have been standardized.
 - [ ] D. There are at least 25 X-Y pairs.
@@ -205,6 +205,10 @@ Would you expect the standard deviation of our sample correlation to increase, d
 2. Which one of the following scatterplots depicts an x and y distribution that is NOT well-approximated by the bivariate normal distribution?
 
 - [X] A.
+
+![Scatter plot A](https://user-images.githubusercontent.com/17474099/88281437-f64d6380-cce7-11ea-8401-dc487c96fcd8.png)
+
+- [ ] B.
 
 
 
