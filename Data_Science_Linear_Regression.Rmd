@@ -1,8 +1,8 @@
 ---
 title: "Data_Science_Linear_Regression"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
