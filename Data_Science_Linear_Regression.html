@@ -405,7 +405,7 @@ summary {
 <p>In the Introduction to Regression section, you will learn the basics of linear regression.</p>
 <p>After completing this section, you will be able to: * Understand how Galton developed linear regression. * Calculate and interpret the sample correlation. * Stratify a dataset when appropriate. * Understand what a bivariate normal distribution is. * Explain what the term variance explained means. * Interpret the two regression lines.</p>
 <p>This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.</p>
-<p>The textbook for this section is available <a href="https://rpubs.com/faisalcep/dsLinearRegression">here</a></p>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/linear-models.html">here</a></p>
 </div>
 <div id="assessment-1---motivating-example-moneyball" class="section level2">
 <h2>Assessment 1 - Motivating Example: Moneyball</h2>
@@ -707,7 +707,7 @@ D. 75%</li>
 <p>In the Linear Models section, you will learn how to do linear regression.</p>
 <p>After completing this section, you will be able to: * Use multivariate regression to adjust for confounders. * Write linear models to describe the relationship between two or more variables. * Calculate the least squares estimates for a regression model using the lm function. * Understand the differences between tibbles and data frames. * Use the do function to bridge R functions and the tidyverse. * Use the tidy, glance, and augment functions from the broom package. * Apply linear regression to measurement error models.</p>
 <p>This section has four parts: Introduction to Linear Models, Least Squares Estimates, Tibbles, do, and broom, and Regression and Baseball.</p>
-<p>The textbook for this section is available <a href="https://rpubs.com/faisalcep/dsLinearRegression">here</a></p>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/linear-models.html#confounding">here</a></p>
 </div>
 <div id="assessment-1---confounding-are-bbs-more-predictive" class="section level2">
 <h2>Assessment 1 - Confounding: Are BBs More Predictive?</h2>
@@ -790,7 +790,7 @@ C. The height of an average father is 70.45 inches.</li>
 <div id="assessment-4---least-squares-estimates-lse" class="section level2">
 <h2>Assessment 4 - Least Squares Estimates (LSE)</h2>
 <ol style="list-style-type: decimal">
-<li>The following code was used in the video to plot RSS with <span class="math inline">\(\rho_0=25\)</span>.</li>
+<li>The following code was used in the video to plot RSS with <span class="math inline">\(\beta_0=25\)</span>.</li>
 </ol>
 <pre class="r"><code>beta1 = seq(0, 1, len=nrow(galton_heights))
 results &lt;- data.frame(beta1 = beta1,
@@ -817,7 +817,17 @@ D. 12</li>
 <ol style="list-style-type: decimal">
 <li>Run a linear model in R predicting the number of runs per game based on the number of bases on balls and the number of home runs. Remember to first limit your data to 1961-2001.</li>
 </ol>
-<p>What is the coefficient for bases on balls? - [X] A. 0.39 - [ ] B. 1.56 - [ ] C. 1.74 - [ ] D. 0.027</p>
+<p>What is the coefficient for bases on balls?</p>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. 0.39</li>
+<li><input type="checkbox" disabled></input>
+B. 1.56</li>
+<li><input type="checkbox" disabled></input>
+C. 1.74</li>
+<li><input type="checkbox" disabled></input>
+D. 0.027</li>
+</ul>
 </div>
 <div id="assessment-6---lse-are-random-variables" class="section level2">
 <h2>Assessment 6 - LSE are Random Variables</h2>
@@ -874,86 +884,322 @@ B. <span class="math inline">\(\beta_1 = 0.503\)</span>, where <span class="math
 C. <span class="math inline">\(\beta_1 = 0\)</span>, where <span class="math inline">\(\beta_1\)</span> is the coefficient for the variable “father.”</li>
 </ul>
 </div>
-<div id="assessment-7--predicted-variables-are-random-variables" class="section level2">
-<h2>Assessment 7- Predicted Variables are Random Variables</h2>
+<div id="assessment-7---predicted-variables-are-random-variables" class="section level2">
+<h2>Assessment 7 - Predicted Variables are Random Variables</h2>
 <ol style="list-style-type: decimal">
 <li>Which R code(s) below would properly plot the predictions and confidence intervals for our linear model of sons’ heights?</li>
 </ol>
-<p>galton_heights %&gt;% ggplot(aes(father, son)) + geom_point() + geom_smooth()</p>
-<ol start="2" style="list-style-type: upper-alpha">
-<li></li>
+<ul>
+<li><input type="checkbox" disabled></input>
+A.</li>
+</ul>
+<pre class="r"><code>galton_heights %&gt;% ggplot(aes(father, son)) +
+  geom_point() +
+  geom_smooth()</code></pre>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+B.</li>
+</ul>
+<pre class="r"><code>galton_heights %&gt;% ggplot(aes(father, son)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;)</code></pre>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+C.</li>
+</ul>
+<pre class="r"><code>model &lt;- lm(son ~ father, data = galton_heights)
+predictions &lt;- predict(model, interval = c(&quot;confidence&quot;), level = 0.95)
+data &lt;- as.tibble(predictions) %&gt;% bind_cols(father = galton_heights$father)
+
+ggplot(data, aes(x = father, y = fit)) +
+  geom_line(color = &quot;blue&quot;, size = 1) + 
+  geom_ribbon(aes(ymin=lwr, ymax=upr), alpha=0.2) + 
+  geom_point(data = galton_heights, aes(x = father, y = son))</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+D.</li>
+</ul>
+<pre class="r"><code>model &lt;- lm(son ~ father, data = galton_heights)
+predictions &lt;- predict(model)
+data &lt;- as.tibble(predictions) %&gt;% bind_cols(father = galton_heights$father)
+
+ggplot(data, aes(x = father, y = fit)) +
+  geom_line(color = &quot;blue&quot;, size = 1) + 
+  geom_point(data = galton_heights, aes(x = father, y = son))</code></pre>
+</div>
+<div id="assessment-8---advanced-dplyr-tibbles" class="section level2">
+<h2>Assessment 8 - Advanced dplyr: Tibbles</h2>
+<ol style="list-style-type: decimal">
+<li>What problem do we encounter when we try to run a linear model on our baseball data, grouping by home runs?</li>
 </ol>
-<p>galton_heights %&gt;% ggplot(aes(father, son)) + geom_point() + geom_smooth(method = “lm”)</p>
-<ol start="3" style="list-style-type: upper-alpha">
-<li></li>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. There is not enough data in some levels to run the model.</li>
+<li><input type="checkbox" disabled checked></input>
+B. The <code>lm</code> function does not know how to handle grouped tibbles.</li>
+<li><input type="checkbox" disabled></input>
+C. The results of the <code>lm</code> function cannot be put into a tidy format.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Tibbles are similar to what other class in R?</li>
 </ol>
-<p>model &lt;- lm(son ~ father, data = galton_heights) predictions &lt;- predict(model, interval = c(“confidence”), level = 0.95) data &lt;- as.tibble(predictions) %&gt;% bind_cols(father = galton_heights$father)</p>
-<p>ggplot(data, aes(x = father, y = fit)) + geom_line(color = “blue”, size = 1) + geom_ribbon(aes(ymin=lwr, ymax=upr), alpha=0.2) + geom_point(data = galton_heights, aes(x = father, y = son))</p>
-<p>model &lt;- lm(son ~ father, data = galton_heights) predictions &lt;- predict(model) data &lt;- as.tibble(predictions) %&gt;% bind_cols(father = galton_heights$father)</p>
-<p>ggplot(data, aes(x = father, y = fit)) + geom_line(color = “blue”, size = 1) + geom_point(data = galton_heights, aes(x = father, y = son))</p>
-<p>Assessment 8- Advanced dplyr: Tibbles</p>
-<pre><code>What problem do we encounter when we try to run a linear model on our baseball data, grouping by home runs?</code></pre>
-<p>A. There is not enough data in some levels to run the model. B. The lm function does not know how to handle grouped tibbles. C. The results of the lm function cannot be put into a tidy format.</p>
-<pre><code>Tibbles are similar to what other class in R?</code></pre>
-<p>A. Vectors B. Matrices C. Data frames D. Lists Assessment 9- Tibbles: Differences from Data Frames</p>
-<pre><code>What are some advantages of tibbles compared to data frames?</code></pre>
-<p>A. Tibbles display better. B. If you subset a tibble, you always get back a tibble. C. Tibbles can have complex entries. D. Tibbles can be grouped. Assessment 10- do</p>
-<pre><code>What are two advantages of the do command, when applied to the tidyverse?</code></pre>
-<p>A. It is faster than normal functions. B. It returns useful error messages. C. It understands grouped tibbles. D. It always returns a data.frame.</p>
-<pre><code>You want to take the tibble dat, which we’ve been using in this video, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.</code></pre>
-<p>You’ve already written the function get_slope, shown below.</p>
-<p>get_slope &lt;- function(data) { fit &lt;- lm(R ~ BB, data = data) sum.fit &lt;- summary(fit)</p>
-<p>data.frame(slope = sum.fit<span class="math inline">\(coefficients[2, &quot;Estimate&quot;],  se = sum.fit\)</span>coefficients[2, “Std. Error”], pvalue = sum.fit$coefficients[2, “Pr(&gt;|t|)”]) }</p>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. Vectors</li>
+<li><input type="checkbox" disabled></input>
+B. Matrices</li>
+<li><input type="checkbox" disabled checked></input>
+C. Data frames</li>
+<li><input type="checkbox" disabled></input>
+D. Lists</li>
+</ul>
+</div>
+<div id="assessment-9---tibbles-differences-from-data-frames" class="section level2">
+<h2>Assessment 9 - Tibbles: Differences from Data Frames</h2>
+<ol style="list-style-type: decimal">
+<li>What are some advantages of tibbles compared to data frames?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. Tibbles display better.</li>
+<li><input type="checkbox" disabled checked></input>
+B. If you subset a tibble, you always get back a tibble.</li>
+<li><input type="checkbox" disabled checked></input>
+C. Tibbles can have complex entries.</li>
+<li><input type="checkbox" disabled checked></input>
+D. Tibbles can be grouped.</li>
+</ul>
+</div>
+<div id="assessment-10---do" class="section level2">
+<h2>Assessment 10 - do</h2>
+<ol style="list-style-type: decimal">
+<li>What are two advantages of the do command, when applied to the tidyverse?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. It is faster than normal functions.</li>
+<li><input type="checkbox" disabled></input>
+B. It returns useful error messages.</li>
+<li><input type="checkbox" disabled checked></input>
+C. It understands grouped tibbles.</li>
+<li><input type="checkbox" disabled checked></input>
+D. It always returns a data.frame.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>You want to take the tibble dat, which we’ve been using in this video, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.</li>
+</ol>
+<p>You’ve already written the function <code>get_slope</code>, shown below.</p>
+<pre class="r"><code>get_slope &lt;- function(data) {
+  fit &lt;- lm(R ~ BB, data = data)
+  sum.fit &lt;- summary(fit)
+
+  data.frame(slope = sum.fit$coefficients[2, &quot;Estimate&quot;], 
+             se = sum.fit$coefficients[2, &quot;Std. Error&quot;],
+             pvalue = sum.fit$coefficients[2, &quot;Pr(&gt;|t|)&quot;])
+}</code></pre>
 <p>What additional code could you write to accomplish your goal?</p>
-<p>dat %&gt;% group_by(HR) %&gt;% do(get_slope)</p>
-<ol start="2" style="list-style-type: upper-alpha">
-<li></li>
+<ul>
+<li><input type="checkbox" disabled></input>
+A.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(HR) %&gt;% 
+  do(get_slope)</code></pre>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+B.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(HR) %&gt;% 
+  do(get_slope(.))</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+C.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(HR) %&gt;% 
+  do(slope = get_slope(.))</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+D.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  do(get_slope(.))</code></pre>
+</div>
+<div id="assessment-11---broom" class="section level2">
+<h2>Assessment 11 - broom</h2>
+<ol style="list-style-type: decimal">
+<li>The output of a broom function is always what?</li>
 </ol>
-<p>dat %&gt;% group_by(HR) %&gt;% do(get_slope(.))</p>
-<p>dat %&gt;% group_by(HR) %&gt;% do(slope = get_slope(.))</p>
-<p>dat %&gt;% do(get_slope(.))</p>
-<p>Assessment 11- broom</p>
-<pre><code>The output of a broom function is always what?</code></pre>
-<p>A. A data.frame B. A list C. A vector</p>
-<pre><code>You want to know whether the relationship between home runs and runs per game varies by baseball league. You create the following dataset:</code></pre>
-<p>dat &lt;- Teams %&gt;% filter(yearID %in% 1961:2001) %&gt;% mutate(HR = HR/G, R = R/G) %&gt;% select(lgID, HR, BB, R)</p>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. A data.frame</li>
+<li><input type="checkbox" disabled></input>
+B. A list</li>
+<li><input type="checkbox" disabled></input>
+C. A vector</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>You want to know whether the relationship between home runs and runs per game varies by baseball league. You create the following dataset:</li>
+</ol>
+<pre class="r"><code>dat &lt;- Teams %&gt;% filter(yearID %in% 1961:2001) %&gt;%
+  mutate(HR = HR/G,
+         R = R/G) %&gt;%
+  select(lgID, HR, BB, R)</code></pre>
 <p>What code would help you quickly answer this question?</p>
-<ol style="list-style-type: upper-alpha">
-<li></li>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(lgID) %&gt;% 
+  do(tidy(lm(R ~ HR, data = .), conf.int = T)) %&gt;% 
+  filter(term == &quot;HR&quot;)</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+B.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(lgID) %&gt;% 
+  do(glance(lm(R ~ HR, data = .)))</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+C.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  do(tidy(lm(R ~ HR, data = .), conf.int = T)) %&gt;% 
+  filter(term == &quot;HR&quot;)</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+D.</li>
+</ul>
+<pre class="r"><code>dat %&gt;% 
+  group_by(lgID) %&gt;% 
+  do(mod = lm(R ~ HR, data = .))</code></pre>
+</div>
+<div id="assessment-12---building-a-better-offensive-metric-for-baseball" class="section level2">
+<h2>Assessment 12 - Building a Better Offensive Metric for Baseball</h2>
+<ol style="list-style-type: decimal">
+<li>What is the final linear model we use to predict runs scored per game?</li>
 </ol>
-<p>dat %&gt;% group_by(lgID) %&gt;% do(tidy(lm(R ~ HR, data = .), conf.int = T)) %&gt;% filter(term == “HR”)</p>
-<p>dat %&gt;% group_by(lgID) %&gt;% do(glance(lm(R ~ HR, data = .)))</p>
-<p>dat %&gt;% do(tidy(lm(R ~ HR, data = .), conf.int = T)) %&gt;% filter(term == “HR”)</p>
-<p>dat %&gt;% group_by(lgID) %&gt;% do(mod = lm(R ~ HR, data = .))</p>
-<p>Assessment 12- Building a Better Offensive Metric for Baseball</p>
-<pre><code>What is the final linear model we use to predict runs scored per game?</code></pre>
-<p>A. lm(R ~ BB + HR) B. lm(HR ~ BB + singles + doubles + triples) C. lm(R ~ BB + singles + doubles + triples + HR) D. lm(R ~ singles + doubles + triples + HR)</p>
-<pre><code>We want to estimate runs per game scored by individual players, not just by teams. What summary metric do we calculate to help estimate this?</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. <code>lm(R ~ BB + HR)</code></li>
+<li><input type="checkbox" disabled></input>
+B. <code>lm(HR ~ BB + singles + doubles + triples)</code></li>
+<li><input type="checkbox" disabled checked></input>
+C. <code>lm(R ~ BB + singles + doubles + triples + HR)</code></li>
+<li><input type="checkbox" disabled></input>
+D. <code>lm(R ~ singles + doubles + triples + HR)</code></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>We want to estimate runs per game scored by individual players, not just by teams. What summary metric do we calculate to help estimate this?</li>
+</ol>
 <p>Look at the code from the video for a hint:</p>
-<p>pa_per_game &lt;- Batting %&gt;% filter(yearID == 2002) %&gt;% group_by(teamID) %&gt;% summarize(pa_per_game = sum(AB+BB)/max(G)) %&gt;% .$pa_per_game %&gt;% mean</p>
-<p>A. pa_per_game: the mean number of plate appearances per team per game for each team B. pa_per_game: the mean number of plate appearances per game for each player C. pa_per_game: the number of plate appearances per team per game, averaged across all teams</p>
-<pre><code>Imagine you have two teams. Team A is comprised of batters who, on average, get two bases on balls, four singles, one double, and one home run. Team B is comprised of batters who, on average, get one base on balls, six singles, two doubles, and one triple.</code></pre>
+<pre class="r"><code>pa_per_game &lt;- Batting %&gt;% 
+  filter(yearID == 2002) %&gt;% 
+  group_by(teamID) %&gt;%
+  summarize(pa_per_game = sum(AB+BB)/max(G)) %&gt;% 
+  .$pa_per_game %&gt;% 
+  mean</code></pre>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. <code>pa_per_game</code>: the mean number of plate appearances per team per game for each team</li>
+<li><input type="checkbox" disabled></input>
+B. <code>pa_per_game</code>: the mean number of plate appearances per game for each player</li>
+<li><input type="checkbox" disabled checked></input>
+C. <code>pa_per_game</code>: the number of plate appearances per team per game, averaged across all teams</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Imagine you have two teams. Team A is comprised of batters who, on average, get two bases on balls, four singles, one double, and one home run. Team B is comprised of batters who, on average, get one base on balls, six singles, two doubles, and one triple.</li>
+</ol>
 <p>Which team scores more runs, as predicted by our model?</p>
-<p>A. Team A B. Team B C. Tie D. Impossible to know Assessment 13- On Base Plus Slugging (OPS)</p>
-<pre><code>The on-base-percentage plus slugging percentage (OPS) metric gives the most weight to:</code></pre>
-<p>A. Singles B. Doubles C. Triples D. Home Runs Assessment 14- Regression Fallacy</p>
-<pre><code>What statistical concept properly explains the “sophomore slump”?</code></pre>
-<p>A. Regression to the mean B. Law of averages C. Normal distribution Assessment 15- Measurement Error Models</p>
-<pre><code>In our model of time vs. observed_distance, the randomness of our data was due to:</code></pre>
-<p>A. sampling B. natural variability C. measurement error</p>
-<pre><code>Which of the following are important assumptions about the measurement errors in this experiment?</code></pre>
-<p>A. The measurement error is random B. The measurement error is independent C. The measurement error has the same distribution for each time i</p>
-<pre><code>Which of the following scenarios would violate an assumption of our measurement error model?</code></pre>
-<p>A. The experiment was conducted on the moon. B. There was one position where it was particularly difficult to see the dropped ball. C. The experiment was only repeated 10 times, not 100 times. Confounding Overview</p>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. Team A</li>
+<li><input type="checkbox" disabled checked></input>
+B. Team B</li>
+<li><input type="checkbox" disabled></input>
+C. Tie</li>
+<li><input type="checkbox" disabled></input>
+D. Impossible to know</li>
+</ul>
+</div>
+<div id="assessment-13---on-base-plus-slugging-ops" class="section level2">
+<h2>Assessment 13 - On Base Plus Slugging (OPS)</h2>
+<ol style="list-style-type: decimal">
+<li>The on-base-percentage plus slugging percentage (OPS) metric gives the most weight to:</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. Singles</li>
+<li><input type="checkbox" disabled></input>
+B. Doubles</li>
+<li><input type="checkbox" disabled></input>
+C. Triples</li>
+<li><input type="checkbox" disabled checked></input>
+D. Home Runs</li>
+</ul>
+</div>
+<div id="assessment-14---regression-fallacy" class="section level2">
+<h2>Assessment 14 - Regression Fallacy</h2>
+<ol style="list-style-type: decimal">
+<li>What statistical concept properly explains the “sophomore slump”?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. Regression to the mean</li>
+<li><input type="checkbox" disabled></input>
+B. Law of averages</li>
+<li><input type="checkbox" disabled></input>
+C. Normal distribution</li>
+</ul>
+</div>
+<div id="assessment-15---measurement-error-models" class="section level2">
+<h2>Assessment 15 - Measurement Error Models</h2>
+<ol style="list-style-type: decimal">
+<li>In our model of time vs. observed_distance, the randomness of our data was due to:</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. sampling</li>
+<li><input type="checkbox" disabled></input>
+B. natural variability</li>
+<li><input type="checkbox" disabled checked></input>
+C. measurement error</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Which of the following are important assumptions about the measurement errors in this experiment?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+A. The measurement error is random</li>
+<li><input type="checkbox" disabled checked></input>
+B. The measurement error is independent</li>
+<li><input type="checkbox" disabled checked></input>
+C. The measurement error has the same distribution for each time i</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Which of the following scenarios would violate an assumption of our measurement error model?</li>
+</ol>
+<ul>
+<li><input type="checkbox" disabled></input>
+A. The experiment was conducted on the moon.</li>
+<li><input type="checkbox" disabled checked></input>
+B. There was one position where it was particularly difficult to see the dropped ball.</li>
+<li><input type="checkbox" disabled></input>
+C. The experiment was only repeated 10 times, not 100 times.</li>
+</ul>
+</div>
+<div id="confounding-overview" class="section level2">
+<h2>Confounding Overview</h2>
 <p>In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.</p>
-<p>After completing this section, you will be able to:</p>
-<pre><code>Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation.
-Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation.
-Explain how reversing cause and effect can lead to associations being confused with causation.
-Understand how confounders can lead to the misinterpretation of associations.
-Explain and give examples of Simpson’s Paradox.</code></pre>
+<p>After completing this section, you will be able to: * Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation. * Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation. * Explain how reversing cause and effect can lead to associations being confused with causation. * Understand how confounders can lead to the misinterpretation of associations. * Explain and give examples of Simpson’s Paradox.</p>
 <p>This section has one part: Correlation is Not Causation.</p>
-<p>The textbook for this section is available here Assessment 1- Correlation is Not Causation: Spurious Correlation</p>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html">here</a></p>
+</div>
+<div id="assessment-1---correlation-is-not-causation-spurious-correlation" class="section level2">
+<h2>Assessment 1 - Correlation is Not Causation: Spurious Correlation</h2>
 <pre><code>In the video, we ran one million tests of correlation for two random variables, X and Y.</code></pre>
 <p>How many of these correlations would you expect to have a significant p-value (p&gt;0.05), just by chance?</p>
 <p>A. 5,000 B. 50,000 C. 100,000 D. It’s impossible to know</p>
