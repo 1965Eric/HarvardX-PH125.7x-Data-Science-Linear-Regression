@@ -324,7 +324,7 @@ results %>% ggplot(aes(beta1, rss)) + geom_line() +
   geom_line(aes(beta1, rss), col=2)
 ```
 
-In a model for sons’ heights vs fathers’ heights, what is the least squares estimate (LSE) for $\beta_1$ if we assume $\hat{\beta}^{0}$ is 36?
+In a model for sons’ heights vs fathers’ heights, what is the least squares estimate (LSE) for $\beta_1$ if we assume $\hat{\beta}_{0}$ is 36?
 
 A. 0.65
 B. 0.5
