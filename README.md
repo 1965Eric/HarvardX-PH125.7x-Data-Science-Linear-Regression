@@ -125,34 +125,36 @@ Teams %>% filter(yearID %in% 1961:2001 ) %>%
 
 1. Below is a scatter plot showing the relationship between two variables, x and y.
 
-
+![Scatter plot](https://user-images.githubusercontent.com/17474099/88270104-6a324080-ccd5-11ea-9cbd-90df12de22bd.png)
 
 From this figure, the correlation between x and y appears to be about:
 
-A. -0.9
-B. -0.2
-C. 0.9
-D. 2
-Assessment 6- Sample Correlation is a Random Variable
+- [X] A. -0.9
+- [ ] B. -0.2
+- [ ] C. 0.9
+- [ ] D. 2
 
-    Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
+## Assessment 6- Sample Correlation is a Random Variable
+
+1. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
 
 Would you expect the mean of our sample correlation to increase, decrease, or stay approximately the same?
 
-A. Increase
-B. Decrease
-C. Stay approximately the same
+- [ ] A. Increase
+- [ ] B. Decrease
+- [X] C. Stay approximately the same
 
-    Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
+2. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
 
 Would you expect the standard deviation of our sample correlation to increase, decrease, or stay approximately the same?
 
-A. Increase
-B. Decrease
-C. Stay approximately the same
-Assessment 7- Anscombe’s Quartet/Stratification
+- [ ] A. Increase
+- [X] B. Decrease
+- [ ] C. Stay approximately the same
 
-    Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
+## Assessment 7- Anscombe’s Quartet/Stratification
+
+1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
 
 scatter plot of son and father heights with son heights on the y-axis and father heights on the x-axis
 
