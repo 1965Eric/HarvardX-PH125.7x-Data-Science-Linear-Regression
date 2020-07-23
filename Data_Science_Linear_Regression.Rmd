@@ -43,6 +43,7 @@ In the final section of the course, you’ll learn about confounding and several
 In the Introduction to Regression section, you will learn the basics of linear regression.
 
 After completing this section, you will be able to:
+
 * Understand how Galton developed linear regression.
 * Calculate and interpret the sample correlation.
 * Stratify a dataset when appropriate.
@@ -236,6 +237,7 @@ Given this, what percent of the variation in sons’ heights is explained by fat
 In the Linear Models section, you will learn how to do linear regression.
 
 After completing this section, you will be able to:
+
 * Use multivariate regression to adjust for confounders.
 * Write linear models to describe the relationship between two or more variables.
 * Calculate the least squares estimates for a regression model using the lm function.
@@ -624,6 +626,7 @@ Which team scores more runs, as predicted by our model?
 In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
 
 After completing this section, you will be able to:
+
 * Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation.
 * Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation.
 * Explain how reversing cause and effect can lead to associations being confused with causation.
