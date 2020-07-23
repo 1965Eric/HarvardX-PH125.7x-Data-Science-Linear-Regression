@@ -636,61 +636,66 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Assessment 1 - Correlation is Not Causation: Spurious Correlation
 
-    In the video, we ran one million tests of correlation for two random variables, X and Y.
+1. In the video, we ran one million tests of correlation for two random variables, X and Y.
 
 How many of these correlations would you expect to have a significant p-value (p>0.05), just by chance?
 
-A. 5,000
-B. 50,000
-C. 100,000
-D. It’s impossible to know
+- [ ] A. 5,000
+- [X] B. 50,000
+- [ ] C. 100,000
+- [ ] D. It’s impossible to know
 
-    Which of the following are examples of p-hacking?
+2. Which of the following are examples of p-hacking?
 
-A. Looking for associations between an outcome and several exposures and only reporting the one that is significant.
-B. Trying several different models and selecting the one that yields the smallest p-value.
-C. Repeating an experiment multiple times and only reporting the one with the smallest p-value.
-D. Using a Monte Carlo simulations in an analysis.
-Assessment 2- Correlation is Not Causation: Outliers
+- [X] A. Looking for associations between an outcome and several exposures and only reporting the one that is significant.
+- [X] B. Trying several different models and selecting the one that yields the smallest p-value.
+- [X] C. Repeating an experiment multiple times and only reporting the one with the smallest p-value.
+- [ ] D. Using a Monte Carlo simulations in an analysis.
 
-    The Spearman correlation coefficient is robust to outliers because:
+## Assessment 2 - Correlation is Not Causation: Outliers
 
-A. It drops outliers before calculating correlation.
-B. It is the correlation of standardized values.
-C. It calculates correlation between ranks, not values.
-Assessment 3- Correlation is Not Causation: Reversing Cause and Effect
+1. The Spearman correlation coefficient is robust to outliers because:
 
-    Which of the following may be examples of reversed cause and effect?
+- [ ] A. It drops outliers before calculating correlation.
+- [ ] B. It is the correlation of standardized values.
+- [X] C. It calculates correlation between ranks, not values.
 
-A. Past smokers who have quit smoking may be more likely to die from lung cancer.
-B. Tall fathers are more likely to have tall sons. C. People with high blood pressure tend to have a healthier diet.
-D. Individuals in a low social status have a higher risk of schizophrenia.
-Assessment 4- Correlation is Not Causation: Confounderss
+## Assessment 3 - Correlation is Not Causation: Reversing Cause and Effect
 
-    What can you do to determine if you are misinterpreting results because of a confounder?
+1. Which of the following may be examples of reversed cause and effect?
 
-A. Nothing, if the p-value says the result is significant, then it is.
-B. More closely examine the results by stratifying and plotting the data.
-C. Always assume that you are misinterpreting the results.
-D. Use linear models to tease out a confounder.
+- [X] A. Past smokers who have quit smoking may be more likely to die from lung cancer.
+- [ ] B. Tall fathers are more likely to have tall sons. 
+- [X] C. People with high blood pressure tend to have a healthier diet.
+- [X] D. Individuals in a low social status have a higher risk of schizophrenia.
 
-    Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
+## Assessment 4 - Correlation is Not Causation: Confounders
 
-A. The data is from 1973.
-B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.
-C. The data is from the “dslabs” package.
-D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.
+1. What can you do to determine if you are misinterpreting results because of a confounder?
 
-    In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
+- [ ] A. Nothing, if the p-value says the result is significant, then it is.
+- [X] B. More closely examine the results by stratifying and plotting the data.
+- [ ] C. Always assume that you are misinterpreting the results.
+- [ ] D. Use linear models to tease out a confounder.
 
-A. It was harder for women to be admitted to UC Berkeley.
-B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.
-C. Some majors are more selective than others
-D. Major selectivity is not a confounder.
-Assessment 5- Simpson’s Paradox
+2. Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
 
-    Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
+- [ ] A. The data is from 1973.
+- [ ] B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.
+- [ ] C. The data is from the “dslabs” package.
+- [X] D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.
 
-A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.
-B. It was a paradox that women were being admitted at a lower rate than men.
-C. The relationship between admissions and gender is confounded by major selectivity.
+3. In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
+
+- [ ] A. It was harder for women to be admitted to UC Berkeley.
+- [X] B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.
+- [ ] C. Some majors are more selective than others
+- [ ] D. Major selectivity is not a confounder.
+
+## Assessment 5 - Simpson’s Paradox
+
+1. Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
+
+- [X] A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.
+- [ ] B. It was a paradox that women were being admitted at a lower rate than men.
+- [ ] C. The relationship between admissions and gender is confounded by major selectivity.
