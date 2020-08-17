@@ -279,7 +279,63 @@ galton_heights %>%
     geom_point(alpha = 0.5)
 ```
 
-## Assessment 4 - Correlation
+## Correlation Coefficient
+
+The corresponding textbook section is [the correlation coefficient](https://rafalab.github.io/dsbook/regression.html#corr-coef)
+
+**Key points**
+
+* The correlation coefficient is defined for a list of pairs $(x_1, y_1), ..., (x_n, y_n)$ as the product of the standardized values: $(\frac{x_i - \mu_x}{\sigma_x})(\frac{y_i -\mu_y}{\sigma_y})$.
+* The correlation coefficient essentially conveys how two variables move together.
+* The correlation coefficient is always between -1 and 1.
+
+*Code*
+
+```{r}
+rho <- mean(scale(x)*scale(y))
+galton_heights %>% summarize(r = cor(father, son)) %>% pull(r)
+```
+
+## Sample Correlation is a Random Variable
+
+The corresponding textbook section is [Sample correlation is a random variable](https://rafalab.github.io/dsbook/regression.html#sample-correlation-is-a-random-variable)
+
+**Key points**
+
+* The correlation that we compute and use as a summary is a random variable.
+* When interpreting correlations, it is important to remember that correlations derived from samples are estimates containing uncertainty.
+* Because the sample correlation is an average of independent draws, the central limit theorem applies. 
+
+*Code*
+
+```{r}
+# compute sample correlation
+R <- sample_n(galton_heights, 25, replace = TRUE) %>%
+    summarize(r = cor(father, son))
+R
+
+# Monte Carlo simulation to show distribution of sample correlation
+B <- 1000
+N <- 25
+R <- replicate(B, {
+    sample_n(galton_heights, N, replace = TRUE) %>%
+    summarize(r = cor(father, son)) %>%
+    pull(r)
+})
+qplot(R, geom = "histogram", binwidth = 0.05, color = I("black"))
+
+# expected value and standard error
+mean(R)
+sd(R)
+
+# QQ-plot to evaluate whether N is large enough
+data.frame(R) %>%
+    ggplot(aes(sample = R)) +
+    stat_qq() +
+    geom_abline(intercept = mean(R), slope = sqrt((1-mean(R)^2)/(N-2)))
+```
+
+## Assessment - Correlation
 
 1. While studying heredity, Francis Galton developed what important statistical concept?
 
@@ -295,11 +351,9 @@ galton_heights %>%
 - [ ] C. The central tendency of a variable
 - [ ] D. The distribution of a variable
 
-## Assessment 5 - Correlation Coefficient
+3. Below is a scatter plot showing the relationship between two variables, x and y.
 
-1. Below is a scatter plot showing the relationship between two variables, x and y.
-
-![Scatter plot](https://user-images.githubusercontent.com/17474099/88270104-6a324080-ccd5-11ea-9cbd-90df12de22bd.png)
+![Scatter plot relationship x and y](images/scatterplot_x_y.png)
 
 From this figure, the correlation between x and y appears to be about:
 
@@ -308,25 +362,36 @@ From this figure, the correlation between x and y appears to be about:
 - [ ] C. 0.9
 - [ ] D. 2
 
-## Assessment 6 - Sample Correlation is a Random Variable
+4. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
 
-1. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
-
-Would you expect the mean of our sample correlation to increase, decrease, or stay approximately the same?
+Would you expect the **mean** of our sample correlation to increase, decrease, or stay approximately the same?
 
 - [ ] A. Increase
 - [ ] B. Decrease
 - [X] C. Stay approximately the same
 
-2. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
+5. Instead of running a Monte Carlo simulation with a sample size of 25 from our 179 father-son pairs, we now run our simulation with a sample size of 50.
 
-Would you expect the standard deviation of our sample correlation to increase, decrease, or stay approximately the same?
+Would you expect the **standard deviation** of our sample correlation to increase, decrease, or stay approximately the same?
 
 - [ ] A. Increase
 - [X] B. Decrease
 - [ ] C. Stay approximately the same
 
-## Assessment 7 - Anscombe’s Quartet/Stratification
+6. If X and Y are completely independent, what do you expect the value of the correlation coefficient to be?
+
+- [ ] A. -1
+- [ ] B. -0.5
+- [X] C. 0
+- [ ] D. 0.5
+- [ ] E. 1
+- [ ] F. Not enough information to answer the question
+
+7. Load the **Lahman** library. Filter the ```Teams``` data frame to include years from 1961 to 2001.
+
+What is the correlation coefficient between number of runs per game and number of at bats per game?
+
+## Assessment - Stratification and Variance Explained, Part 1
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
 
