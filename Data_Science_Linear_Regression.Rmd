@@ -14,7 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
-## Learning Objectives
+# Learning Objectives
+
 * How linear regression was originally developed by Galton
 * What confounding is and how to detect it
 * How to examine the relationships between variables by implementing linear regression in R
@@ -35,22 +36,20 @@ In this section, you’ll learn about linear models. You’ll learn about least 
 
 In the final section of the course, you’ll learn about confounding and several reasons that correlation is not the same as causation, such as spurious correlation, outliers, reversing cause and effect, and confounders. You’ll also learn about Simpson’s Paradox.
 
-## Introduction to Linear Regression
+## Introduction to Regression Overview
 
-In the Introduction to Regression section, you will learn the basics of linear regression.
+In the **Introduction to Regression** section, you will learn the basics of linear regression.
 
 After completing this section, you will be able to:
 
-* Understand how Galton developed linear regression.
-* Calculate and interpret the sample correlation.
-* Stratify a dataset when appropriate.
-* Understand what a bivariate normal distribution is.
-* Explain what the term variance explained means.
-* Interpret the two regression lines.
+* Understand how Galton developed **linear regression**.
+* Calculate and interpret the **sample correlation**.
+* **Stratify** a dataset when appropriate.
+* Understand what a **bivariate normal distribution** is.
+* Explain what the term **variance explained** means.
+* Interpret the two **regression lines**.
     
-This section has three parts: Baseball as a Motivating Example, Correlation, and Stratification and Variance Explained.
-
-The textbook for this whole section is available [here](https://rafalab.github.io/dsbook/linear-models.html)
+This section has three parts: **Baseball as a Motivating Example**, **Correlation**, and **Stratification and Variance Explained**.
 
 ## Motivating Example: Moneyball
 
@@ -86,8 +85,13 @@ The corresponding section of the textbook is the [base on balls or stolen bases 
 
 The visualization of choice when exploring the relationship between two variables like home runs and runs is a scatterplot.
 
-*Scatterplot of the relationship between HRs and runs*
+*Code: Scatterplot of the relationship between HRs and runs*
+
 ```{r}
+if(!require(Lahman)) install.packages("Lahman")
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(dslabs)) install.packages("dslabs")
+
 library(Lahman)
 library(tidyverse)
 library(dslabs)
@@ -99,7 +103,8 @@ Teams %>% filter(yearID %in% 1961:2001) %>%
     geom_point(alpha = 0.5)
 ```
 
-*Scatterplot of the relationship between stolen bases and runs*
+*Code: Scatterplot of the relationship between stolen bases and runs*
+
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001) %>%
     mutate(SB_per_game = SB / G, R_per_game = R / G) %>%
@@ -107,7 +112,8 @@ Teams %>% filter(yearID %in% 1961:2001) %>%
     geom_point(alpha = 0.5)
 ```
 
-*Scatterplot of the relationship between bases on balls and runs*
+*Code: Scatterplot of the relationship between bases on balls and runs*
+
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001) %>%
     mutate(BB_per_game = BB / G, R_per_game = R / G) %>%
@@ -139,14 +145,6 @@ Teams %>% filter(yearID %in% 1961:2001) %>%
 
 4. You want to know whether teams with more at-bats per game have more runs per game. What R code below correctly makes a scatter plot for this relationship?
 
-- [ ] A.
-```{r, eval=FALSE, echo=TRUE}
-Teams %>% filter(yearID %in% 1961:2001 ) %>%
-    ggplot(aes(AB, R)) + 
-    geom_point(alpha = 0.5)
-```
-
-- [X] B.
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
@@ -154,7 +152,25 @@ Teams %>% filter(yearID %in% 1961:2001 ) %>%
     geom_point(alpha = 0.5)
 ```
 
+- [ ] A.
+
+```{r, eval=FALSE, echo=TRUE}
+Teams %>% filter(yearID %in% 1961:2001 ) %>%
+    ggplot(aes(AB, R)) + 
+    geom_point(alpha = 0.5)
+```
+
+- [X] B.
+
+```{r, eval=FALSE, echo=TRUE}
+Teams %>% filter(yearID %in% 1961:2001 ) %>%
+    mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
+    ggplot(aes(AB_per_game, R_per_game)) + 
+    geom_point(alpha = 0.5)
+```
+
 - [ ] C.
+
 ```{r, eval=FALSE, echo=TRUE}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
@@ -163,26 +179,30 @@ Teams %>% filter(yearID %in% 1961:2001 ) %>%
 ```
 
 - [ ] D.
+
 ```{r, eval=FALSE, echo=TRUE}
 Teams %>% filter(yearID %in% 1961:2001 ) %>%
     mutate(AB_per_game = AB/G, R_per_game = R/G) %>%
     ggplot(aes(R_per_game, AB_per_game)) + 
     geom_point()
 ```
+
 5. What does the variable “SOA” stand for in the Teams table?
+
+Hint: make sure to use the help file (```?Teams```).
 
 - [ ] A. sacrifice out
 - [ ] B. slides or attempts
 - [X] C. strikeouts by pitchers
 - [ ] D. accumulated singles
 
-6. Load the Lahman library. Filter the Teams data frame to include years from 1961 to 2001. Make a scatterplot of runs per game versus at bats (AB) per game.
+6. Load the **Lahman** library. Filter the ```Teams``` data frame to include years from 1961 to 2001. Make a scatterplot of runs per game versus at bats (```AB```) per game.
 
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001) %>%
-    mutate(AB_per_game = AB / G, R_per_game = R / G) %>%
-    ggplot(aes(AB_per_game, R_per_game)) + 
-    geom_point(alpha = 0.5)
+  mutate(AB_per_game = AB / G, R_per_game = R / G) %>%
+  ggplot(aes(AB_per_game, R_per_game)) + 
+  geom_point(alpha = 0.5)
 ```
 
 Which of the following is true?
@@ -191,13 +211,13 @@ Which of the following is true?
 - [X] B. As the number of at bats per game increases, the number of runs per game tends to increase.
 - [ ] C. As the number of at bats per game increases, the number of runs per game tends to decrease.
 
-7. Use the filtered Teams data frame from Question 6. Make a scatterplot of win rate (number of wins per game) versus number of fielding errors (E) per game.
+7. Use the filtered ```Teams``` data frame from Question 6. Make a scatterplot of win rate (number of wins per game) versus number of fielding errors (```E```) per game.
 
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001) %>%
-    mutate(win_rate = W / G, E_per_game = E / G) %>%
-    ggplot(aes(win_rate, E_per_game)) + 
-    geom_point(alpha = 0.5)
+  mutate(win_rate = W / G, E_per_game = E / G) %>%
+  ggplot(aes(win_rate, E_per_game)) + 
+  geom_point(alpha = 0.5)
 ```
 
 Which of the following is true?
@@ -206,13 +226,13 @@ Which of the following is true?
 - [ ] B. As the number of errors per game increases, the win rate tends to increase.
 - [X] C. As the number of errors per game increases, the win rate tends to decrease.
 
-8. Use the filtered Teams data frame from Question 6. Make a scatterplot of triples (X3B) per game versus doubles (X2B) per game.
+8. Use the filtered ```Teams``` data frame from Question 6. Make a scatterplot of triples (```X3B```) per game versus doubles (```X2B```) per game.
 
 ```{r}
 Teams %>% filter(yearID %in% 1961:2001) %>%
-    mutate(doubles_per_game = X2B / G, triples_per_game = X3B / G) %>%
-    ggplot(aes(doubles_per_game, triples_per_game)) + 
-    geom_point(alpha = 0.5)
+  mutate(doubles_per_game = X2B / G, triples_per_game = X3B / G) %>%
+  ggplot(aes(doubles_per_game, triples_per_game)) + 
+  geom_point(alpha = 0.5)
 ```
 
 Which of the following is true?
@@ -223,13 +243,41 @@ Which of the following is true?
 
 ## Correlation
 
-The corresponding textbook section is Case Study: [is height hereditary?](https://rafalab.github.io/dsbook/regression.html#case-study-is-height-hereditary)
+The corresponding textbook section is [Case Study: is height hereditary?](https://rafalab.github.io/dsbook/regression.html#case-study-is-height-hereditary)
 
 **Key points**
 
 * Galton tried to predict sons' heights based on fathers' heights.
 * The mean and standard errors are insufficient for describing an important characteristic of the data: the trend that the taller the father, the taller the son.
 * The correlation coefficient is an informative summary of how two variables move together that can be used to predict one variable using the other.
+
+*Code*
+
+```{r}
+# create the dataset
+if(!require(HistData)) install.packages("HistData")
+
+library(tidyverse)
+library(HistData)
+data("GaltonFamilies")
+set.seed(1983)
+galton_heights <- GaltonFamilies %>%
+  filter(gender == "male") %>%
+  group_by(family) %>%
+  sample_n(1) %>%
+  ungroup() %>%
+  select(father, childHeight) %>%
+  rename(son = childHeight)
+
+# means and standard deviations
+galton_heights %>%
+    summarize(mean(father), sd(father), mean(son), sd(son))
+
+# scatterplot of father and son heights
+galton_heights %>%
+    ggplot(aes(father, son)) +
+    geom_point(alpha = 0.5)
+```
 
 ## Assessment 4 - Correlation
 
