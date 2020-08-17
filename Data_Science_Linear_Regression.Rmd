@@ -291,8 +291,13 @@ The corresponding textbook section is [the correlation coefficient](https://rafa
 
 *Code*
 
-```{r}
+```{r, eval=FALSE, echo=TRUE}
 rho <- mean(scale(x)*scale(y))
+```
+
+```{r}
+data("GaltonFamilies")
+galton_heights <- GaltonFamilies %>% filter(childNum == 1 & gender == "male") %>% select(father, childHeight) %>% rename(son = childHeight)
 galton_heights %>% summarize(r = cor(father, son)) %>% pull(r)
 ```
 
