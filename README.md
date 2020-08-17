@@ -1,4 +1,4 @@
-# Data_Science_Linear_Regression
+# Data Science Linear Regression
 # HarvardX: PH125.7x | Data Science: Linear Regression
 
 ## Abstract
