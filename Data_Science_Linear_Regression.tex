@@ -718,9 +718,140 @@ Study: is height hereditary?}
 
 \includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-12-1.pdf}
 
-\hypertarget{assessment-4---correlation}{%
-\subsection{Assessment 4 -
-Correlation}\label{assessment-4---correlation}}
+\hypertarget{correlation-coefficient}{%
+\subsection{Correlation Coefficient}\label{correlation-coefficient}}
+
+The corresponding textbook section is
+\href{https://rafalab.github.io/dsbook/regression.html\#corr-coef}{the
+correlation coefficient}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The correlation coefficient is defined for a list of pairs
+  \((x_1, y_1), ..., (x_n, y_n)\) as the product of the standardized
+  values:
+  \((\frac{x_i - \mu_x}{\sigma_x})(\frac{y_i -\mu_y}{\sigma_y})\).
+\item
+  The correlation coefficient essentially conveys how two variables move
+  together.
+\item
+  The correlation coefficient is always between -1 and 1.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rho \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{scale}\NormalTok{(x)}\OperatorTok{*}\KeywordTok{scale}\NormalTok{(y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"GaltonFamilies"}\NormalTok{)}
+\NormalTok{galton\_heights \textless{}{-}}\StringTok{ }\NormalTok{GaltonFamilies }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(childNum }\OperatorTok{==}\StringTok{ }\DecValTok{1} \OperatorTok{\&}\StringTok{ }\NormalTok{gender }\OperatorTok{==}\StringTok{ "male"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{select}\NormalTok{(father, childHeight) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{son =}\NormalTok{ childHeight)}
+\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{r =} \KeywordTok{cor}\NormalTok{(father, son)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{pull}\NormalTok{(r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5007248
+\end{verbatim}
+
+\hypertarget{sample-correlation-is-a-random-variable}{%
+\subsection{Sample Correlation is a Random
+Variable}\label{sample-correlation-is-a-random-variable}}
+
+The corresponding textbook section is
+\href{https://rafalab.github.io/dsbook/regression.html\#sample-correlation-is-a-random-variable}{Sample
+correlation is a random variable}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The correlation that we compute and use as a summary is a random
+  variable.
+\item
+  When interpreting correlations, it is important to remember that
+  correlations derived from samples are estimates containing
+  uncertainty.
+\item
+  Because the sample correlation is an average of independent draws, the
+  central limit theorem applies.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute sample correlation}
+\NormalTok{R \textless{}{-}}\StringTok{ }\KeywordTok{sample\_n}\NormalTok{(galton\_heights, }\DecValTok{25}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{r =} \KeywordTok{cor}\NormalTok{(father, son))}
+\NormalTok{R}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           r
+## 1 0.4787613
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Monte Carlo simulation to show distribution of sample correlation}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{1000}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{25}
+\NormalTok{R \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, \{}
+    \KeywordTok{sample\_n}\NormalTok{(galton\_heights, N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{r =} \KeywordTok{cor}\NormalTok{(father, son)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{pull}\NormalTok{(r)}
+\NormalTok{\})}
+\KeywordTok{qplot}\NormalTok{(R, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{color =} \KeywordTok{I}\NormalTok{(}\StringTok{"black"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# expected value and standard error}
+\KeywordTok{mean}\NormalTok{(R)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4970997
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(R)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1512451
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# QQ{-}plot to evaluate whether N is large enough}
+\KeywordTok{data.frame}\NormalTok{(R) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ R)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{stat\_qq}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_abline}\NormalTok{(}\DataTypeTok{intercept =} \KeywordTok{mean}\NormalTok{(R), }\DataTypeTok{slope =} \KeywordTok{sqrt}\NormalTok{((}\DecValTok{1}\OperatorTok{{-}}\KeywordTok{mean}\NormalTok{(R)}\OperatorTok{\^{}}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\NormalTok{(N}\DecValTok{{-}2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+\hypertarget{assessment---correlation}{%
+\subsection{Assessment - Correlation}\label{assessment---correlation}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -762,12 +893,9 @@ Correlation}\label{assessment-4---correlation}}
   D. The distribution of a variable
 \end{itemize}
 
-\hypertarget{assessment-5---correlation-coefficient}{%
-\subsection{Assessment 5 - Correlation
-Coefficient}\label{assessment-5---correlation-coefficient}}
-
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
 \tightlist
 \item
   Below is a scatter plot showing the relationship between two
@@ -776,8 +904,8 @@ Coefficient}\label{assessment-5---correlation-coefficient}}
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/88270104-6a324080-ccd5-11ea-9cbd-90df12de22bd.png}
-\caption{Scatter plot}
+\includegraphics{images/scatterplot_x_y.png}
+\caption{Scatter plot relationship x and y}
 \end{figure}
 
 From this figure, the correlation between x and y appears to be about:
@@ -794,12 +922,9 @@ From this figure, the correlation between x and y appears to be about:
   D. 2
 \end{itemize}
 
-\hypertarget{assessment-6---sample-correlation-is-a-random-variable}{%
-\subsection{Assessment 6 - Sample Correlation is a Random
-Variable}\label{assessment-6---sample-correlation-is-a-random-variable}}
-
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
 \tightlist
 \item
   Instead of running a Monte Carlo simulation with a sample size of 25
@@ -807,45 +932,82 @@ Variable}\label{assessment-6---sample-correlation-is-a-random-variable}}
   size of 50.
 \end{enumerate}
 
-Would you expect the mean of our sample correlation to increase,
-decrease, or stay approximately the same?
-
-\begin{itemize}
-\tightlist
-\item[$\square$]
-  A. Increase
-\item[$\square$]
-  B. Decrease
-\item[$\boxtimes$]
-  C. Stay approximately the same
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Instead of running a Monte Carlo simulation with a sample size of 25
-  from our 179 father-son pairs, we now run our simulation with a sample
-  size of 50.
-\end{enumerate}
-
-Would you expect the standard deviation of our sample correlation to
+Would you expect the \textbf{mean} of our sample correlation to
 increase, decrease, or stay approximately the same?
 
 \begin{itemize}
 \tightlist
 \item[$\square$]
   A. Increase
+\item[$\square$]
+  B. Decrease
+\item[$\boxtimes$]
+  C. Stay approximately the same
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Instead of running a Monte Carlo simulation with a sample size of 25
+  from our 179 father-son pairs, we now run our simulation with a sample
+  size of 50.
+\end{enumerate}
+
+Would you expect the \textbf{standard deviation} of our sample
+correlation to increase, decrease, or stay approximately the same?
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. Increase
 \item[$\boxtimes$]
   B. Decrease
 \item[$\square$]
   C. Stay approximately the same
 \end{itemize}
 
-\hypertarget{assessment-7---anscombes-quartetstratification}{%
-\subsection{Assessment 7 - Anscombe's
-Quartet/Stratification}\label{assessment-7---anscombes-quartetstratification}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  If X and Y are completely independent, what do you expect the value of
+  the correlation coefficient to be?
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. -1
+\item[$\square$]
+  B. -0.5
+\item[$\boxtimes$]
+  C. 0
+\item[$\square$]
+  D. 0.5
+\item[$\square$]
+  E. 1
+\item[$\square$]
+  F. Not enough information to answer the question
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Load the \textbf{Lahman} library. Filter the \texttt{Teams} data frame
+  to include years from 1961 to 2001.
+\end{enumerate}
+
+What is the correlation coefficient between number of runs per game and
+number of at bats per game?
+
+\hypertarget{assessment---stratification-and-variance-explained-part-1}{%
+\subsection{Assessment - Stratification and Variance Explained, Part
+1}\label{assessment---stratification-and-variance-explained-part-1}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
