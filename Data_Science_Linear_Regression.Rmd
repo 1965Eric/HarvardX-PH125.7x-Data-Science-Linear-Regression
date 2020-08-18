@@ -36,7 +36,7 @@ In this section, you’ll learn about linear models. You’ll learn about least 
 
 In the final section of the course, you’ll learn about confounding and several reasons that correlation is not the same as causation, such as spurious correlation, outliers, reversing cause and effect, and confounders. You’ll also learn about Simpson’s Paradox.
 
-## Introduction to Regression Overview
+# Introduction to Regression Overview
 
 In the **Introduction to Regression** section, you will learn the basics of linear regression.
 
@@ -566,7 +566,7 @@ b_2 <- mu_x - m_2*mu_y
 - [ ] C. Both X and Y have been standardized.
 - [ ] D. There are at least 25 X-Y pairs.
 
-2. Which one of the following scatterplots depicts an x and y distribution that is NOT well-approximated by the bivariate normal distribution?
+5. Which one of the following scatterplots depicts an x and y distribution that is NOT well-approximated by the bivariate normal distribution?
 
 - [X] A.
 
@@ -610,9 +610,99 @@ The slope of the regression line is calculated by multiplying the correlation co
 
 ## Assessment - Stratification and Variance Explained, Part 2
 
+In the second part of this assessment, you'll analyze a set of mother and daughter heights, also from ```GaltonFamilies```.
 
+Define ```female_heights```, a set of mother and daughter heights sampled from ```GaltonFamilies```, as follows:
 
-## Linear Models Overview
+```{r}
+set.seed(1989, sample.kind="Rounding") #if you are using R 3.6 or later
+library(HistData)
+data("GaltonFamilies")
+
+female_heights <- GaltonFamilies%>%     
+    filter(gender == "female") %>%     
+    group_by(family) %>%     
+    sample_n(1) %>%     
+    ungroup() %>%     
+    select(mother, childHeight) %>%     
+    rename(daughter = childHeight)
+```
+
+8. Calculate the mean and standard deviation of mothers' heights, the mean and standard deviation of daughters' heights, and the correlaton coefficient between mother and daughter heights.
+
+Mean of mothers' heights
+
+```{r}
+mean(female_heights$mother)
+```
+
+Standard deviation of mothers' heights
+
+```{r}
+sd(female_heights$mother)
+```
+
+Mean of daughters' heights
+
+```{r}
+mean(female_heights$daughter)
+```
+
+Standard deviation of daughters' heights
+
+```{r}
+sd(female_heights$daughter)
+```
+
+Correlation coefficient
+
+```{r}
+cor(female_heights$mother, female_heights$daughter)
+```
+
+9. Calculate the slope and intercept of the regression line predicting daughters' heights given mothers' heights. Given an increase in mother's height by 1 inch, how many inches is the daughter's height expected to change?
+
+Slope of regression line predicting daughters' height from mothers' heights
+
+```{r}
+r <- cor(female_heights$mother, female_heights$daughter)
+s_y <- sd(female_heights$daughter)
+s_x <- sd(female_heights$mother)
+r * s_y/s_x
+```
+
+Intercept of regression line predicting daughters' height from mothers' heights
+   
+```{r}
+mu_y <- mean(female_heights$daughter)
+mu_x <- mean(female_heights$mother)
+mu_y - (r * s_y/s_x)*mu_x
+```
+
+Change in daughter's height in inches given a 1 inch increase in the mother's height
+
+```{r}
+r * s_y/s_x
+```
+
+10. What percent of the variability in daughter heights is explained by the mother's height?
+
+```{r}
+r^2*100
+```
+
+11. A mother has a height of 60 inches.
+
+What is the conditional expected value of her daughter's height given the mother's height?
+
+```{r}
+m = r * s_y/s_x
+b = mu_y - (r * s_y/s_x)*mu_x
+x = 60
+m*x+b
+```
+
+# Linear Models Overview
 
 In the Linear Models section, you will learn how to do linear regression.
 
