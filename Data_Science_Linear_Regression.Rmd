@@ -712,34 +712,122 @@ m*x+b
 
 # Section 2 - Linear Models Overview
 
-In the Linear Models section, you will learn how to do linear regression.
+In the **Linear Models** section, you will learn how to do linear regression.
 
 After completing this section, you will be able to:
 
-* Use multivariate regression to adjust for confounders.
-* Write linear models to describe the relationship between two or more variables.
-* Calculate the least squares estimates for a regression model using the lm function.
-* Understand the differences between tibbles and data frames.
-* Use the do function to bridge R functions and the tidyverse.
-* Use the tidy, glance, and augment functions from the broom package.
-* Apply linear regression to measurement error models.
+* Use **multivariate regression** to adjust for confounders.
+* Write **linear models** to describe the relationship between two or more variables.
+* Calculate the **least squares estimates** for a regression model using the **lm** function.
+* Understand the differences between **tibbles** and **data frames**.
+* Use the ```do()``` function to bridge R functions and the tidyverse.
+* Use the ```tidy()```, ```glance()```, and ```augment()``` functions from the **broom** package.
+* Apply linear regression to **measurement error models**.
 
-This section has four parts: Introduction to Linear Models, Least Squares Estimates, Tibbles, do, and broom, and Regression and Baseball.
+This section has four parts: **Introduction to Linear Models, Least Squares Estimates, Tibbles, do, and broom**, and **Regression and Baseball**.
+
+## Confounding: Are BBs More Predictive?
 
 The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#confounding)
 
-## Assessment 1 - Confounding: Are BBs More Predictive?
+**Key points**
 
-1. Why is the number of home runs considered a confounder of the relationship between bases on balls and runs per game?
+* Association is not causation!
+* Although it may appear that BB cause runs, it is actually the HR that cause most of these runs. We say that BB are **confounded** with HR.
+* Regression can help us account for confounding.
 
-- [ ] A. Home runs is not a confounder of this relationship.
-- [ ] B. Home runs are the primary cause of runs per game.
-- [ ] C. The correlation between home runs and runs per game is stronger than the correlation between bases on balls and runs per game.
-- [X] D. Players who get more bases on balls also tend to have more home runs; in addition, home runs increase the points per game.
+*Code*
 
-## Assessment 2 - Stratification and Multivariate Regression
+```{r}
+# find regression line for predicting runs from BBs
+bb_slope <- Teams %>% 
+  filter(yearID %in% 1961:2001 ) %>% 
+  mutate(BB_per_game = BB/G, R_per_game = R/G) %>% 
+  lm(R_per_game ~ BB_per_game, data = .) %>% 
+  .$coef %>%
+  .[2]
+bb_slope
 
-1. As described in the video, when we stratified our regression lines for runs per game vs. bases on balls by the number of home runs, what happened?
+# compute regression line for predicting runs from singles
+singles_slope <- Teams %>% 
+  filter(yearID %in% 1961:2001 ) %>%
+  mutate(Singles_per_game = (H-HR-X2B-X3B)/G, R_per_game = R/G) %>%
+  lm(R_per_game ~ Singles_per_game, data = .) %>%
+  .$coef  %>%
+  .[2]
+singles_slope
+
+# calculate correlation between HR, BB and singles
+Teams %>% 
+  filter(yearID %in% 1961:2001 ) %>% 
+  mutate(Singles = (H-HR-X2B-X3B)/G, BB = BB/G, HR = HR/G) %>%  
+  summarize(cor(BB, HR), cor(Singles, HR), cor(BB,Singles))
+```
+
+## Stratification and Multivariate Regression
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#multivariate-regression)
+
+**Key points**
+
+* A first approach to check confounding is to keep HRs fixed at a certain value and then examine the relationship between BB and runs.
+* The slopes of BB after stratifying on HR are reduced, but they are not 0, which indicates that BB are helpful for producing runs, just not as much as previously thought.
+
+*Code*
+
+```{r}
+# stratify HR per game to nearest 10, filter out strata with few points
+dat <- Teams %>% filter(yearID %in% 1961:2001) %>%
+  mutate(HR_strata = round(HR/G, 1), 
+         BB_per_game = BB / G,
+         R_per_game = R / G) %>%
+  filter(HR_strata >= 0.4 & HR_strata <=1.2)
+  
+# scatterplot for each HR stratum
+dat %>% 
+  ggplot(aes(BB_per_game, R_per_game)) +  
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ HR_strata)
+  
+# calculate slope of regression line after stratifying by HR
+dat %>%  
+  group_by(HR_strata) %>%
+  summarize(slope = cor(BB_per_game, R_per_game)*sd(R_per_game)/sd(BB_per_game))
+  
+# stratify by BB
+dat <- Teams %>% filter(yearID %in% 1961:2001) %>%
+  mutate(BB_strata = round(BB/G, 1), 
+         HR_per_game = HR / G,
+         R_per_game = R / G) %>%
+  filter(BB_strata >= 2.8 & BB_strata <=3.9) 
+
+# scatterplot for each BB stratum
+dat %>% ggplot(aes(HR_per_game, R_per_game)) +  
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ BB_strata)
+  
+# slope of regression line after stratifying by BB
+dat %>%  
+  group_by(BB_strata) %>%
+  summarize(slope = cor(HR_per_game, R_per_game)*sd(R_per_game)/sd(HR_per_game))
+```
+
+## Linear Models
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse)
+
+**Key points**
+
+* “Linear” here does not refer to lines, but rather to the fact that the conditional expectation is a linear combination of known quantities.
+* In Galton's model, we assume $Y$ (son's height) is a linear combination of a constant and $X$ (father's height) plus random noise. We further assume that $\epsilon_i$ are independent from each other, have expected value 0 and the standard deviation $\sigma$ which does not depend on i.
+* Note that if we further assume that $\epsilon$ is normally distributed, then the model is exactly the same one we derived earlier by assuming bivariate normal data.
+* We can subtract the mean from $X$ to make $\beta_0$ more interpretable.  
+
+## Assessment: Introduction to Linear Models
+
+1. When we stratified our regression lines for runs per game vs. bases on balls by the number of home runs, what happened?
 
 - [X] A. The slope of runs per game vs. bases on balls within each stratum was reduced because we removed confounding by home runs.
 - [ ] B. The slope of runs per game vs. bases on balls within each stratum was reduced because there were fewer data points.
@@ -1099,7 +1187,7 @@ Which team scores more runs, as predicted by our model?
 - [X] B. There was one position where it was particularly difficult to see the dropped ball. 
 - [ ] C. The experiment was only repeated 10 times, not 100 times.
 
-## Confounding Overview
+# Section3 - Confounding Overview
 
 In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
 
