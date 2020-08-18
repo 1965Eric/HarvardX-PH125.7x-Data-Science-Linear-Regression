@@ -433,7 +433,7 @@ There are three links to relevant sections of the textbook:
 * A practical way to improve the estimates of the conditional expectations is to define strata of with similar values of x.
 * If there is perfect correlation, the regression line predicts an increase that is the same number of SDs for both variables. If there is 0 correlation, then we don’t use x at all for the prediction and simply predict the average $\mu_y$. For values between 0 and 1, the prediction is somewhere in between. If the correlation is negative, we predict a reduction instead of an increase.
 
-*Code
+*Code*
 
 ```{r}
 # number of fathers with height 72 or 72.5 inches
@@ -477,11 +477,69 @@ galton_heights %>%
     geom_abline(intercept = b, slope = m)
 ```
 
+## Bivariate Normal Distribution
+
+There is a link to the relevant section of the textbook: [Bivariate normal distribution (advanced)](https://rafalab.github.io/dsbook/regression.html#bivariate-normal-distribution-advanced)
+
+**Key points**
+
+* When a pair of random variables are approximated by the bivariate normal distribution, scatterplots look like ovals. They can be thin (high correlation) or circle-shaped (no correlation).
+* When two variables follow a bivariate normal distribution, computing the regression line is equivalent to computing conditional expectations.
+* We can obtain a much more stable estimate of the conditional expectation by finding the regression line and using it to make predictions.
+
+*Code*
+
+```{r}
+galton_heights %>%
+  mutate(z_father = round((father - mean(father)) / sd(father))) %>%
+  filter(z_father %in% -2:2) %>%
+  ggplot() +  
+  stat_qq(aes(sample = son)) +
+  facet_wrap( ~ z_father)
+```
+
+## Variance Explained
+
+There is a link to the relevant section of the textbook: [Variance explained](https://rafalab.github.io/dsbook/regression.html#variance-explained)
+
+**Key points**
+
+* Conditioning on a random variable X can help to reduce variance of response variable Y.
+* The standard deviation of the conditional distribution is $\mbox{SD}(Y \mid X=x) = \sigma_y\sqrt{1-\rho^2}$, which is smaller than the standard deviation without conditioning $\sigma_y$.
+* Because variance is the standard deviation squared, the variance of the conditional distribution is $\sigma_y^2(1-\rho^2)$.
+* In the statement "X explains such and such percent of the variability," the percent value refers to the variance. The variance decreases by $\rho^2$ percent.
+* The “variance explained” statement only makes sense when the data is approximated by a bivariate normal distribution.
+
+## There are Two Regression Lines
+
+There is a link to the relevant section of the textbook: [Warning: there are two regression lines](https://rafalab.github.io/dsbook/regression.html#warning-there-are-two-regression-lines)
+
+**Key point**
+
+There are two different regression lines depending on whether we are taking the expectation of Y given X or taking the expectation of X given Y.
+
+*Code*
+
+```{r}
+# compute a regression line to predict the son's height from the father's height
+mu_x <- mean(galton_heights$father)
+mu_y <- mean(galton_heights$son)
+s_x <- sd(galton_heights$father)
+s_y <- sd(galton_heights$son)
+r <- cor(galton_heights$father, galton_heights$son)
+m_1 <-  r * s_y / s_x
+b_1 <- mu_y - m_1*mu_x
+
+# compute a regression line to predict the father's height from the son's height
+m_2 <-  r * s_x / s_y
+b_2 <- mu_x - m_2*mu_y
+```
+
 ## Assessment - Stratification and Variance Explained, Part 1
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
 
-![Scatter plot of son and father heights with son heights on the y-axis and father heights on the x-axis](https://user-images.githubusercontent.com/17474099/88270632-373c7c80-ccd6-11ea-8dec-eb7315a564b1.png)
+![Scatter plot and regression line of son and father heights](images/regression_line_father_son.png)
 
 - [X] A. Slope = (correlation coefficient of son and father heights) * (standard deviation of sons’ heights / standard deviation of fathers’ heights)
 - [ ] B. Slope = (correlation coefficient of son and father heights) * (standard deviation of fathers’ heights / standard deviation of sons’ heights)
