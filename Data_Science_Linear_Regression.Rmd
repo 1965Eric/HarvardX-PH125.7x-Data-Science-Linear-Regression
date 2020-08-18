@@ -834,9 +834,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 - [ ] C. The slope of runs per game vs. bases on balls within each stratum increased after we removed confounding by home runs.
 - [ ] D. The slope of runs per game vs. bases on balls within each stratum stayed about the same as the original slope.
 
-## Assessment 3 - Linear Models
-
-1. We run a linear model for sons’ heights vs. fathers’ heights using the Galton height data, and get the following results:
+2. We run a linear model for sons’ heights vs. fathers’ heights using the Galton height data, and get the following results:
 
 ```{r, eval=FALSE, echo=TRUE}
 > lm(son ~ father, data = galton_heights)
@@ -855,7 +853,7 @@ Interpret the numeric coefficient for “father.”
 - [X] B. For every inch we increase the father’s height, the predicted son’s height grows by 0.5 inches.
 - [ ] C. For every inch we increase the father’s height, the predicted son’s height is 0.5 times greater.
 
-2. We want the intercept term for our model to be more interpretable, so we run the same model as before but now we subtract the mean of fathers’ heights from each individual father’s height to create a new variable centered at zero.
+3. We want the intercept term for our model to be more interpretable, so we run the same model as before but now we subtract the mean of fathers’ heights from each individual father’s height to create a new variable centered at zero.
 
 ```{r, eval=FALSE, echo=TRUE}
 galton_heights <- galton_heights %>%
@@ -879,6 +877,24 @@ Interpret the numeric coefficient for the intercept.
 - [X] A. The height of a son of a father of average height is 70.45 inches.
 - [ ] B. The height of a son when a father’s height is zero is 70.45 inches.
 - [ ] C. The height of an average father is 70.45 inches.
+
+4. Suppose we fit a multivariate regression model for expected runs based on BB and HR:
+
+$E[R|BB=x_1, HR=x_2] = \beta_0+\beta_1x_1+\beta_2x_2$
+
+Suppose we fix $BB = x_1$. Then we observe a linear relationship between runs and HR with intercept of:
+
+- [ ] A. $\beta_0$
+- [ ] B. $\beta_0 + \beta_2x_2$
+- [X] C. $\beta_0 + \beta_1x_1$
+- [ ] D. $\beta_0 + \beta_2x_1$
+
+5. Which of the following are assumptions for the errors $\epsilon_i$ in a linear regression model?
+Check ALL correct answers.
+
+- [X] A. The $\epsilon_i$ are independent of each other
+- [X] B. The $\epsilon_i$ have expected value 0
+- [X] C. The variance of $\epsilon_i$ is a constant
 
 ## Assessment 4 - Least Squares Estimates (LSE)
 
