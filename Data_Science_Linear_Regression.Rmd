@@ -570,19 +570,19 @@ b_2 <- mu_x - m_2*mu_y
 
 - [X] A.
 
-![](5_answer_A.png)
+![](images\5_answer_A.png)
 
 - [ ] B.
 
-![](5_answer_B.png)
+![](images\5_answer_B.png)
 
 - [ ] C.
 
-![](5_answer_C.png)
+![](images\5_answer_C.png)
 
 - [ ] D.
 
-![](5_answer_D.png)
+![](images\5_answer_D.png)
 
 6. We previously calculated that the correlation coefficient between fathers’ and sons’ heights is 0.5.
 
