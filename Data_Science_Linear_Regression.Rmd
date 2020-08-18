@@ -36,7 +36,7 @@ In this section, you’ll learn about linear models. You’ll learn about least 
 
 In the final section of the course, you’ll learn about confounding and several reasons that correlation is not the same as causation, such as spurious correlation, outliers, reversing cause and effect, and confounders. You’ll also learn about Simpson’s Paradox.
 
-# Introduction to Regression Overview
+# Section 1 - Introduction to Regression Overview
 
 In the **Introduction to Regression** section, you will learn the basics of linear regression.
 
@@ -356,6 +356,8 @@ data.frame(R) %>%
 - [ ] C. The central tendency of a variable
 - [ ] D. The distribution of a variable
 
+\newpage
+
 3. Below is a scatter plot showing the relationship between two variables, x and y.
 
 ![Scatter plot relationship x and y](images/scatterplot_x_y.png)
@@ -535,6 +537,8 @@ m_2 <-  r * s_x / s_y
 b_2 <- mu_x - m_2*mu_y
 ```
 
+\newpage
+
 ## Assessment - Stratification and Variance Explained, Part 1
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
@@ -702,7 +706,7 @@ x = 60
 m*x+b
 ```
 
-# Linear Models Overview
+# Section 2 - Linear Models Overview
 
 In the Linear Models section, you will learn how to do linear regression.
 
