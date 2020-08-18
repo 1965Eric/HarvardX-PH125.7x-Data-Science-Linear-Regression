@@ -531,10 +531,14 @@ s_y <- sd(galton_heights$son)
 r <- cor(galton_heights$father, galton_heights$son)
 m_1 <-  r * s_y / s_x
 b_1 <- mu_y - m_1*mu_x
+m_1 # slope 1
+b_1 # intercept 1
 
 # compute a regression line to predict the father's height from the son's height
 m_2 <-  r * s_x / s_y
 b_2 <- mu_x - m_2*mu_y
+m_2 # slope 2
+b_2 # intercept 2
 ```
 
 \newpage
