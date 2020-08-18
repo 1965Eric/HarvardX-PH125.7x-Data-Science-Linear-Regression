@@ -1005,6 +1005,294 @@ correlation to increase, decrease, or stay approximately the same?
 What is the correlation coefficient between number of runs per game and
 number of at bats per game?
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(Lahman)}
+\NormalTok{Teams\_small \textless{}{-}}\StringTok{ }\NormalTok{Teams }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{\%in\%}\StringTok{ }\DecValTok{1961}\OperatorTok{:}\DecValTok{2001}\NormalTok{)}
+\KeywordTok{cor}\NormalTok{(Teams\_small}\OperatorTok{$}\NormalTok{R}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G, Teams\_small}\OperatorTok{$}\NormalTok{AB}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6580976
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Use the filtered \texttt{Teams} data frame from Question 7.
+\end{enumerate}
+
+What is the correlation coefficient between win rate (number of wins per
+game) and number of errors per game?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Teams\_small}\OperatorTok{$}\NormalTok{W}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G, Teams\_small}\OperatorTok{$}\NormalTok{E}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.3396947
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Use the filtered \texttt{Teams} data frame from Question 7.
+\end{enumerate}
+
+What is the correlation coefficient between doubles (\texttt{X2B}) per
+game and triples (\texttt{X3B}) per game?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Teams\_small}\OperatorTok{$}\NormalTok{X2B}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G, Teams\_small}\OperatorTok{$}\NormalTok{X3B}\OperatorTok{/}\NormalTok{Teams\_small}\OperatorTok{$}\NormalTok{G)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.01157404
+\end{verbatim}
+
+\hypertarget{anscombes-quartetstratification}{%
+\subsection{Anscombe's
+Quartet/Stratification}\label{anscombes-quartetstratification}}
+
+There are three links to relevant sections of the textbook:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rafalab.github.io/dsbook/regression.html\#correlation-is-not-always-a-useful-summary}{Correlation
+  is not always a useful summary}
+\item
+  \href{https://rafalab.github.io/dsbook/regression.html\#conditional-expectation}{Conditional
+  expectation}
+\item
+  \href{https://rafalab.github.io/dsbook/regression.html\#the-regression-line}{The
+  regression line}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Correlation is not always a good summary of the relationship between
+  two variables.
+\item
+  The general idea of conditional expectation is that we stratify a
+  population into groups and compute summaries in each group.
+\item
+  A practical way to improve the estimates of the conditional
+  expectations is to define strata of with similar values of x.
+\item
+  If there is perfect correlation, the regression line predicts an
+  increase that is the same number of SDs for both variables. If there
+  is 0 correlation, then we don't use x at all for the prediction and
+  simply predict the average \(\mu_y\). For values between 0 and 1, the
+  prediction is somewhere in between. If the correlation is negative, we
+  predict a reduction instead of an increase.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# number of fathers with height 72 or 72.5 inches}
+\KeywordTok{sum}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father }\OperatorTok{==}\StringTok{ }\DecValTok{72}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father }\OperatorTok{==}\StringTok{ }\FloatTok{72.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# predicted height of a son with a 72 inch tall father}
+\NormalTok{conditional\_avg \textless{}{-}}\StringTok{ }\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(}\KeywordTok{round}\NormalTok{(father) }\OperatorTok{==}\StringTok{ }\DecValTok{72}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{avg =} \KeywordTok{mean}\NormalTok{(son)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{pull}\NormalTok{(avg)}
+\NormalTok{conditional\_avg}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 71.83571
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# stratify fathers\textquotesingle{} heights to make a boxplot of son heights}
+\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{father\_strata =} \KeywordTok{factor}\NormalTok{(}\KeywordTok{round}\NormalTok{(father))) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(father\_strata, son)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_boxplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# center of each boxplot}
+\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{father =} \KeywordTok{round}\NormalTok{(father)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{group\_by}\NormalTok{(father) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{son\_conditional\_avg =} \KeywordTok{mean}\NormalTok{(son)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(father, son\_conditional\_avg)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-19-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# calculate values to plot regression line on original data}
+\NormalTok{mu\_x \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father)}
+\NormalTok{mu\_y \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{s\_x \textless{}{-}}\StringTok{ }\KeywordTok{sd}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father)}
+\NormalTok{s\_y \textless{}{-}}\StringTok{ }\KeywordTok{sd}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{r \textless{}{-}}\StringTok{ }\KeywordTok{cor}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father, galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{m \textless{}{-}}\StringTok{ }\NormalTok{r }\OperatorTok{*}\StringTok{ }\NormalTok{s\_y}\OperatorTok{/}\NormalTok{s\_x}
+\NormalTok{b \textless{}{-}}\StringTok{ }\NormalTok{mu\_y }\OperatorTok{{-}}\StringTok{ }\NormalTok{m}\OperatorTok{*}\NormalTok{mu\_x}
+
+\CommentTok{\# add regression line to plot}
+\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(father, son)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_point}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_abline}\NormalTok{(}\DataTypeTok{intercept =}\NormalTok{ b, }\DataTypeTok{slope =}\NormalTok{ m)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-19-3.pdf}
+
+\hypertarget{bivariate-normal-distribution}{%
+\subsection{Bivariate Normal
+Distribution}\label{bivariate-normal-distribution}}
+
+There is a link to the relevant section of the textbook:
+\href{https://rafalab.github.io/dsbook/regression.html\#bivariate-normal-distribution-advanced}{Bivariate
+normal distribution (advanced)}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  When a pair of random variables are approximated by the bivariate
+  normal distribution, scatterplots look like ovals. They can be thin
+  (high correlation) or circle-shaped (no correlation).
+\item
+  When two variables follow a bivariate normal distribution, computing
+  the regression line is equivalent to computing conditional
+  expectations.
+\item
+  We can obtain a much more stable estimate of the conditional
+  expectation by finding the regression line and using it to make
+  predictions.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{galton\_heights }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{z\_father =} \KeywordTok{round}\NormalTok{((father }\OperatorTok{{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(father)) }\OperatorTok{/}\StringTok{ }\KeywordTok{sd}\NormalTok{(father))) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(z\_father }\OperatorTok{\%in\%}\StringTok{ }\DecValTok{{-}2}\OperatorTok{:}\DecValTok{2}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}\StringTok{  }
+\StringTok{  }\KeywordTok{stat\_qq}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ son)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet\_wrap}\NormalTok{( }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{z\_father)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Linear_Regression_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{variance-explained}{%
+\subsection{Variance Explained}\label{variance-explained}}
+
+There is a link to the relevant section of the textbook:
+\href{https://rafalab.github.io/dsbook/regression.html\#variance-explained}{Variance
+explained}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Conditioning on a random variable X can help to reduce variance of
+  response variable Y.
+\item
+  The standard deviation of the conditional distribution is
+  \(\mbox{SD}(Y \mid X=x) = \sigma_y\sqrt{1-\rho^2}\), which is smaller
+  than the standard deviation without conditioning \(\sigma_y\).
+\item
+  Because variance is the standard deviation squared, the variance of
+  the conditional distribution is \(\sigma_y^2(1-\rho^2)\).
+\item
+  In the statement ``X explains such and such percent of the
+  variability,'' the percent value refers to the variance. The variance
+  decreases by \(\rho^2\) percent.
+\item
+  The ``variance explained'' statement only makes sense when the data is
+  approximated by a bivariate normal distribution.
+\end{itemize}
+
+\hypertarget{there-are-two-regression-lines}{%
+\subsection{There are Two Regression
+Lines}\label{there-are-two-regression-lines}}
+
+There is a link to the relevant section of the textbook:
+\href{https://rafalab.github.io/dsbook/regression.html\#warning-there-are-two-regression-lines}{Warning:
+there are two regression lines}
+
+\textbf{Key point}
+
+There are two different regression lines depending on whether we are
+taking the expectation of Y given X or taking the expectation of X given
+Y.
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute a regression line to predict the son\textquotesingle{}s height from the father\textquotesingle{}s height}
+\NormalTok{mu\_x \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father)}
+\NormalTok{mu\_y \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{s\_x \textless{}{-}}\StringTok{ }\KeywordTok{sd}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father)}
+\NormalTok{s\_y \textless{}{-}}\StringTok{ }\KeywordTok{sd}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{r \textless{}{-}}\StringTok{ }\KeywordTok{cor}\NormalTok{(galton\_heights}\OperatorTok{$}\NormalTok{father, galton\_heights}\OperatorTok{$}\NormalTok{son)}
+\NormalTok{m\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{  }\NormalTok{r }\OperatorTok{*}\StringTok{ }\NormalTok{s\_y }\OperatorTok{/}\StringTok{ }\NormalTok{s\_x}
+\NormalTok{b\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{mu\_y }\OperatorTok{{-}}\StringTok{ }\NormalTok{m\_}\DecValTok{1}\OperatorTok{*}\NormalTok{mu\_x}
+
+\CommentTok{\# compute a regression line to predict the father\textquotesingle{}s height from the son\textquotesingle{}s height}
+\NormalTok{m\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{  }\NormalTok{r }\OperatorTok{*}\StringTok{ }\NormalTok{s\_x }\OperatorTok{/}\StringTok{ }\NormalTok{s\_y}
+\NormalTok{b\_}\DecValTok{2}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{mu\_x }\OperatorTok{{-}}\StringTok{ }\NormalTok{m\_}\DecValTok{2}\OperatorTok{*}\NormalTok{mu\_y}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{assessment---stratification-and-variance-explained-part-1}{%
 \subsection{Assessment - Stratification and Variance Explained, Part
 1}\label{assessment---stratification-and-variance-explained-part-1}}
@@ -1019,9 +1307,8 @@ number of at bats per game?
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/88270632-373c7c80-ccd6-11ea-8dec-eb7315a564b1.png}
-\caption{Scatter plot of son and father heights with son heights on the
-y-axis and father heights on the x-axis}
+\includegraphics{images/regression_line_father_son.png}
+\caption{Scatter plot and regression line of son and father heights}
 \end{figure}
 
 \begin{itemize}
