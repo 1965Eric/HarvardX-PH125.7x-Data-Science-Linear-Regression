@@ -546,11 +546,11 @@ b_2 <- mu_x - m_2*mu_y
 - [ ] C. Slope = (correlation coefficient of son and father heights) / (standard deviation of sons’ heights * standard deviation of fathers’ heights)
 - [ ] D. Slope = (mean height of fathers) - (correlation coefficient of son and father heights * mean height of sons).
 
-2. Why does the regression line simplify to a line with intercept zero and slope when we standardize our x and y variables? Try the simplification on your own first!
+2. Why does the regression line simplify to a line with intercept zero and slope $\rho$ when we standardize our x and y variables? Try the simplification on your own first!
 
-- [ ] A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
-- [X] B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = px_i$.
-- [ ] C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i=px_i$.
+- [ ] A. When we standardize variables, both x and y will have a mean of one and a standard deviation of zero. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = \rho x_i$.
+- [X] B. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = \rho x_i$.
+- [ ] C. When we standardize variables, both x and y will have a mean of zero and a standard deviation of one. When you substitute this into the formula for the regression line, the terms cancel out until we have the following equation: $y_i = \rho + x_i$.
 
 3. What is a limitation of calculating conditional means?
 
@@ -559,9 +559,7 @@ b_2 <- mu_x - m_2*mu_y
 - [X] C. Conditional means are less stable than a regression line.
 - [ ] D. Conditional means are a useful theoretical tool but cannot be calculated.
 
-## Assessment 8 - Bivariate Normal Distribution
-
-1. A regression line is the best prediction of Y given we know the value of X when:
+4. A regression line is the best prediction of Y given we know the value of X when:
 
 - [X] A. X and Y follow a bivariate normal distribution.
 - [ ] B. Both X and Y are normally distributed.
@@ -572,23 +570,21 @@ b_2 <- mu_x - m_2*mu_y
 
 - [X] A.
 
-![Scatter plot A](https://user-images.githubusercontent.com/17474099/88281437-f64d6380-cce7-11ea-8401-dc487c96fcd8.png)
+![](5_answer_A.png)
 
 - [ ] B.
 
-![Scatter plot B](https://user-images.githubusercontent.com/17474099/88281550-2dbc1000-cce8-11ea-8fbc-31d4a9f9baf3.png)
+![](5_answer_B.png)
 
 - [ ] C.
 
-![Scatter plot C](https://user-images.githubusercontent.com/17474099/88281645-58a66400-cce8-11ea-9dfa-c39b2114ffa7.png)
+![](5_answer_C.png)
 
 - [ ] D.
 
-![Scatter plot D](https://user-images.githubusercontent.com/17474099/88281807-986d4b80-cce8-11ea-9d0d-719572315c01.png)
+![](5_answer_D.png)
 
-## Assessment 9 - Variance Explained
-
-1. We previously calculated that the correlation coefficient between fathers’ and sons’ heights is 0.5.
+6. We previously calculated that the correlation coefficient between fathers’ and sons’ heights is 0.5.
 
 Given this, what percent of the variation in sons’ heights is explained by fathers’ heights?
 
@@ -596,6 +592,25 @@ Given this, what percent of the variation in sons’ heights is explained by fat
 - [X] B. 25%
 - [ ] C. 50%
 - [ ] D. 75%
+
+When two variables follow a bivariate normal distribution, the variation explained can be calculated as $\rho^2 \times 100$.
+
+7. Suppose the correlation between father and son’s height is 0.5, the standard deviation of fathers’ heights is 2 inches, and the standard deviation of sons’ heights is 3 inches.
+
+Given a one inch increase in a father’s height, what is the predicted change in the son’s height?
+
+- [ ] A. 0.333
+- [ ] B. 0.5
+- [ ] C. 0.667
+- [X] D. 0.75
+- [ ] E. 1
+- [ ] F. 1.5
+
+The slope of the regression line is calculated by multiplying the correlation coefficient by the ratio of the standard deviation of son heights and standard deviation of father heights: $\sigma_{son}/\sigma_{father}$.
+
+## Assessment - Stratification and Variance Explained, Part 2
+
+
 
 ## Linear Models Overview
 
