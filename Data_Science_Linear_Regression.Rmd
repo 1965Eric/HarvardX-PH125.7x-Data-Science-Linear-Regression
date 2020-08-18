@@ -396,6 +396,87 @@ Would you expect the **standard deviation** of our sample correlation to increas
 
 What is the correlation coefficient between number of runs per game and number of at bats per game?
 
+```{r}
+library(Lahman)
+Teams_small <- Teams %>% filter(yearID %in% 1961:2001)
+cor(Teams_small$R/Teams_small$G, Teams_small$AB/Teams_small$G)
+```
+
+8. Use the filtered ```Teams``` data frame from Question 7.
+
+What is the correlation coefficient between win rate (number of wins per game) and number of errors per game?
+
+```{r}
+cor(Teams_small$W/Teams_small$G, Teams_small$E/Teams_small$G)
+```
+
+9. Use the filtered ```Teams``` data frame from Question 7.
+
+What is the correlation coefficient between doubles (```X2B```) per game and triples (```X3B```) per game?
+
+```{r}
+cor(Teams_small$X2B/Teams_small$G, Teams_small$X3B/Teams_small$G)
+```
+
+## Anscombe's Quartet/Stratification
+
+There are three links to relevant sections of the textbook:
+
+* [Correlation is not always a useful summary](https://rafalab.github.io/dsbook/regression.html#correlation-is-not-always-a-useful-summary)
+* [Conditional expectation](https://rafalab.github.io/dsbook/regression.html#conditional-expectation)
+* [The regression line](https://rafalab.github.io/dsbook/regression.html#the-regression-line)
+
+**Key points**
+
+* Correlation is not always a good summary of the relationship between two variables.
+* The general idea of conditional expectation is that we stratify a population into groups and compute summaries in each group.
+* A practical way to improve the estimates of the conditional expectations is to define strata of with similar values of x.
+* If there is perfect correlation, the regression line predicts an increase that is the same number of SDs for both variables. If there is 0 correlation, then we don’t use x at all for the prediction and simply predict the average $\mu_y$. For values between 0 and 1, the prediction is somewhere in between. If the correlation is negative, we predict a reduction instead of an increase.
+
+*Code
+
+```{r}
+# number of fathers with height 72 or 72.5 inches
+sum(galton_heights$father == 72)
+sum(galton_heights$father == 72.5)
+
+# predicted height of a son with a 72 inch tall father
+conditional_avg <- galton_heights %>%
+    filter(round(father) == 72) %>%
+    summarize(avg = mean(son)) %>%
+    pull(avg)
+conditional_avg
+
+# stratify fathers' heights to make a boxplot of son heights
+galton_heights %>% mutate(father_strata = factor(round(father))) %>%
+    ggplot(aes(father_strata, son)) +
+    geom_boxplot() +
+    geom_point()
+
+# center of each boxplot
+galton_heights %>%
+    mutate(father = round(father)) %>%
+    group_by(father) %>%
+    summarize(son_conditional_avg = mean(son)) %>%
+    ggplot(aes(father, son_conditional_avg)) +
+    geom_point()
+
+# calculate values to plot regression line on original data
+mu_x <- mean(galton_heights$father)
+mu_y <- mean(galton_heights$son)
+s_x <- sd(galton_heights$father)
+s_y <- sd(galton_heights$son)
+r <- cor(galton_heights$father, galton_heights$son)
+m <- r * s_y/s_x
+b <- mu_y - m*mu_x
+
+# add regression line to plot
+galton_heights %>%
+    ggplot(aes(father, son)) +
+    geom_point(alpha = 0.5) +
+    geom_abline(intercept = b, slope = m)
+```
+
 ## Assessment - Stratification and Variance Explained, Part 1
 
 1. Look at the figure below. The slope of the regression line in this figure is equal to what, in words?
