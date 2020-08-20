@@ -1,10 +1,10 @@
 ---
 title: "Data Science Linear Regression"
 output:
-  word_document: default
   pdf_document:
     latex_engine: xelatex
   html_document: default
+  word_document: default
 urlcolor: blue
 ---
 
@@ -257,7 +257,6 @@ The corresponding textbook section is [Case Study: is height hereditary?](https:
 # create the dataset
 if(!require(HistData)) install.packages("HistData")
 
-library(tidyverse)
 library(HistData)
 data("GaltonFamilies")
 set.seed(1983)
@@ -296,7 +295,6 @@ rho <- mean(scale(x)*scale(y))
 ```
 
 ```{r}
-data("GaltonFamilies")
 galton_heights <- GaltonFamilies %>% filter(childNum == 1 & gender == "male") %>% select(father, childHeight) %>% rename(son = childHeight)
 galton_heights %>% summarize(r = cor(father, son)) %>% pull(r)
 ```
@@ -399,7 +397,6 @@ Would you expect the **standard deviation** of our sample correlation to increas
 What is the correlation coefficient between number of runs per game and number of at bats per game?
 
 ```{r}
-library(Lahman)
 Teams_small <- Teams %>% filter(yearID %in% 1961:2001)
 cor(Teams_small$R/Teams_small$G, Teams_small$AB/Teams_small$G)
 ```
@@ -624,8 +621,6 @@ Define ```female_heights```, a set of mother and daughter heights sampled from `
 
 ```{r}
 set.seed(1989, sample.kind="Rounding") #if you are using R 3.6 or later
-library(HistData)
-data("GaltonFamilies")
 
 female_heights <- GaltonFamilies%>%     
     filter(gender == "female") %>%     
@@ -975,6 +970,8 @@ lse <- replicate(B, {
 lse <- data.frame(beta_0 = lse[1,], beta_1 = lse[2,]) 
 
 # Plot the distribution of beta_0 and beta_1
+if(!require(gridExtra)) install.packages("gridExtra")
+
 library(gridExtra)
 p1 <- lse %>% ggplot(aes(beta_0)) + geom_histogram(binwidth = 5, color = "black") 
 p2 <- lse %>% ggplot(aes(beta_1)) + geom_histogram(binwidth = 0.1, color = "black") 
@@ -1353,7 +1350,7 @@ Which team scores more runs, as predicted by our model?
 - [X] B. There was one position where it was particularly difficult to see the dropped ball. 
 - [ ] C. The experiment was only repeated 10 times, not 100 times.
 
-# Section3 - Confounding Overview
+# Section 3 - Confounding Overview
 
 In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
 
