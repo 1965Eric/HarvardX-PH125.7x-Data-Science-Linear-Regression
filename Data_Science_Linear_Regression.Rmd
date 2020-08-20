@@ -1131,7 +1131,7 @@ What does the central limit theorem tell us about the variables beta_0 and beta_
 5. In an earlier video, we ran the following linear model and looked at a summary of the results.
 
 ```{r, eval=FALSE, echo=TRUE}
-$\beta_0 $
+$\beta_0$
 > mod <- lm(son ~ father, data = galton_heights)
 > summary(mod)
 
@@ -1148,7 +1148,7 @@ Coefficients:
 father           0.5028     0.0653       7.70    9.5e-13 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-$\beta_0 $
+$\beta_0$
 ```
 
 What null hypothesis is the second p-value (the one in the father row) testing?
@@ -1156,7 +1156,6 @@ What null hypothesis is the second p-value (the one in the father row) testing?
 - [ ] A. $\beta_1 = 1$, where $\beta_1$ is the coefficient for the variable “father.”
 - [ ] B. $\beta_1 = 0.503$, where $\beta_1$ is the coefficient for the variable “father.”
 - [X] C. $\beta_1 = 0$, where $\beta_1$ is the coefficient for the variable "father."
-
 
 6. Which R code(s) below would properly plot the predictions and confidence intervals for our linear model of sons’ heights?
 
@@ -1242,7 +1241,7 @@ fit$coef[1]
 What is the predicted height of the first mother in the dataset?
 
 ```{r}
-predict(fit, se.fit = TRUE)[1]
+predict(fit)[1]
 ```
 
 What is the actual height of the first mother in the dataset?
