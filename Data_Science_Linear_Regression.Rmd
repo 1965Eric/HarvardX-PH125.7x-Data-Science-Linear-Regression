@@ -1333,13 +1333,178 @@ fit_bb <- lm(bb ~ mean_bb, data = dat)
 fit_bb$coef[2]
 ```
 
-## Assessment 8 - Advanced dplyr: Tibbles
+## Advanced dplyr: Tibbles
 
-1. What problem do we encounter when we try to run a linear model on our baseball data, grouping by home runs?
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse)
 
-- [ ] A. There is not enough data in some levels to run the model. 
-- [X] B. The ```lm``` function does not know how to handle grouped tibbles. 
-- [ ] C. The results of the ```lm``` function cannot be put into a tidy format.
+**Key points**
+
+* Tibbles can be regarded as a modern version of data frames and are the default data structure in the tidyverse.
+* Some functions that do not work properly with data frames do work with tibbles.
+
+*Code*
+
+```{r}
+# stratify by HR
+dat <- Teams %>% filter(yearID %in% 1961:2001) %>%
+  mutate(HR = round(HR/G, 1), 
+         BB = BB/G,
+         R = R/G) %>%
+  select(HR, BB, R) %>%
+  filter(HR >= 0.4 & HR<=1.2)
+  
+# calculate slope of regression lines to predict runs by BB in different HR strata
+dat %>%  
+  group_by(HR) %>%
+  summarize(slope = cor(BB,R)*sd(R)/sd(BB))
+  
+# use lm to get estimated slopes - lm does not work with grouped tibbles
+dat %>%  
+  group_by(HR) %>%
+  lm(R ~ BB, data = .) %>%
+  .$coef
+  
+# inspect a grouped tibble
+dat %>% group_by(HR) %>% head()
+dat %>% group_by(HR) %>% class()
+```
+
+## Tibbles: Differences from Data Frames
+
+**Key points**
+
+* Tibbles are more readable than data frames.
+* If you subset a data frame, you may not get a data frame. If you subset a tibble, you always get a tibble.
+* Tibbles can hold more complex objects such as lists or functions.
+* Tibbles can be grouped.
+
+*Code*
+
+```{r}
+# inspect data frame and tibble
+Teams
+as_tibble(Teams)
+# Note that the function was formerly called as.tibble()
+
+# subsetting a data frame sometimes generates vectors
+class(Teams[,20])
+
+# subsetting a tibble always generates tibbles
+class(as_tibble(Teams[,20]))
+
+# pulling a vector out of a tibble
+class(as_tibble(Teams)$HR)
+
+# access a non-existing column in a data frame or a tibble
+Teams$hr
+as_tibble(Teams)$HR
+
+# create a tibble with complex objects
+tibble(id = c(1, 2, 3), func = c(mean, median, sd))
+```
+
+## do
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse)
+
+**Key points**
+
+* The ```do()``` function serves as a bridge between R functions, such as ```lm()```, and the tidyverse.
+* We have to specify a column when using the ```do()``` function, otherwise we will get an error.
+* If the data frame being returned has more than one row, the rows will be concatenated appropriately.
+
+*Code*
+
+```{r}
+# use do to fit a regression line to each HR stratum
+dat %>%  
+    group_by(HR) %>%
+    do(fit = lm(R ~ BB, data = .))
+    
+# using do without a column name gives an error
+dat %>%
+    group_by(HR) %>%
+    do(lm(R ~ BB, data = .))
+
+# define a function to extract slope from lm
+get_slope <- function(data){
+  fit <- lm(R ~ BB, data = data)
+  data.frame(slope = fit$coefficients[2], 
+             se = summary(fit)$coefficient[2,2])
+}
+
+# return the desired data frame
+dat %>%  
+  group_by(HR) %>%
+  do(get_slope(.))
+  
+# not the desired output: a column containing data frames
+dat %>%  
+  group_by(HR) %>%
+  do(slope = get_slope(.))
+  
+# data frames with multiple rows will be concatenated appropriately
+get_lse <- function(data){
+  fit <- lm(R ~ BB, data = data)
+  data.frame(term = names(fit$coefficients),
+    estimate = fit$coefficients, 
+    se = summary(fit)$coefficient[,2])
+}
+
+dat %>%  
+  group_by(HR) %>%
+  do(get_lse(.))
+```
+
+## broom
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-broom-package)
+
+**Key points**
+
+* The **broom** package has three main functions, all of which extract information from the object returned by **lm** and return it in a **tidyverse** friendly data frame.
+* The ```tidy()``` function returns estimates and related information as a data frame.
+* The functions ```glance()``` and ```augment()``` relate to model specific and observation specific outcomes respectively.
+
+*Code*
+
+```{r}
+# use tidy to return lm estimates and related information as a data frame
+library(broom)
+fit <- lm(R ~ BB, data = dat)
+tidy(fit)
+
+# add confidence intervals with tidy
+tidy(fit, conf.int = TRUE)
+
+# pipeline with lm, do, tidy
+dat %>%  
+  group_by(HR) %>%
+  do(tidy(lm(R ~ BB, data = .), conf.int = TRUE)) %>%
+  filter(term == "BB") %>%
+  select(HR, estimate, conf.low, conf.high)
+  
+# make ggplots
+dat %>%  
+  group_by(HR) %>%
+  do(tidy(lm(R ~ BB, data = .), conf.int = TRUE)) %>%
+  filter(term == "BB") %>%
+  select(HR, estimate, conf.low, conf.high) %>%
+  ggplot(aes(HR, y = estimate, ymin = conf.low, ymax = conf.high)) +
+  geom_errorbar() +
+  geom_point()
+  
+# inspect with glance
+glance(fit)
+```
+
+## Assessment - Tibbles, do, and broom, part 1
+
+1. As seen in the videos, what problem do we encounter when we try to run a linear model on our baseball data, grouping by home runs?
+
+- [ ] A. There is not enough data in some levels to run the model.
+- [X] B. The ```lm()``` function does not know how to handle grouped tibbles.
+- [ ] C. The results of the ```lm()``` function cannot be put into a tidy format.
 
 2. Tibbles are similar to what other class in R?
 
@@ -1348,27 +1513,24 @@ fit_bb$coef[2]
 - [X] C. Data frames
 - [ ] D. Lists
 
-## Assessment 9 - Tibbles: Differences from Data Frames
-
-1. What are some advantages of tibbles compared to data frames?
+3. What are some advantages of tibbles compared to data frames?
 
 - [X] A. Tibbles display better.
 - [X] B. If you subset a tibble, you always get back a tibble.
 - [X] C. Tibbles can have complex entries.
 - [X] D. Tibbles can be grouped.
 
-## Assessment 10 - do
-
-1. What are two advantages of the do command, when applied to the tidyverse?
+4. What are two advantages of the do command, when applied to the tidyverse?
 
 - [ ] A. It is faster than normal functions.
 - [ ] B. It returns useful error messages.
 - [X] C. It understands grouped tibbles.
 - [X] D. It always returns a data.frame.
 
-2. You want to take the tibble dat, which we’ve been using in this video, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.
+5. You want to take the tibble dat, which we’ve been using in this video, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.
 
 You’ve already written the function ```get_slope```, shown below.
+
 ```{r, eval=FALSE, echo=TRUE}
 get_slope <- function(data) {
   fit <- lm(R ~ BB, data = data)
