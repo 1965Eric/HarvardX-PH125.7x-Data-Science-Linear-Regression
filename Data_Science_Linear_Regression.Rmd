@@ -1250,6 +1250,89 @@ What is the actual height of the first mother in the dataset?
 female_heights$mother[1]
 ```
 
+We have shown how BB and singles have similar predictive power for scoring runs. Another way to compare the usefulness of these baseball metrics is by assessing how stable they are across the years. Because we have to pick players based on their previous performances, we will prefer metrics that are more stable. In these exercises, we will compare the stability of singles and BBs.
+
+Before we get started, we want to generate two tables: one for 2002 and another for the average of 1999-2001 seasons. We want to define per plate appearance statistics, keeping only players with more than 100 plate appearances. Here is how we create the 2002 table:
+
+```{r}
+bat_02 <- Batting %>% filter(yearID == 2002) %>%
+    mutate(pa = AB + BB, singles = (H - X2B - X3B - HR)/pa, bb = BB/pa) %>%
+    filter(pa >= 100) %>%
+    select(playerID, singles, bb)
+```
+
+9. Now compute a similar table but with rates computed over 1999-2001. Keep only rows from 1999-2001 where players have 100 or more plate appearances, calculate each player's single rate and BB rate per season, then calculate the average single rate (```mean_singles```) and average BB rate (```mean_bb```) per player over those three seasons.
+
+How many players had a single rate ```mean_singles``` of greater than 0.2 per plate appearance over 1999-2001?
+
+```{r}
+bat_99_01 <- Batting %>% filter(yearID %in% 1999:2001) %>%
+    mutate(pa = AB + BB, singles = (H - X2B - X3B - HR)/pa, bb = BB/pa) %>%
+    filter(pa >= 100) %>%
+    group_by(playerID) %>%
+    summarize(mean_singles = mean(singles), mean_bb = mean(bb))
+    
+sum(bat_99_01$mean_singles > 0.2)
+```
+
+How many players had a BB rate ```mean_bb``` of greater than 0.2 per plate appearance over 1999-2001?
+
+```{r}
+sum(bat_99_01$mean_bb > 0.2)
+```
+
+10. Use ```inner_join()``` to combine the ```bat_02`` table with the table of 1999-2001 rate averages you created in the previous question.
+
+What is the correlation between 2002 singles rates and 1999-2001 average singles rates?
+
+```{r}
+dat <- inner_join(bat_02, bat_99_01)
+
+cor(dat$singles, dat$mean_singles)
+```
+
+What is the correlation between 2002 BB rates and 1999-2001 average BB rates?
+
+```{r}
+cor(dat$bb, dat$mean_bb)
+```
+
+11. Make scatterplots of ```mean_singles``` versus ```singles``` and ```mean_bb``` versus ```bb```.
+
+Are either of these distributions bivariate normal?
+
+```{r}
+dat %>%
+    ggplot(aes(singles, mean_singles)) +
+    geom_point()
+dat %>%
+    ggplot(aes(bb, mean_bb)) +
+    geom_point()
+```
+
+- [ ] A. Neither distribution is bivariate normal.
+- [ ] B. ```singles``` and ```mean_singles``` are bivariate normal, but ```bb``` and ```mean_bb``` are not.
+- [ ] C. ```bb``` and ```mean_bb``` are bivariate normal, but ```singles``` and ```mean_singles``` are not.
+- [X] D. Both distributions are bivariate normal.
+
+12. Fit a linear model to predict 2002 ```singles``` given 1999-2001 ```mean_singles```.
+
+What is the coefficient of ```mean_singles```, the slope of the fit?
+
+```{r}
+fit_singles <- lm(singles ~ mean_singles, data = dat)
+fit_singles$coef[2]
+```
+
+Fit a linear model to predict 2002 ```bb``` given 1999-2001 ```mean_bb```.
+
+What is the coefficient of ```mean_bb```, the slope of the fit?
+
+```{r}
+fit_bb <- lm(bb ~ mean_bb, data = dat)
+fit_bb$coef[2]
+```
+
 ## Assessment 8 - Advanced dplyr: Tibbles
 
 1. What problem do we encounter when we try to run a linear model on our baseball data, grouping by home runs?
