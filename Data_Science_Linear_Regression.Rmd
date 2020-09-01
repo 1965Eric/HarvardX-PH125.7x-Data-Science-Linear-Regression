@@ -1,10 +1,10 @@
 ---
 title: "Data Science Linear Regression"
 output:
-  word_document: default
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  word_document: default
+  html_document: default
 urlcolor: blue
 ---
 
@@ -1382,7 +1382,7 @@ dat %>% group_by(HR) %>% class()
 
 ```{r}
 # inspect data frame and tibble
-Teams
+head(Teams)
 as_tibble(Teams)
 # Note that the function was formerly called as.tibble()
 
@@ -1420,12 +1420,16 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 dat %>%  
     group_by(HR) %>%
     do(fit = lm(R ~ BB, data = .))
-    
+```
+
+```{r, eval=FALSE, echo=TRUE}    
 # using do without a column name gives an error
 dat %>%
     group_by(HR) %>%
     do(lm(R ~ BB, data = .))
+```
 
+```{r}
 # define a function to extract slope from lm
 get_slope <- function(data){
   fit <- lm(R ~ BB, data = data)
