@@ -1908,6 +1908,14 @@ players %>% mutate(BB = my_scale(BB),
     arrange(desc(R_hat))
 ```
 
+## On Base Plus Slugging (OPS)
+
+**Key point**
+
+The on-base-percentage plus slugging percentage (OPS) metric is:
+
+$\frac{\mbox{BB}}{\mbox{PA}} + \frac{(\mbox{Singles} + 2\mbox{Doubles} + 3\mbox{Triples} + 4\mbox{HR})}{\mbox{AB}}$
+
 ## Assessment 12 - Building a Better Offensive Metric for Baseball
 
 1. What is the final linear model we use to predict runs scored per game?
