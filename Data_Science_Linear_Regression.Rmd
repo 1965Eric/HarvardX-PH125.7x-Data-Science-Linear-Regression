@@ -1854,6 +1854,8 @@ players %>% ggplot(aes(salary, R_hat, color = POS)) +
   scale_x_log10()
   
 # remake plot without players that debuted after 1998
+if(!require(lubridate)) install.packages("lubridate")
+
 library(lubridate)
 players %>% filter(year(debut) < 1998) %>%
  ggplot(aes(salary, R_hat, color = POS)) + 
