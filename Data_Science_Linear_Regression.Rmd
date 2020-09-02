@@ -1668,7 +1668,7 @@ galton <- GaltonFamilies %>%
 galton
 ```
 
-8. Group by ```pair`` and summarize the number of observations in each group.
+8. Group by ```pair``` and summarize the number of observations in each group.
 
 How many father-daughter pairs are in the dataset?
 
@@ -1726,6 +1726,13 @@ galton %>%
 
 10b. Which sets of parent-child heights are significantly correlated at a p-value cut off of .05?
 
+```{r}
+galton %>%
+    group_by(pair) %>%
+    do(tidy(lm(childHeight ~ parentHeight, data = .), conf.int = TRUE)) %>%
+    filter(term == "parentHeight" & p.value < .05)
+```
+
 - [X] A. father-daughter
 - [X] B. father-son
 - [X] C. mother-daughter
@@ -1733,7 +1740,7 @@ galton %>%
 
 Which of the following statements are true?
 
-- [X] A. fAll of the confidence intervals overlap each other.
+- [X] A. All of the confidence intervals overlap each other.
 - [ ] B. At least one confidence interval covers zero.
 - [X] C. The confidence intervals involving mothers' heights are larger than the confidence intervals involving fathers' heights.
 - [ ] D. The confidence intervals involving daughters' heights are larger than the confidence intervals involving sons' heights.
