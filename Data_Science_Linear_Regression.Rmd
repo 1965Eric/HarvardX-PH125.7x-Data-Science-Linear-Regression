@@ -1474,6 +1474,8 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ```{r}
 # use tidy to return lm estimates and related information as a data frame
+if(!require(broom)) install.packages("broom")
+
 library(broom)
 fit <- lm(R ~ BB, data = dat)
 tidy(fit)
@@ -1644,6 +1646,99 @@ dat %>%
 ```
 
 ## Assessment - Tibbles, do, and broom, part 2
+
+We have investigated the relationship between fathers' heights and sons' heights. But what about other parent-child relationships? Does one parent's height have a stronger association with child height? How does the child's gender affect this relationship in heights? Are any differences that we observe statistically significant?
+
+The ```galton``` dataset is a sample of one male and one female child from each family in the ```GaltonFamilies``` dataset. The ```pair``` column denotes whether the pair is father and daughter, father and son, mother and daughter, or mother and son.
+
+Create the ```galton``` dataset using the code below:
+
+```{r}
+data("GaltonFamilies")
+set.seed(1) # if you are using R 3.5 or earlier
+set.seed(1, sample.kind = "Rounding") # if you are using R 3.6 or later
+galton <- GaltonFamilies %>%
+    group_by(family, gender) %>%
+    sample_n(1) %>%
+    ungroup() %>% 
+    gather(parent, parentHeight, father:mother) %>%
+    mutate(child = ifelse(gender == "female", "daughter", "son")) %>%
+    unite(pair, c("parent", "child"))
+
+galton
+```
+
+8. Group by ```pair`` and summarize the number of observations in each group.
+
+How many father-daughter pairs are in the dataset?
+
+How many mother-son pairs are in the dataset?
+
+```{r}
+galton %>%
+    group_by(pair) %>%
+    summarize(n = n())
+```
+
+9. Calculate the correlation coefficients for fathers and daughters, fathers and sons, mothers and daughters and mothers and sons.
+
+Which pair has the **strongest** correlation in heights?
+
+```{r}
+galton %>%
+    group_by(pair) %>%
+    summarize(cor = cor(parentHeight, childHeight)) %>%
+    filter(cor == max(cor))
+```
+
+Which pair has the **weakest** correlation in heights?
+
+```{r}
+galton %>%
+    group_by(pair) %>%
+    summarize(cor = cor(parentHeight, childHeight)) %>%
+    filter(cor == min(cor))
+```
+
+Question 10 has two parts. The information here applies to both parts.
+
+Use ```lm()``` and the **broom** package to fit regression lines for each parent-child pair type. Compute the least squares estimates, standard errors, confidence intervals and p-values for the ```parentHeight``` coefficient for each pair.
+
+10a. What is the estimate of the father-daughter coefficient?
+
+```{r}
+galton %>%
+    group_by(pair) %>%
+    do(tidy(lm(childHeight ~ parentHeight, data = .), conf.int = TRUE)) %>%
+    filter(term == "parentHeight", pair == "father_daughter") %>%
+    pull(estimate)
+```
+
+For every 1-inch increase in mother's height, how many inches does the typical son's height increase?
+
+```{r}
+galton %>%
+    group_by(pair) %>%
+    do(tidy(lm(childHeight ~ parentHeight, data = .), conf.int = TRUE)) %>%
+    filter(term == "parentHeight", pair == "mother_son") %>%
+    pull(estimate)
+```
+
+10b. Which sets of parent-child heights are significantly correlated at a p-value cut off of .05?
+
+- [X] A. father-daughter
+- [X] B. father-son
+- [X] C. mother-daughter
+- [X] D. mother-son
+
+Which of the following statements are true?
+
+- [X] A. fAll of the confidence intervals overlap each other.
+- [ ] B. At least one confidence interval covers zero.
+- [X] C. The confidence intervals involving mothers' heights are larger than the confidence intervals involving fathers' heights.
+- [ ] D. The confidence intervals involving daughters' heights are larger than the confidence intervals involving sons' heights.
+- [X] E. The data are consistent with inheritance of height being independent of the child's gender. 
+- [X] F. The data are consistent with inheritance of height being independent of the parent's gender.
 
 
 
