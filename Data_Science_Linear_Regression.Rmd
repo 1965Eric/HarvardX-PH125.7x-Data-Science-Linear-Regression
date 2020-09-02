@@ -1531,11 +1531,11 @@ glance(fit)
 - [X] C. It understands grouped tibbles.
 - [X] D. It always returns a data.frame.
 
-5. You want to take the tibble dat, which we’ve been using in this video, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.
+5. You want to take the tibble ```dat```, which we used in the video on the ```do()``` function, and run the linear model R ~ BB for each strata of HR. Then you want to add three new columns to your grouped tibble: the coefficient, standard error, and p-value for the BB term in the model.
 
-You’ve already written the function ```get_slope```, shown below.
+You’ve already written the function ```get_slope()```, shown below.
 
-```{r, eval=FALSE, echo=TRUE}
+```{r}
 get_slope <- function(data) {
   fit <- lm(R ~ BB, data = data)
   sum.fit <- summary(fit)
@@ -1548,72 +1548,104 @@ get_slope <- function(data) {
 
 What additional code could you write to accomplish your goal?
 
+```{r}
+dat %>% 
+  group_by(HR) %>% 
+  do(get_slope(.))
+```
+
 - [ ] A.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(HR) %>% 
   do(get_slope)
 ```
+
 - [X] B.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(HR) %>% 
   do(get_slope(.))
 ```
+
 - [ ] C.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(HR) %>% 
   do(slope = get_slope(.))
 ```
+
 - [ ] D.
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   do(get_slope(.))
 ```
 
-## Assessment 11 - broom
-
-1. The output of a broom function is always what?
+6. The output of a broom function is always what?
 
 - [X] A. A data.frame
 - [ ] B. A list
 - [ ] C. A vector
 
-2. You want to know whether the relationship between home runs and runs per game varies by baseball league. You create the following dataset:
-```{r, eval=FALSE, echo=TRUE}
+7. You want to know whether the relationship between home runs and runs per game varies by baseball league. 
+
+You create the following dataset:
+
+```{r}
 dat <- Teams %>% filter(yearID %in% 1961:2001) %>%
   mutate(HR = HR/G,
          R = R/G) %>%
   select(lgID, HR, BB, R)
 ```
+
 What code would help you quickly answer this question?
 
+```{r}
+dat %>% 
+  group_by(lgID) %>% 
+  do(tidy(lm(R ~ HR, data = .), conf.int = T)) %>% 
+  filter(term == "HR")
+```
+
 - [X] A.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(lgID) %>% 
   do(tidy(lm(R ~ HR, data = .), conf.int = T)) %>% 
   filter(term == "HR")
 ```
+
 - [ ] B.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(lgID) %>% 
   do(glance(lm(R ~ HR, data = .)))
 ```
+
 - [ ] C.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   do(tidy(lm(R ~ HR, data = .), conf.int = T)) %>% 
   filter(term == "HR")
 ```
+
 - [ ] D.
+
 ```{r, eval=FALSE, echo=TRUE}
 dat %>% 
   group_by(lgID) %>% 
   do(mod = lm(R ~ HR, data = .))
 ```
+
+## Assessment - Tibbles, do, and broom, part 2
+
+
 
 ## Assessment 12 - Building a Better Offensive Metric for Baseball
 
