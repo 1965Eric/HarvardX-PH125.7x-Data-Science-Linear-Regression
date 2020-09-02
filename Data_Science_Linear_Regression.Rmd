@@ -2063,7 +2063,7 @@ The code to see the summary statistic of the regression:
 tidy(fit, conf.int = TRUE)
 ```
 
-## Assessment 12 - Building a Better Offensive Metric for Baseball
+## Assessment - Regression and Baseball, part 1
 
 1. What is the final linear model we use to predict runs scored per game?
 
@@ -2097,42 +2097,40 @@ Which team scores more runs, as predicted by our model?
 - [ ] C. Tie
 - [ ] D. Impossible to know
 
-## Assessment 13 - On Base Plus Slugging (OPS)
-
-1. The on-base-percentage plus slugging percentage (OPS) metric gives the most weight to:
+4. The on-base-percentage plus slugging percentage (OPS) metric gives the most weight to:
 
 - [ ] A. Singles
 - [ ] B. Doubles
 - [ ] C. Triples
 - [X] D. Home Runs
 
-## Assessment 14 - Regression Fallacy
-
-1. What statistical concept properly explains the “sophomore slump”?
+5. What statistical concept properly explains the “sophomore slump”?
 
 - [X] A. Regression to the mean
 - [ ] B. Law of averages
 - [ ] C. Normal distribution
 
-## Assessment 15 - Measurement Error Models
-
-1. In our model of time vs. observed_distance, the randomness of our data was due to:
+6. In our model of time vs. observed_distance, the randomness of our data was due to:
 
 - [ ] A. sampling 
 - [ ] B. natural variability 
 - [X] C. measurement error
 
-2. Which of the following are important assumptions about the measurement errors in this experiment?
+7. Which of the following are important assumptions about the measurement errors in this experiment?
 
 - [X] A. The measurement error is random
 - [X] B. The measurement error is independent
 - [X] C. The measurement error has the same distribution for each time i
 
-3. Which of the following scenarios would violate an assumption of our measurement error model?
+8. Which of the following scenarios would violate an assumption of our measurement error model?
 
 - [ ] A. The experiment was conducted on the moon. 
 - [X] B. There was one position where it was particularly difficult to see the dropped ball. 
 - [ ] C. The experiment was only repeated 10 times, not 100 times.
+
+## Assessment - Regression and Baseball, part 2
+
+
 
 # Section 3 - Confounding Overview
 
