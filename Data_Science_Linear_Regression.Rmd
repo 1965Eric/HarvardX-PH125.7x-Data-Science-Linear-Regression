@@ -2065,7 +2065,7 @@ tidy(fit, conf.int = TRUE)
 
 ## Assessment - Regression and Baseball, part 1
 
-1. What is the final linear model we use to predict runs scored per game?
+1. What is the final linear model (in the video "Building a Better Offensive Metric for Baseball") we used to predict runs scored per game?
 
 - [ ] A. ```lm(R ~ BB + HR)```
 - [ ] B. ```lm(HR ~ BB + singles + doubles + triples)```
@@ -2074,7 +2074,8 @@ tidy(fit, conf.int = TRUE)
 
 2. We want to estimate runs per game scored by individual players, not just by teams. What summary metric do we calculate to help estimate this?
 
-Look at the code from the video for a hint:
+Look at the code from the video "Building a Metter Offensive Metric for Baseball" for a hint:
+
 ```{r, eval=FALSE, echo=TRUE}
 pa_per_game <- Batting %>% 
   filter(yearID == 2002) %>% 
@@ -2110,7 +2111,7 @@ Which team scores more runs, as predicted by our model?
 - [ ] B. Law of averages
 - [ ] C. Normal distribution
 
-6. In our model of time vs. observed_distance, the randomness of our data was due to:
+6. In our model of time vs. observed_distance in the video "Measurement Error Models", the randomness of our data was due to:
 
 - [ ] A. sampling 
 - [ ] B. natural variability 
@@ -2130,7 +2131,93 @@ Which team scores more runs, as predicted by our model?
 
 ## Assessment - Regression and Baseball, part 2
 
+Question 9 has two parts. Use the information below to answer both parts.
 
+Use the ```Teams``` data frame from the **Lahman** package. Fit a multivariate linear regression model to obtain the effects of BB and HR on Runs (**R**) in 1971. Use the ```tidy()``` function in the **broom** package to obtain the results in a data frame.
+
+9a. What is the estimate for the effect of BB on runs? 
+
+```{r}
+Teams %>%
+    filter(yearID == 1971) %>%
+    lm(R ~ BB + HR, data = .) %>%
+    tidy() %>%
+    filter(term == "BB") %>%
+    pull(estimate)
+```
+
+What is the estimate for the effect of HR on runs?
+
+```{r}
+Teams %>%
+    filter(yearID == 1971) %>%
+    lm(R ~ BB + HR, data = .) %>%
+    tidy() %>%
+    filter(term == "HR") %>%
+    pull(estimate)
+```
+
+9b. Interpret the p-values for the estimates using a cutoff of 0.05.
+
+Which of the following is the correct interpretation?
+
+```{r}
+fit <- Teams %>% filter(yearID %in% 1971) %>% 
+mutate(BB = BB/G, HR = HR/G,  R = R/G) %>%  
+lm(R ~ BB + HR, data = .)
+
+tidy(fit, conf.int = TRUE)
+```
+
+- [ ] A. Both BB and HR have a nonzero effect on runs.
+- [X] B. HR has a significant effect on runs, but the evidence is not strong enough to suggest BB also does.
+- [ ] C. BB has a significant effect on runs, but the evidence is not strong enough to suggest HR also does.
+- [ ] D. Neither BB nor HR have a statistically significant effect on runs.
+
+10. Repeat the above exercise to find the effects of BB and HR on runs (```R```) for every year from 1961 to 2018 using ```do()``` and the **broom** package.
+
+Make a scatterplot of the estimate for the effect of BB on runs over time and add a trend line with confidence intervals.
+
+```{r}
+res <- Teams %>%
+    filter(yearID %in% 1961:2018) %>%
+    group_by(yearID) %>%
+    do(tidy(lm(R ~ BB + HR, data = .))) %>%
+    ungroup() 
+res %>%
+    filter(term == "BB") %>%
+    ggplot(aes(yearID, estimate)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+```
+
+Fill in the blank to complete the statement:
+
+The effect of BB on runs has **increased** over time.
+
+11. Fit a linear model on the results from Question 10 to determine the effect of year on the impact of BB.
+
+For each additional year, by what value does the impact of BB on runs change?
+
+```{r}
+res %>%
+    filter(term == "BB") %>%
+    lm(estimate ~ yearID, data = .) %>%
+    tidy() %>%
+    filter(term == "yearID") %>%
+    pull(estimate)
+```
+
+What is the p-value for this effect?
+
+```{r}
+res %>%
+    filter(term == "BB") %>%
+    lm(estimate ~ yearID, data = .) %>%
+    tidy() %>%
+    filter(term == "yearID") %>%
+    pull(p.value)
+```
 
 # Section 3 - Confounding Overview
 
