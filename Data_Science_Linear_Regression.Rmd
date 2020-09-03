@@ -2219,6 +2219,80 @@ res %>%
     pull(p.value)
 ```
 
+## Assessment - Linear Models
+
+This assessment has 6 multi-part questions that will all use the setup below.
+
+Game attendance in baseball varies partly as a function of how well a team is playing.
+
+Load the **Lahman** library. The ```Teams``` data frame contains an ```attendance``` column. This is the total attendance for the season. To calculate average attendance, divide by the number of games played, as follows:
+
+```{r}
+Teams_small <- Teams %>% 
+    filter(yearID %in% 1961:2001) %>% 
+    mutate(avg_attendance = attendance/G)
+```
+
+Use linear models to answer the following 3-part question about ```Teams_small```.
+
+1a. Use runs (```R```) per game to predict average attendance.
+
+For every 1 run scored per game, average attendance increases by how much?
+
+```{r}
+# find regression line predicting attendance from R and take slope
+Teams_small %>% 
+  mutate(R_per_game = R/G) %>% 
+  lm(avg_attendance ~ R_per_game, data = .) %>% 
+  .$coef %>%
+  .[2]
+```
+
+Use home runs (```HR```) per game to predict average attendance.
+
+For every 1 home run hit per game, average attendance increases by how much?
+
+```{r}
+Teams_small %>% 
+  mutate(HR_per_game = HR/G) %>% 
+  lm(avg_attendance ~ HR_per_game, data = .) %>% 
+  .$coef %>%
+  .[2]
+```
+
+1b. Use number of wins to predict average attendance; do not normalize for number of games.
+
+For every game won in a season, how much does average attendance increase?
+
+```{r}
+Teams_small %>% 
+  lm(avg_attendance ~ W, data = .) %>%
+  .$coef %>%
+  .[2]
+```
+
+Suppose a team won zero games in a season.
+
+Predict the average attendance.
+
+```{r}
+Teams_small %>% 
+  lm(avg_attendance ~ W, data = .) %>% 
+  .$coef %>%
+  .[1]
+```
+
+1c. Use year to predict average attendance.
+
+How much does average attendance increase each year?
+
+```{r}
+Teams_small %>% 
+  lm(avg_attendance ~ yearID, data = .) %>% 
+  .$coef %>%
+  .[2]
+```
+
 # Section 3 - Confounding Overview
 
 In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
