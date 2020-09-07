@@ -2293,6 +2293,80 @@ Teams_small %>%
   .[2]
 ```
 
+2. Game wins, runs per game and home runs per game are positively correlated with attendance. We saw in the course material that runs per game and home runs per game are correlated with each other. Are wins and runs per game or wins and home runs per game correlated?
+
+What is the correlation coefficient for wins and runs per game?
+
+```{r}
+cor(Teams_small$W, Teams_small$R/Teams_small$G)
+```
+
+What is the correlation coefficient for wins and home runs per game?
+
+```{r}
+cor(Teams_small$W, Teams_small$HR/Teams_small$G)
+```
+
+Stratify ```Teams_small``` by wins: divide number of wins by 10 and then round to the nearest integer. Keep only strata 5 through 10, which have 20 or more data points.
+
+Use the stratified dataset to answer this three-part question.
+
+3a. How many observations are in the 8 win strata?
+(Note that due to division and rounding, these teams have 75-85 wins.)
+
+```{r}
+dat <- Teams_small %>%
+    mutate(W_strata = round(W/10)) %>%
+    filter(W_strata >= 5 & W_strata <= 10)
+
+sum(dat$W_strata == 8)
+```
+
+3b. Calculate the slope of the regression line predicting average attendance given runs per game for each of the win strata.
+
+Which win stratum has the largest regression line slope?
+
+```{r}
+# calculate slope of regression line after stratifying by R per game
+dat %>%  
+  group_by(W_strata) %>%
+  summarize(slope = cor(R/G, avg_attendance)*sd(avg_attendance)/sd(R/G))
+```
+
+- [X] A. 5
+- [ ] B. 6
+- [ ] C. 7
+- [ ] D. 8
+- [ ] E. 9
+- [ ] F. 10
+
+Calculate the slope of the regression line predicting average attendance given HR per game for each of the win strata.
+
+Which win stratum has the largest regression line slope?
+
+```{r}
+# calculate slope of regression line after stratifying by HR per game
+dat %>%  
+  group_by(W_strata) %>%
+  summarize(slope = cor(HR/G, avg_attendance)*sd(avg_attendance)/sd(HR/G))
+```
+
+- [X] A. 5
+- [ ] B. 6
+- [ ] C. 7
+- [ ] D. 8
+- [ ] E. 9
+- [ ] F. 10
+
+3c. Which of the followng are true about the effect of win strata on average attendance?
+
+- [X] A. Across all win strata, runs per game are positively correlated with average attendance.
+- [ ] B. Runs per game have the strongest effect on attendance when a team wins many games.
+- [ ] C. After controlling for number of wins, home runs per game are not correlated with attendance.
+- [X] D. Home runs per game have the strongest effect on attendance when a team does not win many games.
+- [X] E. Among teams with similar numbers of wins, teams with more home runs per game have larger average attendance.
+
+
 # Section 3 - Confounding Overview
 
 In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
