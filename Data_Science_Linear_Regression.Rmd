@@ -2366,24 +2366,83 @@ dat %>%
 - [X] D. Home runs per game have the strongest effect on attendance when a team does not win many games.
 - [X] E. Among teams with similar numbers of wins, teams with more home runs per game have larger average attendance.
 
+4. Fit a multivariate regression determining the effects of runs per game, home runs per game, wins, and year on average attendance. Use the original ```Teams_small``` wins column, not the win strata from question 3.
+
+What is the estimate of the effect of runs per game on average attendance?
+
+```{r}
+fit <- Teams_small %>% 
+    mutate(R_per_game = R/G,
+           HR_per_game = HR/G) %>%
+    lm(avg_attendance ~ R_per_game + HR_per_game + W + yearID, data = .)
+tidy(fit) %>%
+    filter(term == "R_per_game") %>%
+    pull(estimate)
+```
+
+What is the estimate of the effect of home runs per game on average attendance?
+
+```{r}
+tidy(fit) %>%
+    filter(term == "HR_per_game") %>%
+    pull(estimate)
+```
+
+What is the estimate of the effect of number of wins in a season on average attendance?
+
+```{r}
+tidy(fit) %>%
+    filter(term == "W") %>%
+    pull(estimate)
+```
+
+5. Use the multivariate regression model from Question 4. Suppose a team averaged 5 runs per game, 1.2 home runs per game, and won 80 games in a season.
+
+What would this team's average attendance be in 2002?
+
+```{r}
+predict(fit, data.frame(R_per_game = 5, HR_per_game = 1.2, W = 80, yearID = 2002))
+```
+
+What would this team's average attendance be in 1960?
+
+```{r}
+predict(fit, data.frame(R_per_game = 5, HR_per_game = 1.2, W = 80, yearID = 1960))
+```
+
+6. Use your model from Question 4 to predict average attendance for teams in 2002 in the original Teams data frame.
+
+What is the correlation between the predicted attendance and actual attendance?
+
+```{r}
+newdata <- Teams %>%
+    filter(yearID == 2002) %>%
+    mutate(avg_attendance = attendance/G,
+           R_per_game = R/G,
+           HR_per_game = HR/G)
+preds <- predict(fit, newdata)
+cor(preds, newdata$avg_attendance)
+```
 
 # Section 3 - Confounding Overview
 
-In the Confounding section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
+In the **Confounding** section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.
 
 After completing this section, you will be able to:
 
-* Identify examples of spurious correlation and explain how data dredging can lead to spurious correlation.
-* Explain how outliers can drive correlation and learn to adjust for outliers using Spearman correlation.
-* Explain how reversing cause and effect can lead to associations being confused with causation.
-* Understand how confounders can lead to the misinterpretation of associations.
-* Explain and give examples of Simpson’s Paradox.
+* Identify examples of **spurious correlation** and explain how **data dredging** can lead to spurious correlation.
+* Explain how **outliers** can drive correlation and learn to adjust for outliers using **Spearman correlation**.
+* Explain how **reversing cause and effect** can lead to associations being confused with causation.
+* Understand how **confounders** can lead to the misinterpretation of associations.
+* Explain and give examples of **Simpson’s Paradox**.
 
-This section has one part: Correlation is Not Causation.
+This section has one part: **Correlation is Not Causation**.
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html)
+## Correlation is Not Causation: Spurious Correlation
 
-## Assessment 1 - Correlation is Not Causation: Spurious Correlation
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#spurious-correlation)
+
+## Assessment - Correlation is Not Causation: Spurious Correlation
 
 1. In the video, we ran one million tests of correlation for two random variables, X and Y.
 
@@ -2401,49 +2460,41 @@ How many of these correlations would you expect to have a significant p-value (p
 - [X] C. Repeating an experiment multiple times and only reporting the one with the smallest p-value.
 - [ ] D. Using a Monte Carlo simulations in an analysis.
 
-## Assessment 2 - Correlation is Not Causation: Outliers
-
-1. The Spearman correlation coefficient is robust to outliers because:
+3. The Spearman correlation coefficient is robust to outliers because:
 
 - [ ] A. It drops outliers before calculating correlation.
 - [ ] B. It is the correlation of standardized values.
 - [X] C. It calculates correlation between ranks, not values.
 
-## Assessment 3 - Correlation is Not Causation: Reversing Cause and Effect
-
-1. Which of the following may be examples of reversed cause and effect?
+4. Which of the following may be examples of reversed cause and effect?
 
 - [X] A. Past smokers who have quit smoking may be more likely to die from lung cancer.
 - [ ] B. Tall fathers are more likely to have tall sons. 
 - [X] C. People with high blood pressure tend to have a healthier diet.
 - [X] D. Individuals in a low social status have a higher risk of schizophrenia.
 
-## Assessment 4 - Correlation is Not Causation: Confounders
-
-1. What can you do to determine if you are misinterpreting results because of a confounder?
+5. What can you do to determine if you are misinterpreting results because of a confounder?
 
 - [ ] A. Nothing, if the p-value says the result is significant, then it is.
 - [X] B. More closely examine the results by stratifying and plotting the data.
 - [ ] C. Always assume that you are misinterpreting the results.
 - [ ] D. Use linear models to tease out a confounder.
 
-2. Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
+6. Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
 
 - [ ] A. The data is from 1973.
 - [ ] B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.
 - [ ] C. The data is from the “dslabs” package.
 - [X] D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.
 
-3. In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
+7. In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
 
 - [ ] A. It was harder for women to be admitted to UC Berkeley.
 - [X] B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.
 - [ ] C. Some majors are more selective than others
 - [ ] D. Major selectivity is not a confounder.
 
-## Assessment 5 - Simpson’s Paradox
-
-1. Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
+8. Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
 
 - [X] A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.
 - [ ] B. It was a paradox that women were being admitted at a lower rate than men.
