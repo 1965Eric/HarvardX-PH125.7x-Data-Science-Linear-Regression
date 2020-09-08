@@ -2629,36 +2629,53 @@ The chance of finding a correlation when none exists is $0.05*1.000.000$ chances
 - [ ] B. It is the correlation of standardized values.
 - [X] C. It calculates correlation between ranks, not values.
 
-4. Which of the following may be examples of reversed cause and effect?
-
-- [X] A. Past smokers who have quit smoking may be more likely to die from lung cancer.
-- [ ] B. Tall fathers are more likely to have tall sons. 
-- [X] C. People with high blood pressure tend to have a healthier diet.
-- [X] D. Individuals in a low social status have a higher risk of schizophrenia.
-
-5. What can you do to determine if you are misinterpreting results because of a confounder?
+4. What can you do to determine if you are misinterpreting results because of a confounder?
 
 - [ ] A. Nothing, if the p-value says the result is significant, then it is.
 - [X] B. More closely examine the results by stratifying and plotting the data.
 - [ ] C. Always assume that you are misinterpreting the results.
 - [ ] D. Use linear models to tease out a confounder.
 
-6. Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
+5. Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.
 
 - [ ] A. The data is from 1973.
 - [ ] B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.
 - [ ] C. The data is from the “dslabs” package.
 - [X] D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.
 
-7. In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
+6. In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:
 
 - [ ] A. It was harder for women to be admitted to UC Berkeley.
 - [X] B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.
 - [ ] C. Some majors are more selective than others
 - [ ] D. Major selectivity is not a confounder.
 
-8. Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
+7. Admission rates at UC Berkeley are an example of Simpson’s Paradox because:
 
 - [X] A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.
 - [ ] B. It was a paradox that women were being admitted at a lower rate than men.
 - [ ] C. The relationship between admissions and gender is confounded by major selectivity.
+
+## Assessment - Confounding
+
+For this set of exercises, we examine the data from a [2014 PNAS paper that analyzed success rates from funding agencies in the Netherlands](https://www.pnas.org/content/112/40/12349.abstract) and concluded:
+
+*"our results reveal gender bias favoring male applicants over female applicants in the prioritization of their "quality of researcher" (but not "quality of proposal") evaluations and success rates, as well as in the language used in instructional and evaluation materials."*
+
+A response was published a few months later titled [No evidence that gender contributes to personal research funding success in The Netherlands: A reaction to Van der Lee and Ellemers](https://www.pnas.org/content/112/51/E7036), which concluded:
+
+*However, the overall gender effect borders on statistical significance, despite the large sample. Moreover, their conclusion could be a prime example of Simpson’s paradox; if a higher percentage of women apply for grants in more competitive scientific disciplines (i.e., with low application success rates for both men and women), then an analysis across all disciplines could incorrectly show "evidence" of gender inequality.* 
+
+Who is right here: the original paper or the response? Here, you will examine the data and come to your own conclusion.
+
+The main evidence for the conclusion of the original paper comes down to a comparison of the percentages. The information we need was originally in Table S1 in the paper, which we include in **dslabs**:
+
+```{r}
+data("research_funding_rates")
+research_funding_rates
+```
+
+1. Construct a two-by-two table of gender (men/women) by award status (awarded/not) using the total numbers across all disciplines.
+
+What is the number of men not awarded?
+
