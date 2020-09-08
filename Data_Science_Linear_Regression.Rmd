@@ -2679,3 +2679,40 @@ research_funding_rates
 
 What is the number of men not awarded?
 
+What is the number of women not awarded?
+
+```{r}
+two_by_two <- research_funding_rates %>% 
+    select(-discipline) %>% 
+    summarize_all(funs(sum)) %>%
+    summarize(yes_men = awards_men, 
+              no_men = applications_men - awards_men, 
+              yes_women = awards_women, 
+              no_women = applications_women - awards_women) %>%
+    gather %>%
+    separate(key, c("awarded", "gender")) %>%
+    spread(gender, value)
+  two_by_two
+```
+
+2. Use the two-by-two table from Question 1 to compute the percentages of men awarded versus women awarded.
+
+What is the percentage of men awarded?
+
+```{r}
+two_by_two %>% 
+    mutate(men = round(men/sum(men)*100, 1), women = round(women/sum(women)*100, 1)) %>%
+    filter(awarded == "yes") %>%
+    pull(men)
+```
+
+What is the percentage of women awarded?
+
+```{r}
+two_by_two %>% 
+    mutate(men = round(men/sum(men)*100, 1), women = round(women/sum(women)*100, 1)) %>%
+    filter(awarded == "yes") %>%
+    pull(women)
+```
+
+3. 
