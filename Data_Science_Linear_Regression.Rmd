@@ -1,10 +1,10 @@
 ---
 title: "Data Science Linear Regression"
 output:
-  word_document: default
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
+  word_document: default
   bookdown::epub_book:
       number_sections: true
 urlcolor: blue
@@ -14,7 +14,7 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
+The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/){target="_blank"}.
 
 # Learning Objectives
 
@@ -55,7 +55,7 @@ This section has three parts: **Baseball as a Motivating Example**, **Correlatio
 
 ## Motivating Example: Moneyball
 
-The corresponding section of the textbook is the [case study on Moneyball](https://rafalab.github.io/dsbook/linear-models.html#case-study-moneyball)
+The corresponding section of the textbook is the [case study on Moneyball](https://rafalab.github.io/dsbook/linear-models.html#case-study-moneyball){target="_blank"}
 
 **Key points**
 
@@ -63,7 +63,7 @@ Bill James was the originator of the **sabermetrics**, the approach of using dat
 
 ## Baseball basics
 
-The corresponding section of the textbook is the [section on baseball basics](https://rafalab.github.io/dsbook/linear-models.html#baseball-basics)
+The corresponding section of the textbook is the [section on baseball basics](https://rafalab.github.io/dsbook/linear-models.html#baseball-basics){target="_blank"}
 
 **Key points**
 
@@ -81,7 +81,7 @@ The corresponding section of the textbook is the [section on baseball basics](ht
 
 ## Bases on Balls or Stolen Bases?
 
-The corresponding section of the textbook is the [base on balls or stolen bases textbook section](https://rafalab.github.io/dsbook/linear-models.html#base-on-balls-or-stolen-bases)
+The corresponding section of the textbook is the [base on balls or stolen bases textbook section](https://rafalab.github.io/dsbook/linear-models.html#base-on-balls-or-stolen-bases){target="_blank"}
 
 **Key points**
 
@@ -245,7 +245,7 @@ Which of the following is true?
 
 ## Correlation
 
-The corresponding textbook section is [Case Study: is height hereditary?](https://rafalab.github.io/dsbook/regression.html#case-study-is-height-hereditary)
+The corresponding textbook section is [Case Study: is height hereditary?](https://rafalab.github.io/dsbook/regression.html#case-study-is-height-hereditary){target="_blank"}
 
 **Key points**
 
@@ -282,7 +282,7 @@ galton_heights %>%
 
 ## Correlation Coefficient
 
-The corresponding textbook section is [the correlation coefficient](https://rafalab.github.io/dsbook/regression.html#corr-coef)
+The corresponding textbook section is [the correlation coefficient](https://rafalab.github.io/dsbook/regression.html#corr-coef){target="_blank"}
 
 **Key points**
 
@@ -303,7 +303,7 @@ galton_heights %>% summarize(r = cor(father, son)) %>% pull(r)
 
 ## Sample Correlation is a Random Variable
 
-The corresponding textbook section is [Sample correlation is a random variable](https://rafalab.github.io/dsbook/regression.html#sample-correlation-is-a-random-variable)
+The corresponding textbook section is [Sample correlation is a random variable](https://rafalab.github.io/dsbook/regression.html#sample-correlation-is-a-random-variable){target="_blank"}
 
 **Key points**
 
@@ -423,9 +423,9 @@ cor(Teams_small$X2B/Teams_small$G, Teams_small$X3B/Teams_small$G)
 
 There are three links to relevant sections of the textbook:
 
-* [Correlation is not always a useful summary](https://rafalab.github.io/dsbook/regression.html#correlation-is-not-always-a-useful-summary)
-* [Conditional expectation](https://rafalab.github.io/dsbook/regression.html#conditional-expectation)
-* [The regression line](https://rafalab.github.io/dsbook/regression.html#the-regression-line)
+* [Correlation is not always a useful summary](https://rafalab.github.io/dsbook/regression.html#correlation-is-not-always-a-useful-summary){target="_blank"}
+* [Conditional expectation](https://rafalab.github.io/dsbook/regression.html#conditional-expectation){target="_blank"}
+* [The regression line](https://rafalab.github.io/dsbook/regression.html#the-regression-line){target="_blank"}
 
 **Key points**
 
@@ -480,7 +480,7 @@ galton_heights %>%
 
 ## Bivariate Normal Distribution
 
-There is a link to the relevant section of the textbook: [Bivariate normal distribution (advanced)](https://rafalab.github.io/dsbook/regression.html#bivariate-normal-distribution-advanced)
+There is a link to the relevant section of the textbook: [Bivariate normal distribution (advanced)](https://rafalab.github.io/dsbook/regression.html#bivariate-normal-distribution-advanced){target="_blank"}
 
 **Key points**
 
@@ -501,7 +501,7 @@ galton_heights %>%
 
 ## Variance Explained
 
-There is a link to the relevant section of the textbook: [Variance explained](https://rafalab.github.io/dsbook/regression.html#variance-explained)
+There is a link to the relevant section of the textbook: [Variance explained](https://rafalab.github.io/dsbook/regression.html#variance-explained){target="_blank"}
 
 **Key points**
 
@@ -513,7 +513,7 @@ There is a link to the relevant section of the textbook: [Variance explained](ht
 
 ## There are Two Regression Lines
 
-There is a link to the relevant section of the textbook: [Warning: there are two regression lines](https://rafalab.github.io/dsbook/regression.html#warning-there-are-two-regression-lines)
+There is a link to the relevant section of the textbook: [Warning: there are two regression lines](https://rafalab.github.io/dsbook/regression.html#warning-there-are-two-regression-lines){target="_blank"}
 
 **Key point**
 
@@ -725,7 +725,7 @@ This section has four parts: **Introduction to Linear Models, Least Squares Esti
 
 ## Confounding: Are BBs More Predictive?
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#confounding)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#confounding){target="_blank"}
 
 **Key points**
 
@@ -763,7 +763,7 @@ Teams %>%
 
 ## Stratification and Multivariate Regression
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#multivariate-regression)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#multivariate-regression){target="_blank"}
 
 **Key points**
 
@@ -813,7 +813,7 @@ dat %>%
 
 ## Linear Models
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse){target="_blank"}
 
 **Key points**
 
@@ -895,7 +895,7 @@ Check ALL correct answers.
 
 ## Least Squares Estimates (LSE)
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse){target="_blank"}
 
 **Key points**
 
@@ -930,7 +930,7 @@ results %>% ggplot(aes(beta1, rss)) + geom_line() +
 
 ## The lm Function
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-lm-function)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-lm-function){target="_blank"}
 
 **Key points**
 
@@ -950,7 +950,7 @@ summary(fit)
 
 ## LSE are Random Variables
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse-are-random-variables)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#lse-are-random-variables){target="_blank"}
 
 **Key points**
 
@@ -1018,7 +1018,7 @@ cor(lse[1,], lse[2,])
 
 ## Predicted Variables are Random Variables
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#predicted-values-are-random-variables)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#predicted-values-are-random-variables){target="_blank"}
 
 **Key points**
 
@@ -1337,7 +1337,7 @@ fit_bb$coef[2]
 
 ## Advanced dplyr: Tibbles
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse){target="_blank"}
 
 **Key points**
 
@@ -1407,7 +1407,7 @@ tibble(id = c(1, 2, 3), func = c(mean, median, sd))
 
 ## do
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#linear-regression-in-the-tidyverse){target="_blank"}
 
 **Key points**
 
@@ -1464,7 +1464,7 @@ dat %>%
 
 ## broom
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-broom-package)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-broom-package){target="_blank"}
 
 **Key points**
 
@@ -1751,7 +1751,7 @@ Which of the following statements are true?
 
 ## Building a Better Offensive Metric for Baseball
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#case-study-moneyball-continued)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#case-study-moneyball-continued){target="_blank"}
 
 *Code*
 
@@ -1922,7 +1922,7 @@ $\frac{\mbox{BB}}{\mbox{PA}} + \frac{(\mbox{Singles} + 2\mbox{Doubles} + 3\mbox{
 
 ## Regression Fallacy
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-regression-fallacy)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#the-regression-fallacy){target="_blank"}
 
 **Key points**
 
@@ -2015,7 +2015,7 @@ summarize(two_years, cor(`2013`,`2014`))
 
 ## Measurement Error Models
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#measurement-error-models)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/linear-models.html#measurement-error-models){target="_blank"}
 
 **Key points**
 
@@ -2442,7 +2442,7 @@ This section has one part: **Correlation is Not Causation**.
 
 ## Correlation is Not Causation: Spurious Correlation
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#spurious-correlation)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#spurious-correlation){target="_blank"}
 
 **Key points**
 
@@ -2482,7 +2482,7 @@ sim_data %>%
 
 ## Correlation is Not Causation: Outliers
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#outliers-1)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#outliers-1){target="_blank"}
 
 **Key points**
 
@@ -2516,7 +2516,7 @@ cor(x, y, method = "spearman")
 
 ## Correlation is Not Causation: Reversing Cause and Effect
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#reversing-cause-and-effect)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#reversing-cause-and-effect){target="_blank"}
 
 **Key points**
 
@@ -2537,7 +2537,7 @@ GaltonFamilies %>%
 
 ## Correlation is Not Causation: Confounders
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#confounders)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#confounders){target="_blank"}
 
 **Key points**
 
@@ -2599,7 +2599,7 @@ admissions %>%  group_by(gender) %>% summarize(average = mean(admitted))
 
 ## Simpson's Paradox
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#simpsons-paradox)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/association-is-not-causation.html#simpsons-paradox){target="_blank"}
 
 **Key point**
 
