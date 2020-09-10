@@ -5,6 +5,8 @@ output:
   pdf_document:
     latex_engine: xelatex
   html_document: default
+  bookdown::epub_book:
+      number_sections: true
 urlcolor: blue
 ---
 
