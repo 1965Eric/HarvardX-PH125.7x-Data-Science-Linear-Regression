@@ -1,12 +1,12 @@
 ---
 title: "Data Science Linear Regression"
 output:
+  bookdown::epub_book:
+      number_sections: true
   html_document: default
   pdf_document:
     latex_engine: xelatex
   word_document: default
-  bookdown::epub_book:
-      number_sections: true
 urlcolor: blue
 ---
 
@@ -2660,11 +2660,11 @@ The chance of finding a correlation when none exists is $0.05*1.000.000$ chances
 
 ## Assessment - Confounding
 
-For this set of exercises, we examine the data from a [2014 PNAS paper that analyzed success rates from funding agencies in the Netherlands](https://www.pnas.org/content/112/40/12349.abstract) and concluded:
+For this set of exercises, we examine the data from a [2014 PNAS paper that analyzed success rates from funding agencies in the Netherlands](https://www.pnas.org/content/112/40/12349.abstract){target="_blank"} and concluded:
 
 *"our results reveal gender bias favoring male applicants over female applicants in the prioritization of their "quality of researcher" (but not "quality of proposal") evaluations and success rates, as well as in the language used in instructional and evaluation materials."*
 
-A response was published a few months later titled [No evidence that gender contributes to personal research funding success in The Netherlands: A reaction to Van der Lee and Ellemers](https://www.pnas.org/content/112/51/E7036), which concluded:
+A response was published a few months later titled [No evidence that gender contributes to personal research funding success in The Netherlands: A reaction to Van der Lee and Ellemers](https://www.pnas.org/content/112/51/E7036){target="_blank"}, which concluded:
 
 *However, the overall gender effect borders on statistical significance, despite the large sample. Moreover, their conclusion could be a prime example of Simpson’s paradox; if a higher percentage of women apply for grants in more competitive scientific disciplines (i.e., with low application success rates for both men and women), then an analysis across all disciplines could incorrectly show "evidence" of gender inequality.* 
 
