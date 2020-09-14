@@ -3,10 +3,10 @@ title: "Data Science Linear Regression"
 output:
   bookdown::epub_book:
       number_sections: true
+  word_document: default
   html_document: default
   pdf_document:
     latex_engine: xelatex
-  word_document: default
 urlcolor: blue
 ---
 

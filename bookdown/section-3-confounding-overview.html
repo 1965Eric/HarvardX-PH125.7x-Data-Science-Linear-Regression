@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Section 3 - Confounding Overview | Data Science Linear Regression</title>
+  <meta name="description" content="4 Section 3 - Confounding Overview | Data Science Linear Regression" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Section 3 - Confounding Overview | Data Science Linear Regression" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Section 3 - Confounding Overview | Data Science Linear Regression" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="section-2-linear-models-overview.html"/>
+
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning Objectives</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="learning-objectives.html"><a href="learning-objectives.html#course-overview"><i class="fa fa-check"></i><b>1.1</b> Course Overview</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="learning-objectives.html"><a href="learning-objectives.html#introduction-to-linear-regression"><i class="fa fa-check"></i><b>1.1.1</b> Introduction to Linear Regression</a></li>
+<li class="chapter" data-level="1.1.2" data-path="learning-objectives.html"><a href="learning-objectives.html#linear-models"><i class="fa fa-check"></i><b>1.1.2</b> Linear Models</a></li>
+<li class="chapter" data-level="1.1.3" data-path="learning-objectives.html"><a href="learning-objectives.html#confounding"><i class="fa fa-check"></i><b>1.1.3</b> Confounding</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html"><i class="fa fa-check"></i><b>2</b> Section 1 - Introduction to Regression Overview</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#motivating-example-moneyball"><i class="fa fa-check"></i><b>2.1</b> Motivating Example: Moneyball</a></li>
+<li class="chapter" data-level="2.2" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#baseball-basics"><i class="fa fa-check"></i><b>2.2</b> Baseball basics</a></li>
+<li class="chapter" data-level="2.3" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#bases-on-balls-or-stolen-bases"><i class="fa fa-check"></i><b>2.3</b> Bases on Balls or Stolen Bases?</a></li>
+<li class="chapter" data-level="2.4" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#assessment---baseball-as-a-motivating-example"><i class="fa fa-check"></i><b>2.4</b> Assessment - Baseball as a Motivating Example</a></li>
+<li class="chapter" data-level="2.5" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#correlation"><i class="fa fa-check"></i><b>2.5</b> Correlation</a></li>
+<li class="chapter" data-level="2.6" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#correlation-coefficient"><i class="fa fa-check"></i><b>2.6</b> Correlation Coefficient</a></li>
+<li class="chapter" data-level="2.7" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#sample-correlation-is-a-random-variable"><i class="fa fa-check"></i><b>2.7</b> Sample Correlation is a Random Variable</a></li>
+<li class="chapter" data-level="2.8" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#assessment---correlation"><i class="fa fa-check"></i><b>2.8</b> Assessment - Correlation</a></li>
+<li class="chapter" data-level="2.9" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#anscombes-quartetstratification"><i class="fa fa-check"></i><b>2.9</b> Anscombe’s Quartet/Stratification</a></li>
+<li class="chapter" data-level="2.10" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#bivariate-normal-distribution"><i class="fa fa-check"></i><b>2.10</b> Bivariate Normal Distribution</a></li>
+<li class="chapter" data-level="2.11" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#variance-explained"><i class="fa fa-check"></i><b>2.11</b> Variance Explained</a></li>
+<li class="chapter" data-level="2.12" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#there-are-two-regression-lines"><i class="fa fa-check"></i><b>2.12</b> There are Two Regression Lines</a></li>
+<li class="chapter" data-level="2.13" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#assessment---stratification-and-variance-explained-part-1"><i class="fa fa-check"></i><b>2.13</b> Assessment - Stratification and Variance Explained, Part 1</a></li>
+<li class="chapter" data-level="2.14" data-path="section-1-introduction-to-regression-overview.html"><a href="section-1-introduction-to-regression-overview.html#assessment---stratification-and-variance-explained-part-2"><i class="fa fa-check"></i><b>2.14</b> Assessment - Stratification and Variance Explained, Part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html"><i class="fa fa-check"></i><b>3</b> Section 2 - Linear Models Overview</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#confounding-are-bbs-more-predictive"><i class="fa fa-check"></i><b>3.1</b> Confounding: Are BBs More Predictive?</a></li>
+<li class="chapter" data-level="3.2" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#stratification-and-multivariate-regression"><i class="fa fa-check"></i><b>3.2</b> Stratification and Multivariate Regression</a></li>
+<li class="chapter" data-level="3.3" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#linear-models-1"><i class="fa fa-check"></i><b>3.3</b> Linear Models</a></li>
+<li class="chapter" data-level="3.4" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment-introduction-to-linear-models"><i class="fa fa-check"></i><b>3.4</b> Assessment: Introduction to Linear Models</a></li>
+<li class="chapter" data-level="3.5" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#least-squares-estimates-lse"><i class="fa fa-check"></i><b>3.5</b> Least Squares Estimates (LSE)</a></li>
+<li class="chapter" data-level="3.6" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#the-lm-function"><i class="fa fa-check"></i><b>3.6</b> The lm Function</a></li>
+<li class="chapter" data-level="3.7" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#lse-are-random-variables"><i class="fa fa-check"></i><b>3.7</b> LSE are Random Variables</a></li>
+<li class="chapter" data-level="3.8" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#advanced-note-on-lse"><i class="fa fa-check"></i><b>3.8</b> Advanced Note on LSE</a></li>
+<li class="chapter" data-level="3.9" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#predicted-variables-are-random-variables"><i class="fa fa-check"></i><b>3.9</b> Predicted Variables are Random Variables</a></li>
+<li class="chapter" data-level="3.10" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---least-squares-estimates-lse-part-1"><i class="fa fa-check"></i><b>3.10</b> Assessment - Least Squares Estimates (LSE), part 1</a></li>
+<li class="chapter" data-level="3.11" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---least-squares-estimates-part-2"><i class="fa fa-check"></i><b>3.11</b> Assessment - Least Squares Estimates, part 2</a></li>
+<li class="chapter" data-level="3.12" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#advanced-dplyr-tibbles"><i class="fa fa-check"></i><b>3.12</b> Advanced dplyr: Tibbles</a></li>
+<li class="chapter" data-level="3.13" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#tibbles-differences-from-data-frames"><i class="fa fa-check"></i><b>3.13</b> Tibbles: Differences from Data Frames</a></li>
+<li class="chapter" data-level="3.14" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#do"><i class="fa fa-check"></i><b>3.14</b> do</a></li>
+<li class="chapter" data-level="3.15" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#broom"><i class="fa fa-check"></i><b>3.15</b> broom</a></li>
+<li class="chapter" data-level="3.16" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---tibbles-do-and-broom-part-1"><i class="fa fa-check"></i><b>3.16</b> Assessment - Tibbles, do, and broom, part 1</a></li>
+<li class="chapter" data-level="3.17" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---tibbles-do-and-broom-part-2"><i class="fa fa-check"></i><b>3.17</b> Assessment - Tibbles, do, and broom, part 2</a></li>
+<li class="chapter" data-level="3.18" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#building-a-better-offensive-metric-for-baseball"><i class="fa fa-check"></i><b>3.18</b> Building a Better Offensive Metric for Baseball</a></li>
+<li class="chapter" data-level="3.19" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#building-a-better-offensive-metric-for-baseball-linear-programming"><i class="fa fa-check"></i><b>3.19</b> Building a Better Offensive Metric for Baseball: Linear Programming</a></li>
+<li class="chapter" data-level="3.20" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#on-base-plus-slugging-ops"><i class="fa fa-check"></i><b>3.20</b> On Base Plus Slugging (OPS)</a></li>
+<li class="chapter" data-level="3.21" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#regression-fallacy"><i class="fa fa-check"></i><b>3.21</b> Regression Fallacy</a></li>
+<li class="chapter" data-level="3.22" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#measurement-error-models"><i class="fa fa-check"></i><b>3.22</b> Measurement Error Models</a></li>
+<li class="chapter" data-level="3.23" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---regression-and-baseball-part-1"><i class="fa fa-check"></i><b>3.23</b> Assessment - Regression and Baseball, part 1</a></li>
+<li class="chapter" data-level="3.24" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---regression-and-baseball-part-2"><i class="fa fa-check"></i><b>3.24</b> Assessment - Regression and Baseball, part 2</a></li>
+<li class="chapter" data-level="3.25" data-path="section-2-linear-models-overview.html"><a href="section-2-linear-models-overview.html#assessment---linear-models"><i class="fa fa-check"></i><b>3.25</b> Assessment - Linear Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html"><i class="fa fa-check"></i><b>4</b> Section 3 - Confounding Overview</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#correlation-is-not-causation-spurious-correlation"><i class="fa fa-check"></i><b>4.1</b> Correlation is Not Causation: Spurious Correlation</a></li>
+<li class="chapter" data-level="4.2" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#correlation-is-not-causation-outliers"><i class="fa fa-check"></i><b>4.2</b> Correlation is Not Causation: Outliers</a></li>
+<li class="chapter" data-level="4.3" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#correlation-is-not-causation-reversing-cause-and-effect"><i class="fa fa-check"></i><b>4.3</b> Correlation is Not Causation: Reversing Cause and Effect</a></li>
+<li class="chapter" data-level="4.4" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#correlation-is-not-causation-confounders"><i class="fa fa-check"></i><b>4.4</b> Correlation is Not Causation: Confounders</a></li>
+<li class="chapter" data-level="4.5" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#simpsons-paradox"><i class="fa fa-check"></i><b>4.5</b> Simpson’s Paradox</a></li>
+<li class="chapter" data-level="4.6" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#assessment---correlation-is-not-causation"><i class="fa fa-check"></i><b>4.6</b> Assessment - Correlation is Not Causation</a></li>
+<li class="chapter" data-level="4.7" data-path="section-3-confounding-overview.html"><a href="section-3-confounding-overview.html#assessment---confounding"><i class="fa fa-check"></i><b>4.7</b> Assessment - Confounding</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science Linear Regression</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-3---confounding-overview" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Section 3 - Confounding Overview</h1>
+<p>In the <strong>Confounding</strong> section, you will learn what is perhaps the most important lesson of statistics: that correlation is not causation.</p>
+<p>After completing this section, you will be able to:</p>
+<ul>
+<li>Identify examples of <strong>spurious correlation</strong> and explain how <strong>data dredging</strong> can lead to spurious correlation.</li>
+<li>Explain how <strong>outliers</strong> can drive correlation and learn to adjust for outliers using <strong>Spearman correlation</strong>.</li>
+<li>Explain how <strong>reversing cause and effect</strong> can lead to associations being confused with causation.</li>
+<li>Understand how <strong>confounders</strong> can lead to the misinterpretation of associations.</li>
+<li>Explain and give examples of <strong>Simpson’s Paradox</strong>.</li>
+</ul>
+<p>This section has one part: <strong>Correlation is Not Causation</strong>.</p>
+<div id="correlation-is-not-causation-spurious-correlation" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Correlation is Not Causation: Spurious Correlation</h2>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html#spurious-correlation" target="_blank">here</a></p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>Association/correlation is not causation.</li>
+<li>p-hacking is a topic of much discussion because it is a problem in scientific publications. Because publishers tend to reward statistically significant results over negative results, there is an incentive to report significant results.</li>
+</ul>
+<p><em>Code</em></p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="section-3-confounding-overview.html#cb344-1" aria-hidden="true"></a><span class="co"># generate the Monte Carlo simulation</span></span>
+<span id="cb344-2"><a href="section-3-confounding-overview.html#cb344-2" aria-hidden="true"></a>N &lt;-<span class="st"> </span><span class="dv">25</span></span>
+<span id="cb344-3"><a href="section-3-confounding-overview.html#cb344-3" aria-hidden="true"></a>g &lt;-<span class="st"> </span><span class="dv">1000000</span></span>
+<span id="cb344-4"><a href="section-3-confounding-overview.html#cb344-4" aria-hidden="true"></a>sim_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">group =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>g, <span class="dt">each =</span> N), <span class="dt">x =</span> <span class="kw">rnorm</span>(N <span class="op">*</span><span class="st"> </span>g), <span class="dt">y =</span> <span class="kw">rnorm</span>(N <span class="op">*</span><span class="st"> </span>g))</span>
+<span id="cb344-5"><a href="section-3-confounding-overview.html#cb344-5" aria-hidden="true"></a></span>
+<span id="cb344-6"><a href="section-3-confounding-overview.html#cb344-6" aria-hidden="true"></a><span class="co"># calculate correlation between X,Y for each group</span></span>
+<span id="cb344-7"><a href="section-3-confounding-overview.html#cb344-7" aria-hidden="true"></a>res &lt;-<span class="st"> </span>sim_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb344-8"><a href="section-3-confounding-overview.html#cb344-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(group) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb344-9"><a href="section-3-confounding-overview.html#cb344-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">r =</span> <span class="kw">cor</span>(x, y)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb344-10"><a href="section-3-confounding-overview.html#cb344-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(r))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="section-3-confounding-overview.html#cb346-1" aria-hidden="true"></a>res</span></code></pre></div>
+<pre><code>## # A tibble: 1,000,000 x 2
+##     group     r
+##     &lt;int&gt; &lt;dbl&gt;
+##  1 840003 0.794
+##  2 767028 0.791
+##  3 971856 0.776
+##  4 212248 0.768
+##  5  60200 0.761
+##  6  27045 0.756
+##  7 114409 0.756
+##  8 755537 0.754
+##  9 422986 0.753
+## 10 789165 0.747
+## # … with 999,990 more rows</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="section-3-confounding-overview.html#cb348-1" aria-hidden="true"></a><span class="co"># plot points from the group with maximum correlation</span></span>
+<span id="cb348-2"><a href="section-3-confounding-overview.html#cb348-2" aria-hidden="true"></a>sim_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(group <span class="op">==</span><span class="st"> </span>res<span class="op">$</span>group[<span class="kw">which.max</span>(res<span class="op">$</span>r)]) <span class="op">%&gt;%</span></span>
+<span id="cb348-3"><a href="section-3-confounding-overview.html#cb348-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span></span>
+<span id="cb348-4"><a href="section-3-confounding-overview.html#cb348-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb348-5"><a href="section-3-confounding-overview.html#cb348-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="img/figures/unnamed-chunk-133-1.png" width="672" /></p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="section-3-confounding-overview.html#cb350-1" aria-hidden="true"></a><span class="co"># histogram of correlation in Monte Carlo simulations</span></span>
+<span id="cb350-2"><a href="section-3-confounding-overview.html#cb350-2" aria-hidden="true"></a>res <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>r)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-133-2.png" width="672" /></p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="section-3-confounding-overview.html#cb351-1" aria-hidden="true"></a><span class="co"># linear regression on group with maximum correlation</span></span>
+<span id="cb351-2"><a href="section-3-confounding-overview.html#cb351-2" aria-hidden="true"></a><span class="kw">library</span>(broom)</span>
+<span id="cb351-3"><a href="section-3-confounding-overview.html#cb351-3" aria-hidden="true"></a>sim_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb351-4"><a href="section-3-confounding-overview.html#cb351-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(group <span class="op">==</span><span class="st"> </span>res<span class="op">$</span>group[<span class="kw">which.max</span>(res<span class="op">$</span>r)]) <span class="op">%&gt;%</span></span>
+<span id="cb351-5"><a href="section-3-confounding-overview.html#cb351-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">do</span>(<span class="kw">tidy</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .)))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic    p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 (Intercept)   -0.121     0.116     -1.04 0.309     
+## 2 x              0.812     0.130      6.27 0.00000213</code></pre>
+</div>
+<div id="correlation-is-not-causation-outliers" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Correlation is Not Causation: Outliers</h2>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html#outliers-1" target="_blank">here</a></p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>Correlations can be caused by <strong>outliers</strong>.</li>
+<li>The <strong>Spearman correlation</strong> is calculated based on the ranks of data.</li>
+</ul>
+<p><em>Code</em></p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="section-3-confounding-overview.html#cb353-1" aria-hidden="true"></a><span class="co"># simulate independent X, Y and standardize all except entry 23</span></span>
+<span id="cb353-2"><a href="section-3-confounding-overview.html#cb353-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">1985</span>)</span>
+<span id="cb353-3"><a href="section-3-confounding-overview.html#cb353-3" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">1</span>)</span>
+<span id="cb353-4"><a href="section-3-confounding-overview.html#cb353-4" aria-hidden="true"></a>y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>,<span class="dv">84</span>,<span class="dv">1</span>)</span>
+<span id="cb353-5"><a href="section-3-confounding-overview.html#cb353-5" aria-hidden="true"></a>x[<span class="op">-</span><span class="dv">23</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(x[<span class="op">-</span><span class="dv">23</span>])</span>
+<span id="cb353-6"><a href="section-3-confounding-overview.html#cb353-6" aria-hidden="true"></a>y[<span class="op">-</span><span class="dv">23</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(y[<span class="op">-</span><span class="dv">23</span>])</span>
+<span id="cb353-7"><a href="section-3-confounding-overview.html#cb353-7" aria-hidden="true"></a></span>
+<span id="cb353-8"><a href="section-3-confounding-overview.html#cb353-8" aria-hidden="true"></a><span class="co"># plot shows the outlier</span></span>
+<span id="cb353-9"><a href="section-3-confounding-overview.html#cb353-9" aria-hidden="true"></a><span class="kw">qplot</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-134-1.png" width="672" /></p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="section-3-confounding-overview.html#cb354-1" aria-hidden="true"></a><span class="co"># outlier makes it appear there is correlation</span></span>
+<span id="cb354-2"><a href="section-3-confounding-overview.html#cb354-2" aria-hidden="true"></a><span class="kw">cor</span>(x,y)</span></code></pre></div>
+<pre><code>## [1] 0.988</code></pre>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="section-3-confounding-overview.html#cb356-1" aria-hidden="true"></a><span class="kw">cor</span>(x[<span class="op">-</span><span class="dv">23</span>], y[<span class="op">-</span><span class="dv">23</span>])</span></code></pre></div>
+<pre><code>## [1] -0.0442</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="section-3-confounding-overview.html#cb358-1" aria-hidden="true"></a><span class="co"># use rank instead</span></span>
+<span id="cb358-2"><a href="section-3-confounding-overview.html#cb358-2" aria-hidden="true"></a><span class="kw">qplot</span>(<span class="kw">rank</span>(x), <span class="kw">rank</span>(y))</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-134-2.png" width="672" /></p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="section-3-confounding-overview.html#cb359-1" aria-hidden="true"></a><span class="kw">cor</span>(<span class="kw">rank</span>(x), <span class="kw">rank</span>(y))</span></code></pre></div>
+<pre><code>## [1] 0.00251</code></pre>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="section-3-confounding-overview.html#cb361-1" aria-hidden="true"></a><span class="co"># Spearman correlation with cor function</span></span>
+<span id="cb361-2"><a href="section-3-confounding-overview.html#cb361-2" aria-hidden="true"></a><span class="kw">cor</span>(x, y, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] 0.00251</code></pre>
+</div>
+<div id="correlation-is-not-causation-reversing-cause-and-effect" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Correlation is Not Causation: Reversing Cause and Effect</h2>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html#reversing-cause-and-effect" target="_blank">here</a></p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>Another way association can be confused with causation is when the <strong>cause and effect are reversed</strong>.</li>
+<li>In the Galton data, when father and son were reversed in the regression, the model was technically correct. The estimates and p-values were obtained correctly as well. What was incorrect was the <strong>interpretation</strong> of the model.</li>
+</ul>
+<p><em>Code</em></p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="section-3-confounding-overview.html#cb363-1" aria-hidden="true"></a><span class="co"># cause and effect reversal using son heights to predict father heights</span></span>
+<span id="cb363-2"><a href="section-3-confounding-overview.html#cb363-2" aria-hidden="true"></a><span class="kw">data</span>(<span class="st">&quot;GaltonFamilies&quot;</span>)</span>
+<span id="cb363-3"><a href="section-3-confounding-overview.html#cb363-3" aria-hidden="true"></a>GaltonFamilies <span class="op">%&gt;%</span></span>
+<span id="cb363-4"><a href="section-3-confounding-overview.html#cb363-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(childNum <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb363-5"><a href="section-3-confounding-overview.html#cb363-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(father, childHeight) <span class="op">%&gt;%</span></span>
+<span id="cb363-6"><a href="section-3-confounding-overview.html#cb363-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">son =</span> childHeight) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-7"><a href="section-3-confounding-overview.html#cb363-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">do</span>(<span class="kw">tidy</span>(<span class="kw">lm</span>(father <span class="op">~</span><span class="st"> </span>son, <span class="dt">data =</span> .)))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   34.0      4.57        7.44 4.31e-12
+## 2 son            0.499    0.0648      7.70 9.47e-13</code></pre>
+</div>
+<div id="correlation-is-not-causation-confounders" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Correlation is Not Causation: Confounders</h2>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html#confounders" target="_blank">here</a></p>
+<p><strong>Key points</strong></p>
+<ul>
+<li>If X and Y are correlated, we call Z a <strong>confounder</strong> if changes in Z causes changes in both X and Y.</li>
+</ul>
+<p><em>Code</em></p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="section-3-confounding-overview.html#cb365-1" aria-hidden="true"></a><span class="co"># UC-Berkeley admission data</span></span>
+<span id="cb365-2"><a href="section-3-confounding-overview.html#cb365-2" aria-hidden="true"></a><span class="kw">data</span>(admissions)</span>
+<span id="cb365-3"><a href="section-3-confounding-overview.html#cb365-3" aria-hidden="true"></a>admissions</span></code></pre></div>
+<pre><code>##    major gender admitted applicants
+## 1      A    men       62        825
+## 2      B    men       63        560
+## 3      C    men       37        325
+## 4      D    men       33        417
+## 5      E    men       28        191
+## 6      F    men        6        373
+## 7      A  women       82        108
+## 8      B  women       68         25
+## 9      C  women       34        593
+## 10     D  women       35        375
+## 11     E  women       24        393
+## 12     F  women        7        341</code></pre>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="section-3-confounding-overview.html#cb367-1" aria-hidden="true"></a><span class="co"># percent men and women accepted</span></span>
+<span id="cb367-2"><a href="section-3-confounding-overview.html#cb367-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb367-3"><a href="section-3-confounding-overview.html#cb367-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">percentage =</span> </span>
+<span id="cb367-4"><a href="section-3-confounding-overview.html#cb367-4" aria-hidden="true"></a>              <span class="kw">round</span>(<span class="kw">sum</span>(admitted<span class="op">*</span>applicants)<span class="op">/</span><span class="kw">sum</span>(applicants),<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   gender percentage
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 men          44.5
+## 2 women        30.3</code></pre>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="section-3-confounding-overview.html#cb370-1" aria-hidden="true"></a><span class="co"># test whether gender and admission are independent</span></span>
+<span id="cb370-2"><a href="section-3-confounding-overview.html#cb370-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb370-3"><a href="section-3-confounding-overview.html#cb370-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_admitted =</span> <span class="kw">round</span>(<span class="kw">sum</span>(admitted <span class="op">/</span><span class="st"> </span><span class="dv">100</span> <span class="op">*</span><span class="st"> </span>applicants)), </span>
+<span id="cb370-4"><a href="section-3-confounding-overview.html#cb370-4" aria-hidden="true"></a>            <span class="dt">not_admitted =</span> <span class="kw">sum</span>(applicants) <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(total_admitted)) <span class="op">%&gt;%</span></span>
+<span id="cb370-5"><a href="section-3-confounding-overview.html#cb370-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb370-6"><a href="section-3-confounding-overview.html#cb370-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">do</span>(<span class="kw">tidy</span>(<span class="kw">chisq.test</span>(.)))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   statistic  p.value parameter method                                                      
+##       &lt;dbl&gt;    &lt;dbl&gt;     &lt;int&gt; &lt;chr&gt;                                                       
+## 1      91.6 1.06e-21         1 Pearson&#39;s Chi-squared test with Yates&#39; continuity correction</code></pre>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="section-3-confounding-overview.html#cb373-1" aria-hidden="true"></a><span class="co"># percent admissions by major</span></span>
+<span id="cb373-2"><a href="section-3-confounding-overview.html#cb373-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(major, gender, admitted) <span class="op">%&gt;%</span></span>
+<span id="cb373-3"><a href="section-3-confounding-overview.html#cb373-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">spread</span>(gender, admitted) <span class="op">%&gt;%</span></span>
+<span id="cb373-4"><a href="section-3-confounding-overview.html#cb373-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">women_minus_men =</span> women <span class="op">-</span><span class="st"> </span>men)</span></code></pre></div>
+<pre><code>##   major men women women_minus_men
+## 1     A  62    82              20
+## 2     B  63    68               5
+## 3     C  37    34              -3
+## 4     D  33    35               2
+## 5     E  28    24              -4
+## 6     F   6     7               1</code></pre>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="section-3-confounding-overview.html#cb375-1" aria-hidden="true"></a><span class="co"># plot total percent admitted to major versus percent women applicants</span></span>
+<span id="cb375-2"><a href="section-3-confounding-overview.html#cb375-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb375-3"><a href="section-3-confounding-overview.html#cb375-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(major) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb375-4"><a href="section-3-confounding-overview.html#cb375-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">major_selectivity =</span> <span class="kw">sum</span>(admitted <span class="op">*</span><span class="st"> </span>applicants) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(applicants),</span>
+<span id="cb375-5"><a href="section-3-confounding-overview.html#cb375-5" aria-hidden="true"></a>            <span class="dt">percent_women_applicants =</span> <span class="kw">sum</span>(applicants <span class="op">*</span><span class="st"> </span>(gender<span class="op">==</span><span class="st">&quot;women&quot;</span>)) <span class="op">/</span></span>
+<span id="cb375-6"><a href="section-3-confounding-overview.html#cb375-6" aria-hidden="true"></a><span class="st">                                             </span><span class="kw">sum</span>(applicants) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></span>
+<span id="cb375-7"><a href="section-3-confounding-overview.html#cb375-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(major_selectivity, percent_women_applicants, <span class="dt">label =</span> major)) <span class="op">+</span></span>
+<span id="cb375-8"><a href="section-3-confounding-overview.html#cb375-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_text</span>()</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p><img src="img/figures/unnamed-chunk-136-1.png" width="672" /></p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="section-3-confounding-overview.html#cb377-1" aria-hidden="true"></a><span class="co"># plot number of applicants admitted and not</span></span>
+<span id="cb377-2"><a href="section-3-confounding-overview.html#cb377-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span></span>
+<span id="cb377-3"><a href="section-3-confounding-overview.html#cb377-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">yes =</span> <span class="kw">round</span>(admitted<span class="op">/</span><span class="dv">100</span><span class="op">*</span>applicants), <span class="dt">no =</span> applicants <span class="op">-</span><span class="st"> </span>yes) <span class="op">%&gt;%</span></span>
+<span id="cb377-4"><a href="section-3-confounding-overview.html#cb377-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>applicants, <span class="op">-</span>admitted) <span class="op">%&gt;%</span></span>
+<span id="cb377-5"><a href="section-3-confounding-overview.html#cb377-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(admission, number_of_students, <span class="op">-</span><span class="kw">c</span>(<span class="st">&quot;major&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb377-6"><a href="section-3-confounding-overview.html#cb377-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(gender, number_of_students, <span class="dt">fill =</span> admission)) <span class="op">+</span></span>
+<span id="cb377-7"><a href="section-3-confounding-overview.html#cb377-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></span>
+<span id="cb377-8"><a href="section-3-confounding-overview.html#cb377-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>major)</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-136-2.png" width="672" /></p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="section-3-confounding-overview.html#cb378-1" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb378-2"><a href="section-3-confounding-overview.html#cb378-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent_admitted =</span> admitted <span class="op">*</span><span class="st"> </span>applicants<span class="op">/</span><span class="kw">sum</span>(applicants)) <span class="op">%&gt;%</span></span>
+<span id="cb378-3"><a href="section-3-confounding-overview.html#cb378-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(gender, <span class="dt">y =</span> percent_admitted, <span class="dt">fill =</span> major)) <span class="op">+</span></span>
+<span id="cb378-4"><a href="section-3-confounding-overview.html#cb378-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>)</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-136-3.png" width="672" /></p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="section-3-confounding-overview.html#cb379-1" aria-hidden="true"></a><span class="co"># condition on major and then look at differences</span></span>
+<span id="cb379-2"><a href="section-3-confounding-overview.html#cb379-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(major, admitted, <span class="dt">col =</span> gender, <span class="dt">size =</span> applicants)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-136-4.png" width="672" /></p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="section-3-confounding-overview.html#cb380-1" aria-hidden="true"></a><span class="co"># average difference by major</span></span>
+<span id="cb380-2"><a href="section-3-confounding-overview.html#cb380-2" aria-hidden="true"></a>admissions <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">average =</span> <span class="kw">mean</span>(admitted))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   gender average
+##   &lt;chr&gt;    &lt;dbl&gt;
+## 1 men       38.2
+## 2 women     41.7</code></pre>
+</div>
+<div id="simpsons-paradox" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Simpson’s Paradox</h2>
+<p>The textbook for this section is available <a href="https://rafalab.github.io/dsbook/association-is-not-causation.html#simpsons-paradox" target="_blank">here</a></p>
+<p><strong>Key point</strong></p>
+<ul>
+<li>Simpson’s Paradox happens when we see the sign of the correlation flip when comparing the entire dataset with specific strata.</li>
+</ul>
+</div>
+<div id="assessment---correlation-is-not-causation" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Assessment - Correlation is Not Causation</h2>
+<ol style="list-style-type: decimal">
+<li>In the video, we ran one million tests of correlation for two random variables, X and Y.</li>
+</ol>
+<p>How many of these correlations would you expect to have a significant p-value (p&gt;0.05), just by chance?</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. 5,000</li>
+<li><input type="checkbox" disabled="" checked="" />
+B. 50,000</li>
+<li><input type="checkbox" disabled="" />
+C. 100,000</li>
+<li><input type="checkbox" disabled="" />
+D. It’s impossible to know</li>
+</ul>
+<p>The chance of finding a correlation when none exists is <span class="math inline">\(0.05*1.000.000\)</span> chances</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Which of the following are examples of p-hacking?</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+A. Looking for associations between an outcome and several exposures and only reporting the one that is significant.</li>
+<li><input type="checkbox" disabled="" checked="" />
+B. Trying several different models and selecting the one that yields the smallest p-value.</li>
+<li><input type="checkbox" disabled="" checked="" />
+C. Repeating an experiment multiple times and only reporting the one with the smallest p-value.</li>
+<li><input type="checkbox" disabled="" />
+D. Using a Monte Carlo simulations in an analysis.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>The Spearman correlation coefficient is robust to outliers because:</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. It drops outliers before calculating correlation.</li>
+<li><input type="checkbox" disabled="" />
+B. It is the correlation of standardized values.</li>
+<li><input type="checkbox" disabled="" checked="" />
+C. It calculates correlation between ranks, not values.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>What can you do to determine if you are misinterpreting results because of a confounder?</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. Nothing, if the p-value says the result is significant, then it is.</li>
+<li><input type="checkbox" disabled="" checked="" />
+B. More closely examine the results by stratifying and plotting the data.</li>
+<li><input type="checkbox" disabled="" />
+C. Always assume that you are misinterpreting the results.</li>
+<li><input type="checkbox" disabled="" />
+D. Use linear models to tease out a confounder.</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Look again at the admissions data using ?admissions. What important characteristic of the table variables do you need to know to understand the calculations used in this video? Select the best answer.</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. The data is from 1973.</li>
+<li><input type="checkbox" disabled="" />
+B. The columns “major” and “gender” are of class character, while “admitted” and “applicants” are numeric.</li>
+<li><input type="checkbox" disabled="" />
+C. The data is from the “dslabs” package.</li>
+<li><input type="checkbox" disabled="" checked="" />
+D. The column “admitted” is the percent of student admitted, while the column “applicants” is the total number of applicants.</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>In the example in the video, major selectivity confounds the relationship between UC Berkley admission rates and gender because:</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. It was harder for women to be admitted to UC Berkeley.</li>
+<li><input type="checkbox" disabled="" checked="" />
+B. Major selectivity is associated with both admission rates and with gender, as women tended to apply to more selective majors.</li>
+<li><input type="checkbox" disabled="" />
+C. Some majors are more selective than others</li>
+<li><input type="checkbox" disabled="" />
+D. Major selectivity is not a confounder.</li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Admission rates at UC Berkeley are an example of Simpson’s Paradox because:</li>
+</ol>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+A. It appears that men have higher a higher admission rate than women, however, after we stratify by major, we see that on average women have a higher admission rate than men.</li>
+<li><input type="checkbox" disabled="" />
+B. It was a paradox that women were being admitted at a lower rate than men.</li>
+<li><input type="checkbox" disabled="" />
+C. The relationship between admissions and gender is confounded by major selectivity.</li>
+</ul>
+</div>
+<div id="assessment---confounding" class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> Assessment - Confounding</h2>
+<p>For this set of exercises, we examine the data from a <a href="https://www.pnas.org/content/112/40/12349.abstract" target="_blank">2014 PNAS paper that analyzed success rates from funding agencies in the Netherlands</a> and concluded:</p>
+<p><em>“our results reveal gender bias favoring male applicants over female applicants in the prioritization of their”quality of researcher" (but not “quality of proposal”) evaluations and success rates, as well as in the language used in instructional and evaluation materials."</em></p>
+<p>A response was published a few months later titled <a href="https://www.pnas.org/content/112/51/E7036" target="_blank">No evidence that gender contributes to personal research funding success in The Netherlands: A reaction to Van der Lee and Ellemers</a>, which concluded:</p>
+<p><em>However, the overall gender effect borders on statistical significance, despite the large sample. Moreover, their conclusion could be a prime example of Simpson’s paradox; if a higher percentage of women apply for grants in more competitive scientific disciplines (i.e., with low application success rates for both men and women), then an analysis across all disciplines could incorrectly show “evidence” of gender inequality.</em></p>
+<p>Who is right here: the original paper or the response? Here, you will examine the data and come to your own conclusion.</p>
+<p>The main evidence for the conclusion of the original paper comes down to a comparison of the percentages. The information we need was originally in Table S1 in the paper, which we include in <strong>dslabs</strong>:</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="section-3-confounding-overview.html#cb383-1" aria-hidden="true"></a><span class="kw">data</span>(<span class="st">&quot;research_funding_rates&quot;</span>)</span>
+<span id="cb383-2"><a href="section-3-confounding-overview.html#cb383-2" aria-hidden="true"></a>research_funding_rates</span></code></pre></div>
+<pre><code>##            discipline applications_total applications_men applications_women awards_total awards_men awards_women success_rates_total success_rates_men success_rates_women
+## 1   Chemical sciences                122               83                 39           32         22           10                26.2              26.5                25.6
+## 2   Physical sciences                174              135                 39           35         26            9                20.1              19.3                23.1
+## 3             Physics                 76               67                  9           20         18            2                26.3              26.9                22.2
+## 4          Humanities                396              230                166           65         33           32                16.4              14.3                19.3
+## 5  Technical sciences                251              189                 62           43         30           13                17.1              15.9                21.0
+## 6   Interdisciplinary                183              105                 78           29         12           17                15.8              11.4                21.8
+## 7 Earth/life sciences                282              156                126           56         38           18                19.9              24.4                14.3
+## 8     Social sciences                834              425                409          112         65           47                13.4              15.3                11.5
+## 9    Medical sciences                505              245                260           75         46           29                14.9              18.8                11.2</code></pre>
+<ol style="list-style-type: decimal">
+<li>Construct a two-by-two table of gender (men/women) by award status (awarded/not) using the total numbers across all disciplines.</li>
+</ol>
+<p>What is the number of men not awarded?</p>
+<p>What is the number of women not awarded?</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="section-3-confounding-overview.html#cb385-1" aria-hidden="true"></a>two_by_two &lt;-<span class="st"> </span>research_funding_rates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb385-2"><a href="section-3-confounding-overview.html#cb385-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>discipline) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb385-3"><a href="section-3-confounding-overview.html#cb385-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(sum)) <span class="op">%&gt;%</span></span>
+<span id="cb385-4"><a href="section-3-confounding-overview.html#cb385-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">yes_men =</span> awards_men, </span>
+<span id="cb385-5"><a href="section-3-confounding-overview.html#cb385-5" aria-hidden="true"></a>              <span class="dt">no_men =</span> applications_men <span class="op">-</span><span class="st"> </span>awards_men, </span>
+<span id="cb385-6"><a href="section-3-confounding-overview.html#cb385-6" aria-hidden="true"></a>              <span class="dt">yes_women =</span> awards_women, </span>
+<span id="cb385-7"><a href="section-3-confounding-overview.html#cb385-7" aria-hidden="true"></a>              <span class="dt">no_women =</span> applications_women <span class="op">-</span><span class="st"> </span>awards_women) <span class="op">%&gt;%</span></span>
+<span id="cb385-8"><a href="section-3-confounding-overview.html#cb385-8" aria-hidden="true"></a><span class="st">    </span>gather <span class="op">%&gt;%</span></span>
+<span id="cb385-9"><a href="section-3-confounding-overview.html#cb385-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">separate</span>(key, <span class="kw">c</span>(<span class="st">&quot;awarded&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb385-10"><a href="section-3-confounding-overview.html#cb385-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">spread</span>(gender, value)</span>
+<span id="cb385-11"><a href="section-3-confounding-overview.html#cb385-11" aria-hidden="true"></a>  two_by_two</span></code></pre></div>
+<pre><code>##   awarded  men women
+## 1      no 1345  1011
+## 2     yes  290   177</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Use the two-by-two table from Question 1 to compute the percentages of men awarded versus women awarded.</li>
+</ol>
+<p>What is the percentage of men awarded?</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="section-3-confounding-overview.html#cb387-1" aria-hidden="true"></a>two_by_two <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb387-2"><a href="section-3-confounding-overview.html#cb387-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">men =</span> <span class="kw">round</span>(men<span class="op">/</span><span class="kw">sum</span>(men)<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="dt">women =</span> <span class="kw">round</span>(women<span class="op">/</span><span class="kw">sum</span>(women)<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb387-3"><a href="section-3-confounding-overview.html#cb387-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(awarded <span class="op">==</span><span class="st"> &quot;yes&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb387-4"><a href="section-3-confounding-overview.html#cb387-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">pull</span>(men)</span></code></pre></div>
+<pre><code>## [1] 17.7</code></pre>
+<p>What is the percentage of women awarded?</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="section-3-confounding-overview.html#cb389-1" aria-hidden="true"></a>two_by_two <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb389-2"><a href="section-3-confounding-overview.html#cb389-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">men =</span> <span class="kw">round</span>(men<span class="op">/</span><span class="kw">sum</span>(men)<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>), <span class="dt">women =</span> <span class="kw">round</span>(women<span class="op">/</span><span class="kw">sum</span>(women)<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb389-3"><a href="section-3-confounding-overview.html#cb389-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(awarded <span class="op">==</span><span class="st"> &quot;yes&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb389-4"><a href="section-3-confounding-overview.html#cb389-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">pull</span>(women)</span></code></pre></div>
+<pre><code>## [1] 14.9</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Run a chi-squared test on the two-by-two table to determine whether the difference in the two success rates is significant. (You can use <code>tidy()</code> to turn the output of <code>chisq.test()</code> into a data frame as well.)</li>
+</ol>
+<p>What is the p-value of the difference in funding rate?</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="section-3-confounding-overview.html#cb391-1" aria-hidden="true"></a>two_by_two <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>awarded) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">chisq.test</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(p.value)</span></code></pre></div>
+<pre><code>## [1] 0.0509</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>There may be an association between gender and funding. But can we infer causation here? Is gender bias causing this observed difference? The response to the original paper claims that what we see here is similar to the UC Berkeley admissions example. Specifically they state that this “could be a prime example of Simpson’s paradox; if a higher percentage of women apply for grants in more competitive scientific disciplines, then an analysis across all disciplines could incorrectly show ‘evidence’ of gender inequality.”</li>
+</ol>
+<p>To settle this dispute, use this dataset with number of applications, awards, and success rate for each gender:</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="section-3-confounding-overview.html#cb393-1" aria-hidden="true"></a>dat &lt;-<span class="st"> </span>research_funding_rates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb393-2"><a href="section-3-confounding-overview.html#cb393-2" aria-hidden="true"></a><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">discipline =</span> <span class="kw">reorder</span>(discipline, success_rates_total)) <span class="op">%&gt;%</span></span>
+<span id="cb393-3"><a href="section-3-confounding-overview.html#cb393-3" aria-hidden="true"></a><span class="st">      </span><span class="kw">rename</span>(<span class="dt">success_total =</span> success_rates_total,</span>
+<span id="cb393-4"><a href="section-3-confounding-overview.html#cb393-4" aria-hidden="true"></a>             <span class="dt">success_men =</span> success_rates_men,</span>
+<span id="cb393-5"><a href="section-3-confounding-overview.html#cb393-5" aria-hidden="true"></a>             <span class="dt">success_women =</span> success_rates_women) <span class="op">%&gt;%</span></span>
+<span id="cb393-6"><a href="section-3-confounding-overview.html#cb393-6" aria-hidden="true"></a><span class="st">      </span><span class="kw">gather</span>(key, value, <span class="op">-</span>discipline) <span class="op">%&gt;%</span></span>
+<span id="cb393-7"><a href="section-3-confounding-overview.html#cb393-7" aria-hidden="true"></a><span class="st">      </span><span class="kw">separate</span>(key, <span class="kw">c</span>(<span class="st">&quot;type&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb393-8"><a href="section-3-confounding-overview.html#cb393-8" aria-hidden="true"></a><span class="st">      </span><span class="kw">spread</span>(type, value) <span class="op">%&gt;%</span></span>
+<span id="cb393-9"><a href="section-3-confounding-overview.html#cb393-9" aria-hidden="true"></a><span class="st">      </span><span class="kw">filter</span>(gender <span class="op">!=</span><span class="st"> &quot;total&quot;</span>)</span>
+<span id="cb393-10"><a href="section-3-confounding-overview.html#cb393-10" aria-hidden="true"></a>dat</span></code></pre></div>
+<pre><code>##             discipline gender applications awards success
+## 1      Social sciences    men          425     65    15.3
+## 2      Social sciences  women          409     47    11.5
+## 3     Medical sciences    men          245     46    18.8
+## 4     Medical sciences  women          260     29    11.2
+## 5    Interdisciplinary    men          105     12    11.4
+## 6    Interdisciplinary  women           78     17    21.8
+## 7           Humanities    men          230     33    14.3
+## 8           Humanities  women          166     32    19.3
+## 9   Technical sciences    men          189     30    15.9
+## 10  Technical sciences  women           62     13    21.0
+## 11 Earth/life sciences    men          156     38    24.4
+## 12 Earth/life sciences  women          126     18    14.3
+## 13   Physical sciences    men          135     26    19.3
+## 14   Physical sciences  women           39      9    23.1
+## 15   Chemical sciences    men           83     22    26.5
+## 16   Chemical sciences  women           39     10    25.6
+## 17             Physics    men           67     18    26.9
+## 18             Physics  women            9      2    22.2</code></pre>
+<p>To check if this is a case of Simpson’s paradox, plot the success rates versus disciplines, which have been ordered by overall success, with colors to denote the genders and size to denote the number of applications.</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="section-3-confounding-overview.html#cb395-1" aria-hidden="true"></a>dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb395-2"><a href="section-3-confounding-overview.html#cb395-2" aria-hidden="true"></a><span class="st">      </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(discipline, success, <span class="dt">size =</span> applications, <span class="dt">color =</span> gender)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb395-3"><a href="section-3-confounding-overview.html#cb395-3" aria-hidden="true"></a><span class="st">      </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></span>
+<span id="cb395-4"><a href="section-3-confounding-overview.html#cb395-4" aria-hidden="true"></a><span class="st">      </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="img/figures/unnamed-chunk-143-1.png" width="672" /></p>
+<p>In which fields do men have a higher success rate than women?</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+A. Chemical sciences</li>
+<li><input type="checkbox" disabled="" checked="" />
+B. Earth/life sciences</li>
+<li><input type="checkbox" disabled="" />
+C. Humanities</li>
+<li><input type="checkbox" disabled="" />
+D. Interdisciplinary</li>
+<li><input type="checkbox" disabled="" checked="" />
+E. Medical sciences</li>
+<li><input type="checkbox" disabled="" />
+F. Physical sciences</li>
+<li><input type="checkbox" disabled="" checked="" />
+G. Physics</li>
+<li><input type="checkbox" disabled="" checked="" />
+H. Social sciences</li>
+<li><input type="checkbox" disabled="" />
+I. Technical sciences</li>
+</ul>
+<p>Which two fields have the most applications from women?</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. Chemical sciences</li>
+<li><input type="checkbox" disabled="" />
+B. Earth/life sciences</li>
+<li><input type="checkbox" disabled="" />
+C. Humanities</li>
+<li><input type="checkbox" disabled="" />
+D. Interdisciplinary</li>
+<li><input type="checkbox" disabled="" checked="" />
+E. Medical sciences</li>
+<li><input type="checkbox" disabled="" />
+F. Physical sciences</li>
+<li><input type="checkbox" disabled="" />
+G. Physics</li>
+<li><input type="checkbox" disabled="" checked="" />
+H. Social sciences</li>
+<li><input type="checkbox" disabled="" />
+I. Technical sciences</li>
+</ul>
+<p>Which two fields have the lowest overall funding rates?</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+A. Chemical sciences</li>
+<li><input type="checkbox" disabled="" />
+B. Earth/life sciences</li>
+<li><input type="checkbox" disabled="" />
+C. Humanities</li>
+<li><input type="checkbox" disabled="" />
+D. Interdisciplinary</li>
+<li><input type="checkbox" disabled="" checked="" />
+E. Medical sciences</li>
+<li><input type="checkbox" disabled="" />
+F. Physical sciences</li>
+<li><input type="checkbox" disabled="" />
+G. Physics</li>
+<li><input type="checkbox" disabled="" checked="" />
+H. Social sciences</li>
+<li><input type="checkbox" disabled="" />
+I. Technical sciences</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-2-linear-models-overview.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
